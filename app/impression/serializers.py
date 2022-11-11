@@ -3,7 +3,7 @@ serializers for impression api
 """
 from rest_framework import serializers
 from user_agents import parse
-from impression.models import (
+from core.models import (
     Impression
 )
 from django.contrib.gis.geoip2 import GeoIP2

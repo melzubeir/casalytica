@@ -41,4 +41,10 @@ class UserAdmin(BaseUserAdmin):
     )
 
 
+class ImpressionAdmin(admin.ModelAdmin):
+
+    list_display = ("created", "post_hash", "referer", )
+
+
+admin.site.register(models.Impression, ImpressionAdmin)
 admin.site.register(models.User, UserAdmin)
