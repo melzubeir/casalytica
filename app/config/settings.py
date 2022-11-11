@@ -59,7 +59,8 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
 
-    'debug_toolbar',
+    "debug_toolbar",
+    "geoip2",
 
     "rest_framework",
     "rest_framework.authtoken",
@@ -67,7 +68,7 @@ INSTALLED_APPS = [
     "allauth.account",
     "dj_rest_auth",
     "dj_rest_auth.registration",
-    'drf_spectacular',
+    "drf_spectacular",
 
     "core",
     "impression",
@@ -160,6 +161,13 @@ MEDIA_URL = 'media/'
 MEDIA_ROOT = '/vol/web/media'
 STATIC_ROOT = '/vol/web/static'
 STATICFILES_DIRS = (path.join(BASE_DIR, ''),)
+
+
+
+
+# geip2 path to database
+GEOIP_PATH= environ.get('GEOIP_PATH')
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field

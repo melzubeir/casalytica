@@ -2,6 +2,7 @@
 Models for the impressions app.
 """
 from django.db import models
+from config import settings
 
 DESO_APP_CHOICES = [
     (0, ('Undefined')),
@@ -37,6 +38,10 @@ class Impression(models.Model):
 
     is_deso = models.BooleanField(default=False)
 
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+    )
 
 
     def get_source_app(self):
