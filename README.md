@@ -17,11 +17,16 @@ deso was made for creators, and creators deserve better analytics.
 
 ## installation
 
-### prerequisites
+casalytica is fully dockerized and can be run with docker-compose. the production server is run behind a
+nginx reverse proxy server.
+
+### tech stack
 
 - django 4.1
 - python 3.9
 - postgresql 14
+- nginx
+- docker
 
 ### aws ec2 setup
 
@@ -55,7 +60,6 @@ docker-compose up -d --build
 - for production
 
 ```sh
-docker-compose -f docker-compose-prod.yml build
 docker-compose -f docker-compose-prod.yml up --build -d
 ```
 
