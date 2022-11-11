@@ -7,6 +7,7 @@ services:
     restart: always
     volumes:
       - static-data:/vol/web
+      - app-data:/vol/app
     env_file:
       - .env
 
@@ -20,6 +21,8 @@ services:
       - "80:8000"
     volumes:
       - static-data:/vol/static
+      - app-data:/vol/app
 
 volumes:
   static-data:
+  app-data:

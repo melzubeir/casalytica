@@ -1,22 +1,18 @@
-server {
-    listen ${LISTEN_PORT};
+upstream casalytica {
+    server  unix:/vol/app/casalytica.sock;
+}
 
-    charset utf-8;
-    
+
+server {
+    server_name casalytica.com www.casalytica.com casalytica.localhost;
     location /static {
-        alias /vol/static;
+        alias /vol/static/static;
     }
 
     location / {
-        uwsgi_pass                        ${APP_HOST}:${APP_PORT};
+        uwsgi_pass                        casalytica;
         include                           /etc/nginx/uwsgi_params;
         client_max_body_size              10M;
-    }
-
-    location ~ \.php$ {
-        fastcgi_pass      ${APP_HOST}:${APP_PORT};
-        fastcgi_index     index.php;
-        include           fastcgi.conf;
     }
 
 }

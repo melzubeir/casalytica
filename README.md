@@ -23,12 +23,41 @@ deso was made for creators, and creators deserve better analytics.
 - python 3.9
 - postgresql 14
 
-### setup
+### aws ec2 setup
+
+settings up an aws ec2 instance (amazon linux 2)
+
+- install git
+
+```bash
+sudo yum install git -y
+```
+
+- install docker and dependencies
+
+```bash
+sudo amazon-linux-extras install docker -y
+sudo systemctl enable docker.service
+sudo systemctl start docker.service
+sudo usermod -aG docker ec2-user
+sudo curl -L "https://github.com/docker/compose/releases/download/1.29.1/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+sudo chmod +x /usr/local/bin/docker-compose
+```
+
+### build
+
+- for development
 
 ```sh
 docker-compose up -d --build
 ```
 
+- for production
+
+```sh
+docker-compose -f docker-compose-prod.yml build
+docker-compose -f docker-compose-prod.yml up --build -d
+```
 
 ## usage
 
