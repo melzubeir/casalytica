@@ -8,6 +8,9 @@ from django.contrib.auth.models import (
 )
 from django.db import models
 from config import settings
+from django.utils.translation import gettext_lazy as _
+from django.contrib.gis.geoip2 import GeoIP2
+from user_agents import parse
 
 
 DESO_APP_CHOICES = [
@@ -24,7 +27,7 @@ class UserManager(BaseUserManager):
     def create_user(self, email, password=None, **extra_fields):
         """Create, save and return a new user"""
         if not email:
-            raise ValueError('Users must have an email address')
+            raise ValueError(_('Users must have an email address'))
         user = self.model(email=self.normalize_email(email), **extra_fields)
         user.set_password(password)
         user.save(using=self._db)
@@ -53,6 +56,17 @@ class User(AbstractBaseUser, PermissionsMixin):
     # replacing the default username field with email
     USERNAME_FIELD = 'email'
 
+
+class Post(models.Model):
+    """Model for posts"""
+
+    post_hash = models.CharField(max_length=255)
+    creator = models.CharField(max_length=255)
+    impressions_total = models.IntegerField(default=0)
+    likes_total = models.IntegerField(default=0)
+    diamonds_total = models.IntegerField(default=0)
+    comments_total = models.IntegerField(default=0)
+    reposts_total = models.IntegerField(default=0)
 
 
 class Impression(models.Model):
@@ -95,9 +109,56 @@ class Impression(models.Model):
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
     )
+    post = models.ForeignKey(
+        Post,
+        on_delete=models.CASCADE
+    )
+
+    def _get_or_create_post(self, post):
+        """get or create post"""
+        if post:
+            post_obj, created = Post.objects.get_or_create(
+                post_hash=post)
+        post_obj.impressions_total = models.F('impressions_total') + 1
+        post_obj.save()
+        return post_obj
 
     def get_source_app(self):
         return DESO_APP_CHOICES[self.source_app - 1][1]
+
+    def get_location(self, ip=None):
+        """get location from ip address"""
+        g = GeoIP2()
+        try:
+            loc = g.city(ip)
+        except:
+            return False
+
+        return loc
+
+    def save(self, *args, **kwargs):
+        """save the impression with location and user agent meta data expansion"""
+        self.post = self._get_or_create_post(self.post_hash)
+
+        location = self.get_location(self.remote_addr)
+        if location:
+            self.city = location['city'] if True else 'unknown'
+            self.country = location['country_name'] if True else 'unknown'
+            self.latitude = location['latitude'] if True else 0
+            self.longitude = location['longitude'] if True else 0
+            self.tz = location['time_zone'] if True else 'unknown'
+
+        if self.user_agent:
+            ua = parse(self.user_agent)
+            self.device_brand = ua.device.brand
+            self.device_family = ua.device.family
+            self.device_model = ua.device.model
+            self.os_family = ua.os.family
+            self.os_version = ua.os.version_string
+            self.browser_family = ua.browser.family
+            self.browser_version = ua.browser.version_string
+
+        super(Impression, self).save(*args, **kwargs)
 
     def __str__(self):
         return str(self.created)

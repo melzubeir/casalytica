@@ -2,11 +2,9 @@
 serializers for impression api
 """
 from rest_framework import serializers
-from user_agents import parse
 from core.models import (
-    Impression
+    Impression,
 )
-from django.contrib.gis.geoip2 import GeoIP2
 
 
 class ImpressionSerializer(serializers.ModelSerializer):
@@ -37,41 +35,16 @@ class ImpressionSerializer(serializers.ModelSerializer):
         impression = Impression.objects.create(
             **validated_data, user=auth_user)
 
-        self.remote_addr = validated_data.pop('remote_addr', None)
-        self.user_agent = validated_data.pop('user_agent', None)
-        self.referer = validated_data.pop('referer', None)
-        self.source_app = validated_data.pop('source_app', None)
+        impression.post_hash = validated_data.pop('post_hash', None)
 
-        location = self.get_location(self.remote_addr)
-        if location:
-            impression.city = location['city'] if True else 'unknown'
-            impression.country = location['country_name'] if True else 'unknown'
-            impression.latitude = location['latitude'] if True else 0
-            impression.longitude = location['longitude'] if True else 0
-            impression.tz = location['time_zone'] if True else 'unknown'
-
-        if self.user_agent:
-            ua = parse(self.user_agent)
-            impression.device_brand = ua.device.brand
-            impression.device_family = ua.device.family
-            impression.device_model = ua.device.model
-            impression.os_family = ua.os.family
-            impression.os_version = ua.os.version_string
-            impression.browser_family = ua.browser.family
-            impression.browser_version = ua.browser.version_string
+        impression.remote_addr = validated_data.pop('remote_addr', None)
+        impression.user_agent = validated_data.pop('user_agent', None)
+        impression.referer = validated_data.pop('referer', None)
+        impression.source_app = validated_data.pop('source_app', None)
 
         # maybe spend some time validating data? lol
         return impression
 
-    def get_location(self, ip=None):
-        """get location from ip address"""
-        g = GeoIP2()
-        try:
-            loc = g.city(ip)
-        except:
-            return False
-
-        return loc
 
     def update(self, instance, validated_data):
         """update impression"""

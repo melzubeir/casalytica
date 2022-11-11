@@ -42,9 +42,15 @@ class UserAdmin(BaseUserAdmin):
 
 
 class ImpressionAdmin(admin.ModelAdmin):
-
+    """Define the admin pages for impressions"""
     list_display = ("created", "post_hash", "referer", )
 
 
+class PostAdmin(admin.ModelAdmin):
+    """Define the admin pages for impressions"""
+    list_display = ("post_hash", "impressions_total", )
+
+
 admin.site.register(models.Impression, ImpressionAdmin)
+admin.site.register(models.Post, PostAdmin)
 admin.site.register(models.User, UserAdmin)
