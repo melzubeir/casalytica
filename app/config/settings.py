@@ -162,11 +162,8 @@ MEDIA_ROOT = '/vol/web/media'
 STATIC_ROOT = '/vol/web/static'
 STATICFILES_DIRS = (path.join(BASE_DIR, ''),)
 
-
-
-
 # geip2 path to database
-GEOIP_PATH= environ.get('GEOIP_PATH')
+GEOIP_PATH = environ.get('GEOIP_PATH')
 
 
 # Default primary key field type

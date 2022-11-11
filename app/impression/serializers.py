@@ -7,6 +7,7 @@ from impression.models import (
 )
 from django.contrib.gis.geoip2 import GeoIP2
 
+
 class ImpressionSerializer(serializers.ModelSerializer):
     """serializer for impression model"""
     class Meta:
@@ -20,43 +21,37 @@ class ImpressionSerializer(serializers.ModelSerializer):
         """create a new impression"""
 
         auth_user = self.context['request'].user
-
-        self.remote_addr = validated_data.pop('remote_addr', None)
+        impression = Impression.objects.create(
+            **validated_data, user=auth_user)
+        remote_addr = validated_data.pop('remote_addr', None)
         self.user_agent = validated_data.pop('user_agent', None)
 
-        self.city = validated_data.pop('city', None)
-        self.address = validated_data.pop('address', None)
-        self.latitude = validated_data.pop('latitude', None)
-        self.longitude = validated_data.pop('longitude', None)
-        self.tz = validated_data.pop('tz', None)
+        location = self.get_location(remote_addr)
+        if location:
+            impression.city = location['city'] if True else 'unknown'
+            impression.country = location['country_name'] if True else 'unknown'
+            impression.latitude = location['latitude'] if True else 0
+            impression.longitude = location['longitude'] if True else 0
+            impression.tz = location['time_zone'] if True else 'unknown'
 
         self.referer = validated_data.pop('referer', None)
         self.device_type = validated_data.pop('device_type', None)
         self.os_type = validated_data.pop('os_type', None)
         self.os_version = validated_data.pop('os_version', None)
         self.broser_type = validated_data.pop('browser_type', None)
-        self.get_location()
-
 
         # maybe spend some time validating data? lol
-        return Impression.objects.create(**validated_data, user=auth_user)
+        return impression
 
-    def get_location(self):
+    def get_location(self, ip=None):
         """get location from ip address"""
         g = GeoIP2()
         try:
-            location = g.city(self.remote_addr)
+            loc = g.city(ip)
         except:
             return False
 
-        self.city = location['city'] if True else 'unknown'
-        self.country = location['country_name'] if True else 'unknown'
-        self.latitude = location['latitude'] if True else 0
-        self.longitude = location['longitude'] if True else 0
-        self.tz = location['time_zone'] if True else 'unknown'
-
-        return location
-
+        return loc
 
     def update(self, instance, validated_data):
         """update impression"""
@@ -66,8 +61,6 @@ class ImpressionSerializer(serializers.ModelSerializer):
             setattr(instance, attr, value)
         instance.save()
         return instance
-
-
 
 
 class ImpressionDetailSerializer(ImpressionSerializer):
