@@ -82,6 +82,7 @@ class Post(models.Model):
             self.diamonds_total = sPost['PostFound']['DiamondCount']
             self.comments_total = sPost['PostFound']['CommentCount']
             self.reposts_total = sPost['PostFound']['RepostCount']
+            self.creator = sPost['PostFound']['ProfileEntryResponse']['Username']
         super().save(*args, **kwargs)
 
     def __str__(self):
