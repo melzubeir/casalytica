@@ -50,7 +50,12 @@ class PostAdmin(admin.ModelAdmin):
     """Define the admin pages for impressions"""
     list_display = ("post_hash", "impressions_total", )
 
+class CreatorAdmin(admin.ModelAdmin):
+    """Define the admin pages for creators"""
+    list_display = ("username", "public_key_base58", )
+
 
 admin.site.register(models.Impression, ImpressionAdmin)
 admin.site.register(models.Post, PostAdmin)
+admin.site.register(models.Creator, CreatorAdmin)
 admin.site.register(models.User, UserAdmin)
