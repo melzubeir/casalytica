@@ -61,11 +61,6 @@ class User(AbstractBaseUser, PermissionsMixin):
     USERNAME_FIELD = 'email'
 
 
-class Node(models.Model):
-    """Model for deso nodes"""
-    id = models.IntegerField(primary_key=True)
-
-
 class Creator(models.Model):
     """Model for creators"""
     username = models.CharField(max_length=255)
@@ -73,6 +68,29 @@ class Creator(models.Model):
 
     def __str__(self):
         return self.username
+
+
+class Node(models.Model):
+    """Model for deso nodes
+    Nodes are the servers that run the deso blockchain
+    and can be queried:
+        POST /api/v0/get-app-state
+
+    probably worth populating the local db with the most up-to-date list
+    and periodically updating it
+    """
+
+    id = models.IntegerField(primary_key=True)
+    name = models.CharField(max_length=255)
+    url = models.URLField(max_length=255)
+    owner = models.ForeignKey(
+        Creator,
+        on_delete=models.CASCADE
+    )
+
+    def __str__(self):
+        return self.name
+
 
 class Post(models.Model):
     """Model for posts"""

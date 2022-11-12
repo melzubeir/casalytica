@@ -1,0 +1,211 @@
+{
+  "MinSatoshisBurnedForProfileCreation": 100000,
+  "BlockHeight": 181325,
+  "IsTestnet": false,
+  "HasStarterDeSoSeed": true,
+  "HasTwilioAPIKey": true,
+  "CreateProfileFeeNanos": 1000000,
+  "CompProfileCreation": true,
+  "DiamondLevelMap": {
+    "1": 50000,
+    "2": 500000,
+    "3": 5000000,
+    "4": 50000000,
+    "5": 500000000,
+    "6": 5000000000,
+    "7": 50000000000,
+    "8": 500000000000
+  },
+  "HasWyreIntegration": true,
+  "HasJumioIntegration": true,
+  "BuyWithETH": true,
+  "USDCentsPerDeSoExchangeRate": 1010,
+  "JumioDeSoNanos": 99009900,
+  "JumioUSDCents": 100,
+  "JumioKickbackUSDCents": 10,
+  "CountrySignUpBonus": {
+    "AllowCustomReferralAmount": true,
+    "ReferralAmountOverrideUSDCents": 500,
+    "AllowCustomKickbackAmount": true,
+    "KickbackAmountOverrideUSDCents": 100
+  },
+  "DefaultFeeRateNanosPerKB": 1000,
+  "TransactionFeeMap": {
+    "ACCEPT_NFT_BID": null,
+    "ACCEPT_NFT_TRANSFER": null,
+    "AUTHORIZE_DERIVED_KEY": null,
+    "BASIC_TRANSFER": null,
+    "BITCOIN_EXCHANGE": null,
+    "BLOCK_REWARD": null,
+    "BURN_NFT": null,
+    "CREATE_NFT": null,
+    "CREATOR_COIN": null,
+    "CREATOR_COIN_TRANSFER": null,
+    "DAO_COIN": null,
+    "DAO_COIN_LIMIT_ORDER": null,
+    "DAO_COIN_TRANSFER": null,
+    "FOLLOW": null,
+    "LIKE": null,
+    "MESSAGING_GROUP": null,
+    "NFT_BID": null,
+    "NFT_TRANSFER": null,
+    "PRIVATE_MESSAGE": null,
+    "SUBMIT_POST": null,
+    "SWAP_IDENTITY": null,
+    "UNSET": null,
+    "UPDATE_BITCOIN_USD_EXCHANGE_RATE": null,
+    "UPDATE_GLOBAL_PARAMS": null,
+    "UPDATE_NFT": null,
+    "UPDATE_PROFILE": null
+  },
+  "BuyETHAddress": "0xDa0950da3882eF1AE1e41e99eBE31E6b3324c17F",
+  "Nodes": {
+    "1": {
+      "Name": "DeSo",
+      "URL": "https://node.deso.org",
+      "Owner": "diamondhands"
+    },
+    "2": {
+      "Name": "BitClout",
+      "URL": "https://bitclout.com",
+      "Owner": "diamondhands"
+    },
+    "3": {
+      "Name": "Diamond",
+      "URL": "https://diamondapp.com",
+      "Owner": "Zordon"
+    },
+    "4": {
+      "Name": "Desofy",
+      "URL": "https://desofy.app",
+      "Owner": "Ribal"
+    },
+    "5": {
+      "Name": "Flick",
+      "URL": "https://flickapp.com",
+      "Owner": "nigeleccles"
+    },
+    "6": {
+      "Name": "tijn's club",
+      "URL": "https://tijn.club",
+      "Owner": "tijn"
+    },
+    "7": {
+      "Name": "Nacho Average",
+      "URL": "https://nachoaverage.com/",
+      "Owner": "ClayPerryMusic"
+    },
+    "8": {
+      "Name": "love4src",
+      "URL": "https://love4src.com",
+      "Owner": "kanshi"
+    },
+    "9": {
+      "Name": "Supernovas",
+      "URL": "https://supernovas.app",
+      "Owner": "fransarthur"
+    },
+    "10": {
+      "Name": "GiftClout",
+      "URL": "https://members.giftclout.com",
+      "Owner": "RajLahoti"
+    },
+    "11": {
+      "Name": "DeSocialWorld",
+      "URL": "https://desocialworld.com",
+      "Owner": "edokoevoet"
+    },
+    "12": {
+      "Name": "NFTz",
+      "URL": "https://nftz.zone",
+      "Owner": "mvanhalen"
+    },
+    "13": {
+      "Name": "Cloutible",
+      "URL": "https://cloutible.club",
+      "Owner": "DawaynePerza"
+    },
+    "14": {
+      "Name": "Agbegbe",
+      "URL": "https://agbegbe.org",
+      "Owner": "TheParkerazzi"
+    },
+    "15": {
+      "Name": "CloutingAround",
+      "URL": "https://cloutingaround.dev",
+      "Owner": "TheParkerazzi"
+    },
+    "16": {
+      "Name": "MediaTech",
+      "URL": "https://deso.mediatech.ventures",
+      "Owner": "paulobrien"
+    },
+    "17": {
+      "Name": "Mousai",
+      "URL": "https://deso.mousai.stream",
+      "Owner": "marlonjm2k"
+    },
+    "18": {
+      "Name": "KoalaTBooks",
+      "URL": "https://koalatbooks.com",
+      "Owner": "chriscelaya"
+    },
+    "19": {
+      "Name": "Beyond",
+      "URL": "https://beyond.restartu.org",
+      "Owner": "RestartU"
+    },
+    "20": {
+      "Name": "DeverSo",
+      "URL": "https://deverso.io/",
+      "Owner": "Nordian"
+    },
+    "21": {
+      "Name": "VoSocial",
+      "URL": "https://vosoapp.com",
+      "Owner": "voso"
+    },
+    "22": {
+      "Name": "Tunel",
+      "URL": "https://tunel.app",
+      "Owner": "hazrodriguez"
+    },
+    "23": {
+      "Name": "Entre",
+      "URL": "https://joinentre.com",
+      "Owner": "entre"
+    },
+    "24": {
+      "Name": "Elmas",
+      "URL": "https://elmas.app",
+      "Owner": "elmas"
+    },
+    "25": {
+      "Name": "İnci",
+      "URL": "https://inci.app",
+      "Owner": "inci"
+    },
+    "26": {
+      "Name": "Overclout",
+      "URL": "https://overclout.com",
+      "Owner": "Overclout"
+    },
+    "27": {
+      "Name": "DesoNoCode",
+      "URL": "https://node.desonocode.com",
+      "Owner": "DeSoNoCode"
+    },
+    "28": {
+      "Name": "Post2EarnDao",
+      "URL": "https://node.post2earndao.com",
+      "Owner": "edokoevoet"
+    },
+    "29": {
+      "Name": "Pearl",
+      "URL": "https://pearl.app",
+      "Owner": "pearl"
+    }
+  },
+  "USDCentsPerBitCloutExchangeRate": 1010,
+  "JumioBitCloutNanos": 99009900
+}
