@@ -2,8 +2,8 @@
 serializers for analytics api
 """
 from rest_framework import serializers
-from core.models import (
-    Impression,
+from .models import (
+    Impression
 )
 
 

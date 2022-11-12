@@ -14,7 +14,7 @@ from rest_framework import (
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
 
-from core.models import (
+from .models import (
     Impression
 )
 from analytics import serializers
