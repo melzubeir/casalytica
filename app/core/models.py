@@ -61,6 +61,11 @@ class User(AbstractBaseUser, PermissionsMixin):
     USERNAME_FIELD = 'email'
 
 
+class Node(models.Model):
+    """Model for deso nodes"""
+    id = models.IntegerField(primary_key=True)
+
+
 class Creator(models.Model):
     """Model for creators"""
     username = models.CharField(max_length=255)
@@ -91,6 +96,13 @@ class Post(models.Model):
         creator_obj.save()
         return creator_obj
 
+    def _get_or_create_node(self, node_id):
+        """get or create creator"""
+        node_obj, created = Node.objects.get_or_create(
+            id=node_id)
+        node_obj.save()
+        return node_obj
+
     def save(self, *args, **kwargs):
         """Override Post save method to update post data from deso"""
         desoPost = Posts()
@@ -107,6 +119,11 @@ class Post(models.Model):
                 sPost['PostFound']['ProfileEntryResponse']['Username'],
                 sPost['PostFound']['ProfileEntryResponse']['PublicKeyBase58Check']
             )
+            if 'Node' in sPost['PostFound']['PostExtraData']:
+                self.node = self._get_or_create_node(
+                    sPost['PostFound']['PostExtraData']['Node']
+                )
+
         super().save(*args, **kwargs)
 
     def __str__(self):
