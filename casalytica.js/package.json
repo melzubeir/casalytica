@@ -1,0 +1,28 @@
+{
+  "name": "casalytica",
+  "version": "0.0.1",
+  "description": "analytics for on-chain content",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "deso",
+    "casalytica",
+    "analytics"
+  ],
+  "author": "Mo Elzubeir <elzubeir@gmail.com> (https://www.pandamistake.com)",
+  "license": "BSD-3-Clause",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/melzubeir/casalytica.git"
+  },
+  "bugs": {
+    "url": "https://github.com/melzubeir/casalytica/issues"
+  },
+  "homepage": "https://github.com/melzubeir/casalytica#readme",
+  "dependencies": {
+    "casalytica": "^0.0.1",
+    "axios": "^0.21.1"
+  }
+}
