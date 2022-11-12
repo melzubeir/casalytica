@@ -1,5 +1,5 @@
 """
-serializers for impression api
+serializers for analytics api
 """
 from rest_framework import serializers
 from core.models import (

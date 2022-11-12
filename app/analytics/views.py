@@ -17,7 +17,7 @@ from rest_framework.permissions import IsAuthenticated
 from core.models import (
     Impression
 )
-from impression import serializers
+from analytics import serializers
 
 @extend_schema_view(
     list=extend_schema(

@@ -71,7 +71,7 @@ INSTALLED_APPS = [
     "drf_spectacular",
 
     "core",
-    "impression",
+    "analytics",
 
 
 ]

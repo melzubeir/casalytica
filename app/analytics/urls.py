@@ -6,12 +6,12 @@ from django.urls import (
     include
 )
 from rest_framework.routers import DefaultRouter
-from impression import views
+from analytics import views
 
 router = DefaultRouter()
-router.register('impression', views.ImpressionViewSet)
+router.register('analytics', views.ImpressionViewSet)
 
-app_name = 'impression'
+app_name = 'analytics'
 
 urlpatterns = [
     path('', include(router.urls)),

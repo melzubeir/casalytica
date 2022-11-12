@@ -11,10 +11,8 @@ from config import settings
 from django.utils.translation import gettext_lazy as _
 from django.contrib.gis.geoip2 import GeoIP2
 from user_agents import parse
-from deso import (
-    Posts,
-    User
-)
+
+from deso import Posts
 
 
 DESO_APP_CHOICES = [
