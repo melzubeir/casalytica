@@ -55,6 +55,10 @@ class Post(models.Model):
     diamonds_total = models.IntegerField(default=0)
     comments_total = models.IntegerField(default=0)
     reposts_total = models.IntegerField(default=0)
+    node = models.ForeignKey(
+        Node,
+        on_delete=models.CASCADE,
+    )
     creator = models.ForeignKey(
         Creator,
         on_delete=models.CASCADE,

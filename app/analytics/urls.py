@@ -1,5 +1,5 @@
 """
-url mappings for the impression api
+url mappings for the analytics api
 """
 from django.urls import (
     path,
@@ -9,7 +9,10 @@ from rest_framework.routers import DefaultRouter
 from analytics import views
 
 router = DefaultRouter()
-router.register('analytics', views.ImpressionViewSet)
+router.register('impression', views.ImpressionViewSet)
+router.register('posts', views.PostViewSet)
+router.register('nodes', views.NodeViewSet)
+router.register('creators', views.CreatorViewSet)
 
 app_name = 'analytics'
 

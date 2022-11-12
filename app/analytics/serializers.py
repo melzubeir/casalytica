@@ -2,10 +2,7 @@
 serializers for analytics api
 """
 from rest_framework import serializers
-from .models import (
-    Impression
-)
-
+from analytics import models
 
 class ImpressionSerializer(serializers.ModelSerializer):
     """serializer for impression model
@@ -20,11 +17,10 @@ class ImpressionSerializer(serializers.ModelSerializer):
     }
     """
     class Meta:
-        model = Impression
+        model = models.Impression
         fields = [
-            'id', 'created', 'post_hash', 'is_deso',
-            'remote_addr', 'user_agent', 'referer',
-            'source_app',
+            'created', 'post_hash', 'remote_addr', 'user_agent', 'referer',
+            'source_app', 'is_deso',
         ]
         read_only_fields = ['created']
 
@@ -32,7 +28,7 @@ class ImpressionSerializer(serializers.ModelSerializer):
         """create a new impression"""
 
         auth_user = self.context['request'].user
-        impression = Impression.objects.create(
+        impression = models.Impression.objects.create(
             **validated_data, user=auth_user)
 
         impression.post_hash = validated_data.pop('post_hash', None)
@@ -66,4 +62,47 @@ class ImpressionDetailSerializer(ImpressionSerializer):
             'os_family', 'os_version',
             'city', 'country', 'latitude', 'longitude',
             'tz',
+        ]
+        read_only_fields = [
+            'device_brand', 'device_family', 'device_model',
+            'browser_family', 'browser_version',
+            'os_family', 'os_version',
+            'city', 'country', 'latitude', 'longitude',
+            'tz',
+        ]
+
+class CreatorSerializer(serializers.ModelSerializer):
+    """Serializer for creator model"""
+
+    class Meta:
+        model = models.Creator
+        fields = [
+            'username', 'public_key_base58'
+        ]
+        read_only_fields = fields
+
+
+class NodeSerializer(serializers.ModelSerializer):
+    """Serializer for node model"""
+
+    class Meta:
+        model = models.Node
+        fields = [
+            'name', 'url', 'owner'
+        ]
+        read_only_fields = fields
+
+class PostSerializer(serializers.ModelSerializer):
+    """Serializer for post model"""
+
+    class Meta:
+        model = models.Post
+        fields = [
+            'post_hash', 'impressions_total', 'likes_total',
+            'diamonds_total', 'comments_total', 'reposts_total',
+            'creator', 'node'
+        ]
+        read_only_fields = [
+            'impressions_total', 'likes_total', 'diamonds_total',
+            'comments_total', 'reposts_total',
         ]

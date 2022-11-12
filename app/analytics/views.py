@@ -15,7 +15,10 @@ from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
 
 from .models import (
-    Impression
+    Impression,
+    Post,
+    Node,
+    Creator,
 )
 from analytics import serializers
 
@@ -41,13 +44,6 @@ class ImpressionViewSet(viewsets.ModelViewSet):
         """Convert a list of strings to integers"""
         return [int(str_id) for str_id in qs.split(',')]
 
-    def get_queryset(self):
-        """Retrieve impressions for a post"""
-        queryset = self.queryset
-
-        return queryset.filter(
-            user=self.request.user
-            ).order_by('-id').distinct()
 
     def get_serializer_class(self):
         """Return the serializer class for request"""
@@ -55,3 +51,41 @@ class ImpressionViewSet(viewsets.ModelViewSet):
             return serializers.ImpressionSerializer
 
         return self.serializer_class
+
+
+@extend_schema_view(
+    list=extend_schema(
+        parameters=[
+            OpenApiParameter(
+                'creator',
+                OpenApiTypes.INT, enum=[0, 1],
+                description='Filter by creator',
+            )
+        ]
+    )
+)
+class PostViewSet(viewsets.ModelViewSet):
+    """View to manage post APIs"""
+    serializer_class = serializers.PostSerializer
+    queryset = Post.objects.all()
+    authentication_classes = [TokenAuthentication, ]
+    permission_classes = [IsAuthenticated, ]
+
+
+
+@extend_schema_view()
+class NodeViewSet(viewsets.ModelViewSet):
+    """View to manage node APIs"""
+    serializer_class = serializers.NodeSerializer
+    queryset = Node.objects.all()
+    authentication_classes = [TokenAuthentication, ]
+    permission_classes = [IsAuthenticated, ]
+
+
+@extend_schema_view()
+class CreatorViewSet(viewsets.ModelViewSet):
+    """View to manage creator APIs"""
+    serializer_class = serializers.CreatorSerializer
+    queryset = Creator.objects.all()
+    authentication_classes = [TokenAuthentication, ]
+    permission_classes = [IsAuthenticated, ]
