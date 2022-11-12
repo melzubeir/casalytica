@@ -1,6 +1,6 @@
 # Casalytica
 
-[![npm version](https://img.shields.io/npm/v/casalytica.svg)](https://www.npmjs.com/package/Casalytica)
+[![npm version](https://img.shields.io/badge/npm-casalytica-blueviolet)](https://www.casalytica.com/api/docs/)
 
 An SDK to interact with Casalytica APIs
 
@@ -14,7 +14,6 @@ An SDK to interact with Casalytica APIs
 
 ```sh
 yarn add casalytica
-```
 ```
 
 or
