@@ -11,6 +11,7 @@ from config import settings
 from django.utils.translation import gettext_lazy as _
 from django.contrib.gis.geoip2 import GeoIP2
 from user_agents import parse
+from deso import Posts
 
 
 DESO_APP_CHOICES = [
@@ -60,6 +61,7 @@ class User(AbstractBaseUser, PermissionsMixin):
 class Post(models.Model):
     """Model for posts"""
 
+
     post_hash = models.CharField(max_length=255)
     creator = models.CharField(max_length=255)
     impressions_total = models.IntegerField(default=0)
@@ -67,6 +69,23 @@ class Post(models.Model):
     diamonds_total = models.IntegerField(default=0)
     comments_total = models.IntegerField(default=0)
     reposts_total = models.IntegerField(default=0)
+
+    def save(self, *args, **kwargs):
+        """Override save method to update post data from deso"""
+        desoPost = Posts()
+
+        # this is a very slow call and needs to be refactored
+        sPost = desoPost.getSinglePost(self.post_hash).json()
+
+        if sPost['PostFound']:
+            self.likes_total = sPost['PostFound']['LikeCount']
+            self.diamonds_total = sPost['PostFound']['DiamondCount']
+            self.comments_total = sPost['PostFound']['CommentCount']
+            self.reposts_total = sPost['PostFound']['RepostCount']
+        super().save(*args, **kwargs)
+
+    def __str__(self):
+        return self.post_hash
 
 
 class Impression(models.Model):
