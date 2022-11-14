@@ -1,6 +1,6 @@
 # Casalytica
 
-[![npm version](https://img.shields.io/badge/npm-casalytica-blueviolet)](https://www.casalytica.com/api/docs/)
+[![casalytica api](https://img.shields.io/badge/casalytica-api-blueviolet)](https://www.casalytica.com/api/docs/)
 
 An SDK to interact with Casalytica APIs
 

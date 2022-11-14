@@ -1,5 +1,8 @@
 # casalaytica - analytics for on-chain content
 
+[![casalytica api](https://img.shields.io/badge/casalytica-api-blueviolet)](https://www.casalytica.com/api/docs/)
+
+
 an application-layer API to track on-chain content impressions and views
 
 ---
