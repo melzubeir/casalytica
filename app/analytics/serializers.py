@@ -107,9 +107,13 @@ class ImpressionSerializer(serializers.ModelSerializer):
                 # this is a very slow call and needs to be refactored
                 sPost = desoPost.getSinglePost(post['post_hash']).json()
                 if 'PostFound' in sPost:
+                    likes_total = sPost['PostFound']['LikeCount']
+                    diamonds_total = sPost['PostFound']['DiamondCount']
+                    comments_total = sPost['PostFound']['CommentCount']
+                    reposts_total = sPost['PostFound']['RepostCount']
                     c = [sPost['PostFound']['ProfileEntryResponse']['Username'],
-                        sPost['PostFound']['ProfileEntryResponse']['PublicKeyBase58Check']
-                        ]
+                         sPost['PostFound']['ProfileEntryResponse']['PublicKeyBase58Check']
+                         ]
                     if 'Node' in sPost['PostFound']['PostExtraData']:
                         n = sPost['PostFound']['PostExtraData']['Node']
             except:
@@ -121,8 +125,12 @@ class ImpressionSerializer(serializers.ModelSerializer):
 
             post_obj, created = models.Post.objects.get_or_create(
                 post_hash=post['post_hash'],
-                creator = creator,
-                node = node)
+                likes_total = likes_total,
+                diamonds_total = diamonds_total,
+                comments_total = comments_total,
+                reposts_total = reposts_total,
+                creator=creator,
+                node=node)
             post_obj.impressions_total = F('impressions_total') + 1
             post_obj.save()
             impression.posts.add(post_obj)
@@ -177,7 +185,6 @@ class ImpressionSerializer(serializers.ModelSerializer):
         # maybe spend some time validating data? lol
         return impression
 
-
     def update(self, instance, validated_data):
         """update impression"""
 
@@ -207,6 +214,7 @@ class ImpressionDetailSerializer(ImpressionSerializer):
             'city', 'country', 'latitude', 'longitude',
             'tz',
         ]
+
 
 class CreatorSerializer(serializers.ModelSerializer):
     """Serializer for creator model"""
