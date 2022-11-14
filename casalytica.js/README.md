@@ -2,6 +2,10 @@
 
 [![casalytica api](https://img.shields.io/badge/casalytica-api-blueviolet)](https://www.casalytica.com/api/docs/)
 
+<p align="center">
+<img src="https://raw.githubusercontent.com/melzubeir/casalytica/master/app/static/images/casalytica.png" width="480" height="480" >
+</p>
+
 An SDK to interact with Casalytica APIs
 
 ---
@@ -28,6 +32,7 @@ See full usage in code docs: [documentation](https://github.com/melzubeir/casaly
 
 ### Casalytica
 
+
 #### Put an impression
 
 ```js
@@ -36,7 +41,14 @@ import { CasalyticaClient } from "Casalytica";
 const casalytica = new CasalyticaClient();
 
 const impression = {
-  "post_hash": "3151efdf499e5220241b48040fc9500970f4aaa6f512daa0b88be7b3f200c339",
+  "posts": [
+    {
+      "post_hash": "3151efdf499e5220241b48040fc9500970f4aaa6f512daa0b88be7b3f200c339",
+    },
+    {
+      "post_hash": "14fafdebff6610c2b0c2cca2b5ec901949e1f98c5bccbb72450b01cfd3c35228",
+    }
+  ]
   "source_app": 1,
   "remote_addr": "4.2.2.1",
   "referer": "https://www.google.com/",
