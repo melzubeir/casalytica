@@ -80,10 +80,22 @@ docker-compose -f docker-compose-prod.yml up --build -d
 we populate the database with the currently known nodes and their creators, which were grabbed from
 the deso appstate
 
-- load data fixtures
+
+- copy the data fixtures temporarily to the container
 
 ```sh
 cp docs/data_fixtures.json app/
+```
+
+- for production
+
+```sh
+docker-compose -f docker-compose-prod-yml exec app python manage.py loaddata data_fixtures.json
+```
+
+- for development
+
+```sh
 docker-compose exec app python manage.py loaddata data_fixtures.json
 ```
 
