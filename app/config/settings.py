@@ -4,6 +4,7 @@ casalytica settings for config project.
 
 from os import environ, path
 from pathlib import Path
+import logging
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -33,11 +34,44 @@ if ENVIRONMENT == 'production':
     CSRF_COOKIE_SECURE = True
     SECURE_PROXY_SSL_HEADER = ('X-Forwarded-Proto', 'https')
 
+
+LOGGING = {
+    'version': 1,                       # the dictConfig format version
+    'disable_existing_loggers': False,  # retain the default loggers
+    'formatters': {
+    'console': {
+            'format': '%(name)-12s %(levelname)-8s %(message)s'
+        },
+        'file': {
+            'format': '%(asctime)s %(name)-12s %(levelname)-8s %(message)s'
+        }
+    },
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+            'formatter': 'console'
+        },
+        'file': {
+            'level': 'DEBUG',
+            'class': 'logging.FileHandler',
+            'formatter': 'file',
+            'filename': 'general.log'
+        }
+    },
+    'loggers': {
+        '': {
+            'level': 'DEBUG',
+            'handlers': ['console', 'file']
+        }
+    }
+}
+
+
+logger = logging.getLogger(__name__)
+
 if DEBUG:
-    import logging
     ALLOWED_HOSTS = ['*']
     TEMPLATE_DEBUG = True
-    logger = logging.getLogger(__name__)
 else:
     ALLOWED_HOSTS = []
     ALLOWED_HOSTS.extend(
@@ -47,27 +81,7 @@ else:
         )
     )
 
-LOGGING = {
-    'version': 1,                       # the dictConfig format version
-    'disable_existing_loggers': False,  # retain the default loggers
-    'formatters': {
-        'verbose': {
-            'format': '{name} {levelname} {asctime} {module} {process:d} {thread:d} {message}',
-            'style': '{',
-        },
-        'simple': {
-            'format': '{levelname} {message}',
-            'style': '{',
-        },
-    },
-    'handlers': {
-        'file': {
-            'class': 'logging.FileHandler',
-            'filename': 'general.log',
-            'formatter': 'verbose',
-        },
-    }
-}
+
 
 # Application definition
 
