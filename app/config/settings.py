@@ -2,11 +2,8 @@
 casalytica settings for config project.
 """
 
+from os import environ, path
 from pathlib import Path
-from os import (
-    environ,
-    path
-)
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -37,8 +34,10 @@ if ENVIRONMENT == 'production':
     SECURE_PROXY_SSL_HEADER = ('X-Forwarded-Proto', 'https')
 
 if DEBUG:
+    import logging
     ALLOWED_HOSTS = ['*']
     TEMPLATE_DEBUG = True
+    logger = logging.getLogger(__name__)
 else:
     ALLOWED_HOSTS = []
     ALLOWED_HOSTS.extend(
@@ -48,6 +47,27 @@ else:
         )
     )
 
+LOGGING = {
+    'version': 1,                       # the dictConfig format version
+    'disable_existing_loggers': False,  # retain the default loggers
+    'formatters': {
+        'verbose': {
+            'format': '{name} {levelname} {asctime} {module} {process:d} {thread:d} {message}',
+            'style': '{',
+        },
+        'simple': {
+            'format': '{levelname} {message}',
+            'style': '{',
+        },
+    },
+    'handlers': {
+        'file': {
+            'class': 'logging.FileHandler',
+            'filename': 'general.log',
+            'formatter': 'verbose',
+        },
+    }
+}
 
 # Application definition
 
