@@ -6,7 +6,7 @@ from django.contrib import admin
 
 class ImpressionAdmin(admin.ModelAdmin):
     """Define the admin pages for impressions"""
-    list_display = ("created", "post_hash", "referer", )
+    list_display = ("created", "remote_addr", "referer", )
 
 
 class PostAdmin(admin.ModelAdmin):
