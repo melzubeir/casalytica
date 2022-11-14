@@ -7,7 +7,8 @@ from django.db.models import F
 from config.settings import (
     logger,
     nodeURL,
-    casalyticaPublicKey
+    casalyticaPublicKey,
+    SKIP_DESO
 )
 from django.contrib.gis.geoip2 import GeoIP2
 from user_agents import parse
@@ -105,10 +106,24 @@ class ImpressionSerializer(serializers.ModelSerializer):
         node_obj.save()
         return node_obj
 
-    def _get_post_data(self, post_hash):
+    def _get_post_data(self, post_hash, skip_deso=False):
         """get post data from deso"""
+        p = {
+            'post_hash': post_hash,
+            'likes_total': 0,
+            'diamonds_total': 0,
+            'comments_total': 0,
+            'reposts_total': 0,
+            'creator': {
+                'username': 'unknown',
+                'key': 'unknown'
+            },
+            'node': 1
+        }
+        if skip_deso:
+            return p
+
         desoPost = Posts(nodeURL=nodeURL)
-        p = {}
 
         try:
             sPost = desoPost.getSinglePost(postHashHex=post_hash,
@@ -137,14 +152,14 @@ class ImpressionSerializer(serializers.ModelSerializer):
                 }
         except:
             logger.error('error getting post from deso')
-            return False
+
         logger.info('post data from deso: %s', p)
         return p
 
     def _get_or_create_posts(self, posts):
         """handle getting or create posts for impression"""
         for post in posts:
-            post_data = self._get_post_data(post['post_hash'])
+            post_data = self._get_post_data(post['post_hash'], skip_deso=SKIP_DESO)
             if post_data:
                 creator = self._get_or_create_creator(
                     post_data['creator'])
@@ -172,8 +187,11 @@ class ImpressionSerializer(serializers.ModelSerializer):
         try:
             loc = g.city(ip)
         except:
+            logger.critical(
+                'ImpressionSerializer.get_location(): error getting location from ip: ' + loc)
             return False
 
+        logger.info('ImpressionSerializer.get_location(): location: %s', loc)
         return loc
 
     def get_source_app(self):
@@ -193,26 +211,25 @@ class ImpressionSerializer(serializers.ModelSerializer):
         self.impression.referer = validated_data.pop('referer', None)
         self.impression.source_app = validated_data.pop('source_app', None)
 
-        if self._get_or_create_posts(posts):
-            location = self.get_location(self.impression.remote_addr)
-            if location:
-                self.impression.city = location['city'] if True else 'unknown'
-                self.impression.country = location['country_name'] if True else 'unknown'
-                self.impression.latitude = location['latitude'] if True else 0
-                self.impression.longitude = location['longitude'] if True else 0
-                self.impression.tz = location['time_zone'] if True else 'unknown'
+        self._get_or_create_posts(posts)
+        location = self.get_location(self.impression.remote_addr)
+        if location:
+            self.impression.city = location['city'] if True else 'unknown'
+            self.impression.country = location['country_name'] if True else 'unknown'
+            self.impression.latitude = location['latitude'] if True else 0
+            self.impression.longitude = location['longitude'] if True else 0
+            self.impression.tz = location['time_zone'] if True else 'unknown'
 
-            if self.impression.user_agent:
-                ua = parse(self.impression.user_agent)
-                self.impression.device_brand = ua.device.brand
-                self.impression.device_family = ua.device.family
-                self.impression.device_model = ua.device.model
-                self.impression.os_family = ua.os.family
-                self.impression.os_version = ua.os.version_string
-                self.impression.browser_family = ua.browser.family
-                self.impression.browser_version = ua.browser.version_string
-        else:
-            return False
+        if self.impression.user_agent:
+            ua = parse(self.impression.user_agent)
+            self.impression.device_brand = ua.device.brand
+            self.impression.device_family = ua.device.family
+            self.impression.device_model = ua.device.model
+            self.impression.os_family = ua.os.family
+            self.impression.os_version = ua.os.version_string
+            self.impression.browser_family = ua.browser.family
+            self.impression.browser_version = ua.browser.version_string
+
         self.impression.save()
         return self.impression
 

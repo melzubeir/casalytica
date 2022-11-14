@@ -156,9 +156,10 @@ DATABASES = {
 }
 
 
-# DeSo node
+# DeSo configs
 nodeURL = environ.get('NODE_URL', 'https://node.deso.org/api/v0/')
 casalyticaPublicKey='BC1YLiy1Ny1btpBkaNHBaUD5D9xX8PhdgeToPn3Fq95RhCMYQVW1Anw'
+SKIP_DESO=bool(int(environ.get('SKIP_DESO', 1)))
 
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
