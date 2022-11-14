@@ -156,6 +156,9 @@ DATABASES = {
 }
 
 
+# DeSo node
+nodeURL = environ.get('NODE_URL', 'https://node.deso.org/api/v0/')
+
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
 
