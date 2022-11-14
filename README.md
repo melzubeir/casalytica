@@ -1,80 +1,64 @@
-# casalaytica - analytics for on-chain content
+# Casalytica
 
 [![casalytica api](https://img.shields.io/badge/casalytica-api-blueviolet)](https://www.casalytica.com/api/docs/)
 
+<p align="center">
+<img src="https://raw.githubusercontent.com/melzubeir/casalytica/master/app/static/images/casalytica.png" width="480" height="480" >
+</p>
 
-an application-layer API to track on-chain content impressions and views
+An SDK to interact with Casalytica APIs
 
 ---
 
-decentralized social media is great, until you want to know how many impressions your post has. your content could be viewed on any one of the many apps serving deso content. so what to do?
+**WARNING:** This is still a highly experimental proejct. Use at your own risk.
 
-imagine you're a node operator and want to get paid for promoting certain feeds. how would you account for it?
+---
 
-an applicaiton-layer off-chain api to track impressions being collected from all voluntarily participating apps would allow us to pool all the data and then pass it back to the participants as well.
-
-for example, if i posted on entre and data is being collected from entre, desofy and diamondapp.. casalytica would then return to each participating app the totals of the post as well.
-
-deso was made for creators, and creators deserve better analytics.
-
-
-## installation
-
-casalytica is fully dockerized and can be run with docker-compose. the production server is run behind a
-nginx reverse proxy server.
-
-### tech stack
-
-- django 4.1
-- python 3.9
-- postgresql 14
-- nginx
-- docker
-
-### aws ec2 setup
-
-settings up an aws ec2 instance (amazon linux 2)
-
-- install git
-
-```bash
-sudo yum install git -y
-```
-
-- install docker and dependencies
-
-```bash
-sudo amazon-linux-extras install docker -y
-sudo systemctl enable docker.service
-sudo systemctl start docker.service
-sudo usermod -aG docker ec2-user
-sudo curl -L "https://github.com/docker/compose/releases/download/1.29.1/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
-sudo chmod +x /usr/local/bin/docker-compose
-```
-
-### build
-
-- for development
+## Installation
 
 ```sh
-docker-compose up -d --build
+yarn add casalytica
 ```
 
-- for production
+or
 
 ```sh
-docker-compose -f docker-compose-prod.yml up --build -d
+npm i --save casalytica
 ```
 
-## usage
+## Usage
 
-see full usage in code docs: [documentation](https://www.casalytica.com/api/docs/)
+See full usage in code docs: [documentation](https://github.com/melzubeir/casalytica#readme)
 
-
-### casalytica
-
+### Casalytica
 
 
-## license
+#### Put an impression
 
-bsd-3-clause license
+```js
+import { CasalyticaClient } from "Casalytica";
+
+const casalytica = new CasalyticaClient();
+
+const impression = {
+  "posts": [
+    {
+      "post_hash": "3151efdf499e5220241b48040fc9500970f4aaa6f512daa0b88be7b3f200c339",
+    },
+    {
+      "post_hash": "14fafdebff6610c2b0c2cca2b5ec901949e1f98c5bccbb72450b01cfd3c35228",
+    }
+  "source_app": 1,
+  "remote_addr": "4.2.2.1",
+  "referer": "https://www.google.com/",
+  "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.102 Safari/537.36"
+};
+
+casalytica.postImpression(impression).then((response) => {
+  console.log(response);
+}
+).catch((error) => {
+  console.log(error);
+}
+);
+```
