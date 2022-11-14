@@ -59,7 +59,7 @@ sudo chmod +x /usr/local/bin/docker-compose
 
 - clone the repo
 
-```bash
+```sh
 git clone git@github.com:melzubeir/casalytica.git
 ```
 
@@ -73,6 +73,18 @@ docker-compose up -d --build
 
 ```sh
 docker-compose -f docker-compose-prod.yml up --build -d
+```
+
+## data fixtures
+
+we populate the database with the currently known nodes and their creators, which were grabbed from
+the deso appstate
+
+- load data fixtures
+
+```sh
+cp docs/data_fixtures.json app/
+docker-compose exec app python manage.py loaddata data_fixtures.json
 ```
 
 ## usage
