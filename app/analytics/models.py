@@ -49,7 +49,7 @@ class Node(models.Model):
 class Post(models.Model):
     """Model for posts"""
 
-    post_hash = models.CharField(max_length=255)
+    post_hash = models.CharField(max_length=255, primary_key=True)
     impressions_total = models.IntegerField(default=0)
     likes_total = models.IntegerField(default=0)
     diamonds_total = models.IntegerField(default=0)
