@@ -6,7 +6,8 @@ from analytics import models
 from django.db.models import F
 from config.settings import (
     logger,
-    nodeURL
+    nodeURL,
+    casalyticaPublicKey
 )
 from django.contrib.gis.geoip2 import GeoIP2
 from user_agents import parse
@@ -44,7 +45,6 @@ class PostSerializer(serializers.ModelSerializer):
         node_obj.save()
         return node_obj
 
-
     def create(self, post_data):
         """create post"""
         creator = self._get_or_create_creator(
@@ -57,14 +57,12 @@ class PostSerializer(serializers.ModelSerializer):
         post_obj.diamonds_total = post_data['diamonds_total']
         post_obj.comments_total = post_data['comments_total']
         post_obj.reposts_total = post_data['reposts_total']
-        post_obj.creator=creator
-        post_obj.node=node
+        post_obj.creator = creator
+        post_obj.node = node
         post_obj.impressions_total = F('impressions_total') + 1
 
         logger.info('PostSerializer.create() post_obj: %s', post_obj)
         post_obj.save()
-
-
 
 
 class ImpressionSerializer(serializers.ModelSerializer):
@@ -113,7 +111,8 @@ class ImpressionSerializer(serializers.ModelSerializer):
         p = {}
 
         try:
-            sPost = desoPost.getSinglePost(post_hash).json()
+            sPost = desoPost.getSinglePost(postHashHex=post_hash,
+                                           readerPublicKey=casalyticaPublicKey).json()
         except:
             logger.critical("Error getting post data from deso")
             return p
@@ -134,7 +133,7 @@ class ImpressionSerializer(serializers.ModelSerializer):
                         'username': sPost['PostFound']['ProfileEntryResponse']['Username'],
                         'key': sPost['PostFound']['ProfileEntryResponse']['PublicKeyBase58Check']
                     },
-                    'node' : n
+                    'node': n
                 }
         except:
             logger.error('error getting post from deso')
@@ -156,11 +155,12 @@ class ImpressionSerializer(serializers.ModelSerializer):
                 post_obj.diamonds_total = post_data['diamonds_total']
                 post_obj.comments_total = post_data['comments_total']
                 post_obj.reposts_total = post_data['reposts_total']
-                post_obj.creator=creator
-                post_obj.node=node
+                post_obj.creator = creator
+                post_obj.node = node
                 post_obj.impressions_total = F('impressions_total') + 1
                 post_obj.save()
-                logger.info('ImpressionSerializer._get_or_create_posts() post_obj: %s', post_obj)
+                logger.info(
+                    'ImpressionSerializer._get_or_create_posts() post_obj: %s', post_obj)
                 self.impression.posts.add(post_obj)
             else:
                 return False
@@ -192,7 +192,6 @@ class ImpressionSerializer(serializers.ModelSerializer):
         self.impression.user_agent = validated_data.pop('user_agent', None)
         self.impression.referer = validated_data.pop('referer', None)
         self.impression.source_app = validated_data.pop('source_app', None)
-
 
         if self._get_or_create_posts(posts):
             location = self.get_location(self.impression.remote_addr)
