@@ -117,8 +117,8 @@ MIDDLEWARE = [
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
-    "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "debug_toolbar.middleware.DebugToolbarMiddleware",
+    "django.middleware.clickjacking.XFrameOptionsMiddleware"
 ]
 
 ROOT_URLCONF = "config.urls"
@@ -199,7 +199,7 @@ STATIC_URL = 'static/'
 MEDIA_URL = 'media/'
 MEDIA_ROOT = '/vol/web/media'
 STATIC_ROOT = '/vol/web/static'
-STATICFILES_DIRS = (path.join(BASE_DIR, ''),)
+STATICFILES_DIRS = (path.join(BASE_DIR, 'static'),)
 
 # geip2 path to database
 GEOIP_PATH = environ.get('GEOIP_PATH')
