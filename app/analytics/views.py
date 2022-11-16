@@ -63,6 +63,7 @@ class PostViewSet(viewsets.ModelViewSet):
     queryset = Post.objects.all()
     authentication_classes = [TokenAuthentication, ]
     permission_classes = [IsAuthenticated, ]
+    lookup_field = 'post_hash'
 
 
 @extend_schema_view()
