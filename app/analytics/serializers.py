@@ -7,11 +7,8 @@ import logging
 import ipaddress
 from django.db.models import F
 from django.utils.translation import gettext_lazy as _
-from config import settings
 from django.contrib.gis.geoip2 import GeoIP2
 from user_agents import parse
-
-from deso import Posts
 
 
 logger = logging.getLogger(__name__)
@@ -32,7 +29,6 @@ class PostSerializer(serializers.ModelSerializer):
             'comments_total', 'reposts_total',
         ]
 
-
     def _get_or_create_creator(self, username, public_key_base58):
         """get or create creator"""
         logger.info('PostSerializer._get_or_create_creator() ----> ENTRY <----')
@@ -51,14 +47,11 @@ class PostSerializer(serializers.ModelSerializer):
         node_obj.save()
         return node_obj
 
-
     def update(self, post_data):
         """update post"""
         logger.info('PostSerializer.update() ----> ENTRY <----')
         post_obj = models.Post.objects.get(post_hash=post_data['post_hash'])
         post_obj.impressions_total = F('impressions_total') + 1
-
-
 
     def create(self, post_data):
         """create post"""
@@ -66,7 +59,6 @@ class PostSerializer(serializers.ModelSerializer):
         creator = self._get_or_create_creator(
             post_data['creator'][0], post_data['creator'][1])
         node = self._get_or_create_node(post_data['node'])
-
 
         post_obj, created = models.Post.objects.get_or_create(
             post_hash=post_data['post_hash'], creator=creator, node=node)
@@ -94,7 +86,6 @@ class ImpressionSerializer(serializers.Serializer):
         ]
         read_only_fields = ['created']
 
-
     def get_fields(self):
         """get fields"""
         fields = super().get_fields()
@@ -104,9 +95,8 @@ class ImpressionSerializer(serializers.Serializer):
         fields['remote_addr'] = serializers.IPAddressField()
         fields['user_agent'] = serializers.CharField()
         fields['user'] = serializers.CharField(required=True)
-
+        fields['referer'] = serializers.CharField(required=False)
         return fields
-
 
     def _set_location(self, ip, instance):
         """set location metadata from ip address"""
@@ -143,7 +133,8 @@ class ImpressionSerializer(serializers.Serializer):
 
     def to_internal_value(self, data):
         """convert data to internal value"""
-        logger.info('ImpressionSerializer.to_internal_value() ----> ENTRY <----\n\t\tdata: %s', data)
+        logger.info(
+            'ImpressionSerializer.to_internal_value() ----> ENTRY <----\n\t\tdata: %s', data)
         auth_user = self.context['request'].user
 
         values = {
@@ -155,12 +146,14 @@ class ImpressionSerializer(serializers.Serializer):
             'referer': data.get('referer', None),
             'user': auth_user
         }
-        logger.info('ImpressionSerializer.to_internal_value() values: %s', values)
+        logger.info(
+            'ImpressionSerializer.to_internal_value() values: %s', values)
         return values
 
     def to_representation(self, instance):
         """convert to representation"""
-        logger.info('ImpressionSerializer.to_representation() ----> ENTRY <----')
+        logger.info(
+            'ImpressionSerializer.to_representation() ----> ENTRY <----')
         return {
             'created': instance.created,
             'remote_addr': instance.remote_addr,
@@ -183,7 +176,7 @@ class ImpressionSerializer(serializers.Serializer):
             user=validated_data['user'],
         )
 
-        posts = self._get_or_create_posts(validated_data['posts'])
+        self._get_or_create_posts(validated_data['posts'])
 
         self._set_location(validated_data['remote_addr'], instance)
         self._set_agent(validated_data['user_agent'], instance)
@@ -193,7 +186,8 @@ class ImpressionSerializer(serializers.Serializer):
 
     def validate_remote_addr(self, remote_addr):
         """validate remote_addr"""
-        logger.info('ImpressionSerializer.validate_remote_addr() ----> ENTRY <----')
+        logger.info(
+            'ImpressionSerializer.validate_remote_addr() ----> ENTRY <----')
         if remote_addr is None:
             raise serializers.ValidationError(_('remote_addr is required'))
         if (ipaddress.ip_address(remote_addr).is_private or
@@ -201,91 +195,50 @@ class ImpressionSerializer(serializers.Serializer):
             raise serializers.ValidationError(_('remote_addr is invalid'))
         return remote_addr
 
-    def _get_post_data(self, post_hash, skip_deso=True):
-        """get post data from deso"""
-        logger.info('ImpressionSerializer._get_post_data() ----> ENTRY <----')
-        p = {
-            'post_hash': post_hash,
-            'likes_total': 0,
-            'diamonds_total': 0,
-            'comments_total': 0,
-            'reposts_total': 0,
-            'creator': {
-                'username': 'unknown',
-                'key': 'unknown'
-            },
-            'node': 1
-        }
-        if skip_deso:
-            logger.info('ImpressionSerializer._get_post_data() skip_deso True p: %s', p)
-            return p
-
-        desoPost = Posts(nodeURL=settings.nodeURL)
-
-        try:
-            sPost = desoPost.getSinglePost(postHashHex=post_hash,
-                                           readerPublicKey=settings.casalyticaPublicKey).json()
-        except:
-            logger.critical("Error getting post data from deso")
-            return p
-
-        try:
-            if 'PostFound' in sPost:
-                if 'Node' in sPost['PostFound']['PostExtraData']:
-                    n = sPost['PostFound']['PostExtraData']['Node']
-                else:
-                    n = 1
-                p = {
-                    'post_hash': post_hash,
-                    'likes_total': sPost['PostFound']['LikeCount'],
-                    'diamonds_total': sPost['PostFound']['DiamondCount'],
-                    'comments_total': sPost['PostFound']['CommentCount'],
-                    'reposts_total': sPost['PostFound']['RepostCount'],
-                    'creator': {
-                        'username': sPost['PostFound']['ProfileEntryResponse']['Username'],
-                        'key': sPost['PostFound']['ProfileEntryResponse']['PublicKeyBase58Check']
-                    },
-                    'node': n
-                }
-        except:
-            logger.error('error getting post from deso')
-
-        logger.info('post data from deso: %s', p)
-        return p
-
     def _get_or_create_posts(self, posts):
         """handle getting or create posts for impression"""
 
-        logger.info('ImpressionViewset._get_or_create_posts() ----> ENTRY <----')
+        logger.info(
+            'ImpressionViewset._get_or_create_posts() ----> ENTRY <----')
         post_objects = []
         for post in posts:
-            logger.info('ImpressionViewset._get_or_create_posts() - posts loop top / post: %s', post)
-            post_data = self._get_post_data(post['post_hash'])
-            if post_data:
-                logger.info('ImpressionViewset._get_or_create_posts() post_data True - post_data: %s', post_data)
-                creator = self._get_or_create_creator(
-                    post_data['creator'])
-                node = self._get_or_create_node(post_data['node'])
-                post_obj, created = models.Post.objects.get_or_create(
-                    post_hash=post['post_hash'])
-                if not created:
-                    logger.info('ImpressionViewset._get_or_create_posts() - Post exists NOT CREATED: %s', post_obj)
-                post_obj.creator = creator
-                post_obj.node = node
-                post_obj.impressions_total = F('impressions_total') + 1
-                post_obj.save()
-                post_objects.append(post_obj)
+            logger.info(
+                'ImpressionViewset._get_or_create_posts() - posts loop top / post: %s', post)
+            post_data = {
+                'post_hash': post['post_hash'],
+                'likes_total': 0,
+                'diamonds_total': 0,
+                'comments_total': 0,
+                'reposts_total': 0,
+                'creator': {
+                    'username': 'unknown',
+                    'key': 'unknown'
+                },
+                'node': 1
+            }
+            creator = self._get_or_create_creator(
+                post_data['creator'])
+            node = self._get_or_create_node(post_data['node'])
+            post_obj, created = models.Post.objects.get_or_create(
+                post_hash=post['post_hash'])
+            if not created:
                 logger.info(
-                    'ImpressionViewset._get_or_create_posts() - posts loop bottom - post_obj: %s', post_obj)
-            else:
-                logger.warning('ImpressionViewset._get_or_create_posts() post_data False - post_data: %s', post_data)
-                return False
+                    'ImpressionViewset._get_or_create_posts() - Post exists NOT CREATED: %s', post_obj)
+            post_obj.creator = creator
+            post_obj.node = node
+            post_obj.impressions_total = F('impressions_total') + 1
+            post_obj.save()
+            post_objects.append(post_obj)
+            logger.info(
+                'ImpressionViewset._get_or_create_posts() - posts loop bottom - post_obj: %s', post_obj)
+
         return post_objects
 
     def _get_or_create_creator(self, creator):
         """get or create creator"""
 
-        logger.info('ImpressionViewset._get_or_create_creator() ----> ENTRY <----')
+        logger.info(
+            'ImpressionViewset._get_or_create_creator() ----> ENTRY <----')
         creator_obj, created = models.Creator.objects.get_or_create(
             username=creator['username'],
             public_key_base58=creator['key'])
@@ -300,23 +253,6 @@ class ImpressionSerializer(serializers.Serializer):
             id=node_id)
         node_obj.save()
         return node_obj
-
-    def validate_posts(self, posts):
-        """validate posts"""
-        logger.info('ImpressionSerializer.validate_posts() ----> ENTRY <----\n\t\tposts: %s', posts)
-        for post in posts:
-            post_hash = post['post_hash']
-            post_data = self._get_post_data(post_hash, skip_deso=settings.SKIP_DESO)
-            post_serializer = PostSerializer(data=post_data)
-            if post_serializer.is_valid():
-                post_serializer.save()
-            else:
-                logger.error('ImpressionSerializer.validate_posts() - post_serializer is not valid: %s', post_serializer.errors)
-        return posts
-
-    def get_source_app(self):
-        return models.Impression.DESO_APP_CHOICES[self.source_app - 1][1]
-
 
 
 class ImpressionDetailSerializer(ImpressionSerializer):

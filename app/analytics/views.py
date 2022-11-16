@@ -82,3 +82,4 @@ class CreatorViewSet(viewsets.ModelViewSet):
     queryset = Creator.objects.all()
     authentication_classes = [TokenAuthentication, ]
     permission_classes = [IsAuthenticated, ]
+    lookup_field = 'username'
