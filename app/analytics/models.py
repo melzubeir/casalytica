@@ -1,11 +1,14 @@
 from django.db import models
+import logging
+import json
 from config import settings
 from django.utils.translation import gettext_lazy as _
 from django.contrib.gis.geoip2 import GeoIP2
 from user_agents import parse
+from config import settings
 
-from deso import Posts
 
+logger = logging.getLogger(__name__)
 
 DESO_APP_CHOICES = [
     (0, ('Undefined')),
@@ -49,7 +52,10 @@ class Node(models.Model):
 class Post(models.Model):
     """Model for posts"""
 
-    post_hash = models.CharField(max_length=255)
+
+    post_hash = models.SlugField(max_length=64,
+                                 validators=[settings.HEXA_VALID],
+                                 unique=True)
     impressions_total = models.IntegerField(default=0)
     likes_total = models.IntegerField(default=0)
     diamonds_total = models.IntegerField(default=0)
@@ -58,13 +64,21 @@ class Post(models.Model):
     node = models.ForeignKey(
         Node,
         on_delete=models.CASCADE,
-        blank=True
+        blank=True,
+        null=True
+
     )
     creator = models.ForeignKey(
         Creator,
         on_delete=models.CASCADE,
-        blank=True
+        blank=True,
+        null=True
     )
+
+    def toJSON(self):
+        return json.dumps(self, default=lambda o: o.__dict__,
+            sort_keys=True, indent=4)
+
 
     def __str__(self):
         return self.post_hash

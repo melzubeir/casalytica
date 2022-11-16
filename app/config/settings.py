@@ -5,6 +5,9 @@ casalytica settings for config project.
 from os import environ, path
 from pathlib import Path
 import logging
+import re
+from django.core.validators import RegexValidator
+from django.utils.translation import gettext_lazy as _
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -159,7 +162,7 @@ DATABASES = {
 # DeSo configs
 nodeURL = environ.get('NODE_URL', 'https://node.deso.org/api/v0/')
 casalyticaPublicKey='BC1YLiy1Ny1btpBkaNHBaUD5D9xX8PhdgeToPn3Fq95RhCMYQVW1Anw'
-SKIP_DESO=bool(int(environ.get('SKIP_DESO', 1)))
+SKIP_DESO=bool(int(environ.get('SKIP_DESO', 0)))
 
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
@@ -178,6 +181,11 @@ AUTH_PASSWORD_VALIDATORS = [
         "NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",
     },
 ]
+
+
+# Validators
+HEXA_RE = re.compile('^[A-Fa-f0-9]+$')
+HEXA_VALID = RegexValidator(HEXA_RE, _('Enter a valid hex number '), 'invalid')
 
 
 # Internationalization
