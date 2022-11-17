@@ -41,7 +41,7 @@ function Header(props) {
         <DesoLogin
           accessLevel={accessLevel}
           JWT={JWT}
-          buttonText={publicKey}
+          buttonText={publicKey ? publicKey.substring(0, 10) + '...' : 'Login'}
         />
       </Toolbar>
       <Toolbar

@@ -18,6 +18,9 @@ const authSlice = createSlice({
     logout(state) {
       state.isAuthenticated = false;
     },
+    setProfile(state, action) {
+      state.profile = action.payload;
+    }
   },
 });
 
