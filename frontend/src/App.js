@@ -3,15 +3,12 @@ import { useEffect } from 'react';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import Container from '@mui/material/Container';
-import axios from 'axios';
-
+import DesoApi from './libs/DesoApi'
 import Header from './components/Header';
 import Footer from './components/Footer';
 
 import { authActions } from './store/auth';
 
-
-const baseURL = 'https://node.deso.org/api/v0';
 
 const sections = [
   { title: 'About', url: '#' },
@@ -20,14 +17,9 @@ const sections = [
   { title: 'Contact', url: 'https://diamondapp.com/user/casalytica' },
 ];
 
-const headers = {
-  'Content-Type': 'application/json',
-  'accept': 'application/json',
-}
-
 
 const theme = createTheme();
-
+const deso = new DesoApi();
 
 function App() {
   const dispatch = useDispatch();
@@ -36,25 +28,16 @@ function App() {
   const publicKey = useSelector(state => state.auth.publicKey);
   const isAuth = useSelector(state => state.auth.isAuthenticated);
 
+
   useEffect(() => {
     if (isAuth) {
-      const fetchData = async () => {
-        axios.post(baseURL + '/get-single-profile'  , {}, {
-          headers: headers,
-          params: {
-            'PublicKeyBase58Check': publicKey,
-          }
-      })
-    }
-    fetchData()
-      .then((response) => {
-        console.log(response);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+      deso.getSingleProfile(publicKey)
+        .then((response) => {
+          dispatch(authActions.setProfile(response.Profile));
+        })
     }
   }, [isAuth, publicKey, dispatch]);
+
 
 
   return (

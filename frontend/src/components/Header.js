@@ -19,11 +19,12 @@ function Header(props) {
 
   const isAuth = useSelector(state => state.auth.isAuthenticated);
   const publicKey = useSelector(state => state.auth.publicKey);
+  const username = useSelector(state => state.auth.username);
 
   return (
     <React.Fragment>
       <Toolbar sx={{ borderBottom: 1, borderColor: 'divider' }}>
-        <Button size="small">{ isAuth ? 'Hola Back!' : 'Signup' }</Button>
+        <Button size="small">{ isAuth ? '' : 'Signup' }</Button>
         <Typography
           component="h2"
           variant="h5"
@@ -41,7 +42,7 @@ function Header(props) {
         <DesoLogin
           accessLevel={accessLevel}
           JWT={JWT}
-          buttonText={publicKey ? publicKey.substring(0, 10) + '...' : 'Login'}
+          buttonText={username ? username : 'Login'}
         />
       </Toolbar>
       <Toolbar

@@ -19,7 +19,12 @@ const authSlice = createSlice({
       state.isAuthenticated = false;
     },
     setProfile(state, action) {
-      state.profile = action.payload;
+      state.username = action.payload.Username;
+      state.profilePic = action.payload.ProfilePic;
+      state.isVerified = action.payload.IsVerified;
+      state.isHidden = action.payload.IsHidden;
+      state.isReserved = action.payload.IsReserved;
+      state.description = action.payload.Description;
     }
   },
 });
