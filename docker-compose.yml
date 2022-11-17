@@ -19,6 +19,19 @@ services:
       - .env.dev
     depends_on:
       - db
+  frontend:
+    build:
+      context: ./frontend
+      args:
+        - DEV=true
+    ports:
+      - "3000:3000"
+    command: >
+      sh -c "npm install &&
+             npm start"
+    volumes:
+      - ./frontend:/app
+      - dev-static-data:/vol/static
   db:
     image: postgres:14-alpine
     volumes:

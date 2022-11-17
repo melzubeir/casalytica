@@ -1,0 +1,476 @@
+/**
+  * bootstrap-switch - Turn checkboxes and radio buttons into toggle switches.
+  *
+  * @version v3.4 for Bootstrap 4.x
+  * @homepage https://bttstrp.github.io/bootstrap-switch
+  * @author Mattia Larentis <mattia@larentis.eu> (http://larentis.eu)
+  * & djibe
+  * @license Apache-2.0
+  */
+.bootstrap-switch {
+  display: inline-block;
+  direction: ltr;
+  cursor: pointer;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  position: relative;
+  text-align: left;
+  overflow: hidden;
+  line-height: 8px;
+  z-index: 0;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+  vertical-align: middle;
+  -webkit-transition: border-color ease-in-out .15s, -webkit-box-shadow ease-in-out .15s;
+  transition: border-color ease-in-out .15s, -webkit-box-shadow ease-in-out .15s;
+  transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+  transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s, -webkit-box-shadow ease-in-out .15s;
+}
+.bootstrap-switch .bootstrap-switch-container {
+  display: inline-block;
+  top: 0;
+  border-radius: 4px;
+  -webkit-transform: translate3d(0, 0, 0);
+          transform: translate3d(0, 0, 0);
+}
+.bootstrap-switch .bootstrap-switch-handle-on,
+.bootstrap-switch .bootstrap-switch-handle-off,
+.bootstrap-switch .bootstrap-switch-label {
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  cursor: pointer;
+  display: table-cell;
+  vertical-align: middle;
+  padding: 6px 12px;
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 500;
+}
+.bootstrap-switch .bootstrap-switch-handle-on,
+.bootstrap-switch .bootstrap-switch-handle-off {
+  text-align: center;
+  z-index: 1;
+}
+.bootstrap-switch .bootstrap-switch-handle-on.bootstrap-switch-primary,
+.bootstrap-switch .bootstrap-switch-handle-off.bootstrap-switch-primary {
+  background: #007bff;
+  color: #fff;
+}
+.bootstrap-switch .bootstrap-switch-handle-on.bootstrap-switch-default,
+.bootstrap-switch .bootstrap-switch-handle-off.bootstrap-switch-default {
+  background: #eee;
+  color: rgba(0, 0, 0, 0.87);
+}
+.bootstrap-switch .bootstrap-switch-handle-on.bootstrap-switch-secondary,
+.bootstrap-switch .bootstrap-switch-handle-off.bootstrap-switch-secondary {
+  background: #6c757d;
+  color: #fff;
+}
+.bootstrap-switch .bootstrap-switch-handle-on.bootstrap-switch-info,
+.bootstrap-switch .bootstrap-switch-handle-off.bootstrap-switch-info {
+  background: #17a2b8;
+  color: #fff;
+}
+.bootstrap-switch .bootstrap-switch-handle-on.bootstrap-switch-success,
+.bootstrap-switch .bootstrap-switch-handle-off.bootstrap-switch-success {
+  background: #28a745;
+  color: #fff;
+}
+.bootstrap-switch .bootstrap-switch-handle-on.bootstrap-switch-warning,
+.bootstrap-switch .bootstrap-switch-handle-off.bootstrap-switch-warning {
+  background: #ffc107;
+  color: #fff;
+}
+.bootstrap-switch .bootstrap-switch-handle-on.bootstrap-switch-danger,
+.bootstrap-switch .bootstrap-switch-handle-off.bootstrap-switch-danger {
+  background: #dc3545;
+  color: #fff;
+}
+.bootstrap-switch .bootstrap-switch-label {
+  text-align: center;
+  margin-top: -1px;
+  margin-bottom: -1px;
+  z-index: 100;
+  color: #333;
+  background: #fff;
+  padding: 8px 12px;
+}
+.bootstrap-switch span::before {
+  content: "\200b";
+}
+.bootstrap-switch .bootstrap-switch-handle-on {
+  border-bottom-left-radius: 3px;
+  border-top-left-radius: 3px;
+}
+.bootstrap-switch .bootstrap-switch-handle-off {
+  border-bottom-right-radius: 3px;
+  border-top-right-radius: 3px;
+}
+.bootstrap-switch input[type='radio'],
+.bootstrap-switch input[type='checkbox'] {
+  position: absolute !important;
+  top: 0;
+  left: 0;
+  margin: 0;
+  z-index: -1;
+  opacity: 0;
+  filter: alpha(opacity=0);
+  visibility: hidden;
+}
+.bootstrap-switch.bootstrap-switch-mini .bootstrap-switch-handle-on,
+.bootstrap-switch.bootstrap-switch-mini .bootstrap-switch-handle-off,
+.bootstrap-switch.bootstrap-switch-mini .bootstrap-switch-label {
+  padding: 1px 5px;
+  font-size: 12px;
+  line-height: 1.5;
+}
+.bootstrap-switch.bootstrap-switch-small .bootstrap-switch-handle-on,
+.bootstrap-switch.bootstrap-switch-small .bootstrap-switch-handle-off,
+.bootstrap-switch.bootstrap-switch-small .bootstrap-switch-label {
+  padding: 5px 10px;
+  font-size: 12px;
+  line-height: 1.5;
+}
+.bootstrap-switch.bootstrap-switch-large .bootstrap-switch-handle-on,
+.bootstrap-switch.bootstrap-switch-large .bootstrap-switch-handle-off,
+.bootstrap-switch.bootstrap-switch-large .bootstrap-switch-label {
+  padding: 6px 16px;
+  font-size: 18px;
+  line-height: 1.3333333;
+}
+.bootstrap-switch.bootstrap-switch-disabled, .bootstrap-switch.bootstrap-switch-readonly, .bootstrap-switch.bootstrap-switch-indeterminate {
+  cursor: default !important;
+}
+.bootstrap-switch.bootstrap-switch-disabled .bootstrap-switch-handle-on, .bootstrap-switch.bootstrap-switch-readonly .bootstrap-switch-handle-on, .bootstrap-switch.bootstrap-switch-indeterminate .bootstrap-switch-handle-on, .bootstrap-switch.bootstrap-switch-disabled .bootstrap-switch-handle-off, .bootstrap-switch.bootstrap-switch-readonly .bootstrap-switch-handle-off, .bootstrap-switch.bootstrap-switch-indeterminate .bootstrap-switch-handle-off, .bootstrap-switch.bootstrap-switch-disabled .bootstrap-switch-label, .bootstrap-switch.bootstrap-switch-readonly .bootstrap-switch-label, .bootstrap-switch.bootstrap-switch-indeterminate .bootstrap-switch-label {
+  opacity: 0.5;
+  filter: alpha(opacity=50);
+  cursor: default !important;
+}
+.bootstrap-switch.bootstrap-switch-animate .bootstrap-switch-container {
+  -webkit-transition: margin-left 0.5s;
+  transition: margin-left 0.5s;
+}
+.bootstrap-switch.bootstrap-switch-inverse .bootstrap-switch-handle-on {
+  border-radius: 0 3px 3px 0;
+}
+.bootstrap-switch.bootstrap-switch-inverse .bootstrap-switch-handle-off {
+  border-radius: 3px 0 0 3px;
+}
+.bootstrap-switch.bootstrap-switch-focused {
+  border-color: #66afe9;
+  outline: 0;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(102, 175, 233, 0.6);
+          box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(102, 175, 233, 0.6);
+}
+.bootstrap-switch.bootstrap-switch-on .bootstrap-switch-label, .bootstrap-switch.bootstrap-switch-inverse.bootstrap-switch-off .bootstrap-switch-label {
+  border-bottom-right-radius: 3px;
+  border-top-right-radius: 3px;
+}
+.bootstrap-switch.bootstrap-switch-off .bootstrap-switch-label, .bootstrap-switch.bootstrap-switch-inverse.bootstrap-switch-on .bootstrap-switch-label {
+  border-bottom-left-radius: 3px;
+  border-top-left-radius: 3px;
+}
+
+
+
+
+/* --------------------------------------------------------------
+	SWITCH
+--------------------------------------------------------------  */
+.switch-toggle {
+	position: absolute;
+	margin-left: -9999px;
+	visibility: hidden;
+}
+
+.switch-toggle + label {
+	display: block;
+	position: relative;
+	cursor: pointer;
+	outline: none;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+}
+
+/* --------------------------------------------------------------
+	SWITCH 1 - ROUND
+----------------------------------------------------------------- */
+input.switch-toggle-round + label {
+	padding: 2px;
+	width: 60px;
+	height: 30px;
+	background-color: #DDD;
+	-webkit-border-radius: 15px;
+	-o-border-radius: 15px;
+	border-radius: 15px;
+}
+
+input.switch-toggle-round + label:before,
+input.switch-toggle-round + label:after {
+	display: block;
+	position: absolute;
+	top: 1px;
+	left: 1px;
+	bottom: 1px;
+	content: "";
+}
+
+input.switch-toggle-round + label:before {
+	right: 1px;
+	background-color: #F1F1F1;
+	-webkit-border-radius: 15px;
+	-o-border-radius: 15px;
+	border-radius: 15px;
+	-webkit-transition: background 0.4s;
+	-moz-transition: background 0.4s;
+	-o-transition: background 0.4s;
+	transition: background 0.4s;
+}
+
+input.switch-toggle-round + label:after {
+	width: 28px;
+	background-color: #FFF;
+	-webkit-border-radius: 100%;
+	-o-border-radius: 100%;
+	border-radius: 100%;
+	-webkit-box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+	-moz-box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+	-webkit-transition: margin 0.4s;
+	-moz-transition: margin 0.4s;
+	-o-transition: margin 0.4s;
+	transition: margin 0.4s;
+}
+
+input.switch-toggle-round:checked + label:before {
+	background-color: #1ABC9C;
+	background-color: var(--themecolor, #1ABC9C);
+}
+input.switch-toggle-round:checked + label:after { margin-left: 30px; }
+
+/* --------------------------------------------------------------
+	SWITCH 1 - ROUND- MINI
+----------------------------------------------------------------- */
+input.switch-rounded-mini.switch-toggle-round + label {
+	padding: 1px;
+	width: 32px;
+	height: 16px;
+	-webkit-border-radius: 8px;
+	-o-border-radius: 8px;
+	border-radius: 8px;
+}
+
+input.switch-rounded-mini.switch-toggle-round + label:before {
+	-webkit-border-radius: 8px;
+	-o-border-radius: 8px;
+	border-radius: 8px;
+}
+
+input.switch-rounded-mini.switch-toggle-round + label:after { width: 15px; }
+input.switch-rounded-mini.switch-toggle-round:checked + label:after { margin-left: 15px; }
+
+/* --------------------------------------------------------------
+	SWITCH 1 - ROUND- LARGE
+----------------------------------------------------------------- */
+input.switch-rounded-large.switch-toggle-round + label {
+	width: 90px;
+	height: 45px;
+	-webkit-border-radius: 45px;
+	-o-border-radius: 45px;
+	border-radius: 45px;
+}
+
+input.switch-rounded-large.switch-toggle-round + label:before {
+	-webkit-border-radius: 45px;
+	-o-border-radius: 45px;
+	border-radius: 45px;
+}
+
+input.switch-rounded-large.switch-toggle-round + label:after { width: 43px; }
+input.switch-rounded-large.switch-toggle-round:checked + label:after { margin-left: 45px; }
+
+
+/* --------------------------------------------------------------
+	SWITCH 1 - ROUND- XLARGE
+----------------------------------------------------------------- */
+input.switch-rounded-xlarge.switch-toggle-round + label {
+	width: 120px;
+	height: 60px;
+	-webkit-border-radius: 60px;
+	-o-border-radius: 60px;
+	border-radius: 60px;
+}
+
+input.switch-rounded-xlarge.switch-toggle-round + label:before {
+	-webkit-border-radius: 60px;
+	-o-border-radius: 60px;
+	border-radius: 60px;
+}
+
+input.switch-rounded-xlarge.switch-toggle-round + label:after { width: 58px; }
+input.switch-rounded-xlarge.switch-toggle-round:checked + label:after { margin-left: 60px; }
+
+
+/* -----------------------------------------------------------
+	SWITCH 2 - ROUND FLAT
+-------------------------------------------------------------- */
+input.switch-toggle-flat + label {
+	padding: 2px;
+	width: 60px;
+	height: 30px;
+	background-color: #DDD;
+	-webkit-border-radius: 30px;
+	-moz-border-radius: 30px;
+	-ms-border-radius: 30px;
+	-o-border-radius: 30px;
+	border-radius: 30px;
+	-webkit-transition: background 0.4s;
+	-moz-transition: background 0.4s;
+	-o-transition: background 0.4s;
+	transition: background 0.4s;
+}
+
+input.switch-toggle-flat + label:before,
+input.switch-toggle-flat + label:after {
+	display: block;
+	position: absolute;
+	content: "";
+}
+
+input.switch-toggle-flat + label:before {
+	top: 2px;
+	left: 2px;
+	bottom: 2px;
+	right: 2px;
+	background-color: #FFF;
+	-webkit-border-radius: 30px;
+	-moz-border-radius: 30px;
+	-ms-border-radius: 30px;
+	-o-border-radius: 30px;
+	border-radius: 30px;
+	-webkit-transition: background 0.4s;
+	-moz-transition: background 0.4s;
+	-o-transition: background 0.4s;
+	transition: background 0.4s;
+}
+
+input.switch-toggle-flat + label:after {
+	top: 4px;
+	left: 4px;
+	bottom: 4px;
+	width: 22px;
+	background-color: #DDD;
+	-webkit-border-radius: 22px;
+	-moz-border-radius: 22px;
+	-ms-border-radius: 22px;
+	-o-border-radius: 22px;
+	border-radius: 22px;
+	-webkit-transition: margin 0.4s, background 0.4s;
+	-moz-transition: margin 0.4s, background 0.4s;
+	-o-transition: margin 0.4s, background 0.4s;
+	transition: margin 0.4s, background 0.4s;
+}
+
+input.switch-toggle-flat:checked + label {
+	background-color: var(--themecolor, #1ABC9C);
+}
+
+input.switch-toggle-flat:checked + label:after {
+	margin-left: 30px;
+	background-color: var(--themecolor, #1ABC9C);
+}
+
+
+/* -----------------------------------------------------------
+	SWITCH 2 - FLAT - MINI
+-------------------------------------------------------------- */
+input.switch-flat-mini.switch-toggle-flat + label {
+	padding: 1px;
+	width: 32px;
+	height: 16px;
+	-webkit-border-radius: 16px;
+	-o-border-radius: 16px;
+	border-radius: 16px;
+}
+
+input.switch-flat-mini.switch-toggle-flat + label:before {
+	top: 1px;
+	left: 1px;
+	bottom: 1px;
+	right: 1px;
+	-webkit-border-radius: 16px;
+	-o-border-radius: 16px;
+	border-radius: 16px;
+}
+
+input.switch-flat-mini.switch-toggle-flat + label:after {
+	top: 2px;
+	left: 2px;
+	bottom: 2px;
+	width: 12px;
+	-webkit-border-radius: 12px;
+	-o-border-radius: 12px;
+	border-radius: 12px;
+}
+
+input.switch-flat-mini.switch-toggle-flat:checked + label:after { margin-left: 16px; }
+
+
+/* -----------------------------------------------------------
+	SWITCH 2 - FLAT - LARGE
+-------------------------------------------------------------- */
+input.switch-flat-large.switch-toggle-flat + label {
+	width: 90px;
+	height: 45px;
+	-webkit-border-radius: 45px;
+	-o-border-radius: 45px;
+	border-radius: 45px;
+}
+
+input.switch-flat-large.switch-toggle-flat + label:before {
+	-webkit-border-radius: 45px;
+	-o-border-radius: 45px;
+	border-radius: 45px;
+}
+
+input.switch-flat-large.switch-toggle-flat + label:after {
+	width: 37px;
+	-webkit-border-radius: 37px;
+	-o-border-radius: 37px;
+	border-radius: 37px;
+}
+
+input.switch-flat-large.switch-toggle-flat:checked + label:after { margin-left: 45px; }
+
+
+
+/* -----------------------------------------------------------
+	SWITCH 2 - FLAT - XLARGE
+-------------------------------------------------------------- */
+input.switch-flat-xlarge.switch-toggle-flat + label {
+	padding: 2px;
+	width: 120px;
+	height: 60px;
+	-webkit-border-radius: 60px;
+	-o-border-radius: 60px;
+	border-radius: 60px;
+}
+
+input.switch-flat-xlarge.switch-toggle-flat + label:before {
+	-webkit-border-radius: 60px;
+	-o-border-radius: 60px;
+	border-radius: 60px;
+}
+input.switch-flat-xlarge.switch-toggle-flat + label:after {
+	width: 52px;
+	-webkit-border-radius: 52px;
+	-o-border-radius: 52px;
+	border-radius: 52px;
+}
+
+input.switch-flat-xlarge.switch-toggle-flat:checked + label:after { margin-left: 60px; }
+
