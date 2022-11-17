@@ -1,9 +1,8 @@
-# Casalytica
 
-[![casalytica api](https://img.shields.io/badge/casalytica-api-blueviolet)](https://www.casalytica.com/api/docs/)
+<a href="https://www.casalytica.com/api/docs/"><img align="right" src="https://img.shields.io/badge/casalytica-api-blueviolet"></a>
 
 <p align="center">
-<img src="https://raw.githubusercontent.com/melzubeir/casalytica/master/app/static/images/casalytica.png" width="480" height="480" >
+<img src="https://raw.githubusercontent.com/melzubeir/casalytica/master/app/static/images/logo.png" width="300" alt="Casalytica">
 </p>
 
 an application-layer API to track on-chain content impressions and views
@@ -28,9 +27,15 @@ nginx reverse proxy server.
 
 ### tech stack
 
+#### backend
 - django 4.1
 - python 3.9
 - postgresql 14
+
+#### frontend
+- react
+
+#### deployment
 - nginx
 - docker
 
