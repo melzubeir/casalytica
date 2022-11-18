@@ -2,7 +2,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import React from 'react';
 import Button from '@mui/material/Button';
 
-import { authActions } from '../store/reducers/auth';
+import { authActions } from '../../store/reducers/auth';
 
 import PropTypes from "prop-types";
 

@@ -8,7 +8,7 @@ import SearchIcon from '@mui/icons-material/Search';
 import Typography from '@mui/material/Typography';
 import Link from '@mui/material/Link';
 
-import DesoLogin from '../DesoLogin';
+import DesoLogin from './DesoLogin';
 import logo from '../../assets/images/logo.png';
 
 const accessLevel = 4;
