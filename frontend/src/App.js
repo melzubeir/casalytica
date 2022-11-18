@@ -7,7 +7,7 @@ import DesoApi from './libs/DesoApi'
 import Header from './components/Header';
 import Footer from './components/Footer';
 
-import { authActions } from './store/auth';
+import { authActions } from './store/reducers/auth';
 
 
 const sections = [

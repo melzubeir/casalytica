@@ -18,7 +18,6 @@ function Header(props) {
   const { sections, title } = props;
 
   const isAuth = useSelector(state => state.auth.isAuthenticated);
-  const publicKey = useSelector(state => state.auth.publicKey);
   const username = useSelector(state => state.auth.username);
 
   return (
