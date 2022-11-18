@@ -23,7 +23,7 @@ function Header(props) {
   return (
     <React.Fragment>
       <Toolbar sx={{ borderBottom: 1, borderColor: 'divider' }}>
-        <Button size="small">{ isAuth ? '' : 'Signup' }</Button>
+        <Button size="small">{ isAuth ? username : 'Signup' }</Button>
         <Typography
           component="h2"
           variant="h5"
@@ -41,7 +41,7 @@ function Header(props) {
         <DesoLogin
           accessLevel={accessLevel}
           JWT={JWT}
-          buttonText={username ? username : 'Login'}
+          buttonText={username ? 'Logout' : 'Login'}
         />
       </Toolbar>
       <Toolbar

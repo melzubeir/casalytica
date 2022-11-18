@@ -17,6 +17,16 @@ const authSlice = createSlice({
     },
     logout(state) {
       state.isAuthenticated = false;
+      state.publicKey = null;
+      state.accessLevel = null;
+      state.loginMethod =   null;
+      state.jwt = null;
+      state.username = null;
+      state.profilePic =  null;
+      state.isVerified = null;
+      state.isHidden =  null;
+      state.isReserved =  null;
+      state.description = null;
     },
     setProfile(state, action) {
       state.username = action.payload.Username;

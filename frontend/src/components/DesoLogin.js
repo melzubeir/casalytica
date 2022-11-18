@@ -1,4 +1,4 @@
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import React from 'react';
 import Button from '@mui/material/Button';
 
@@ -7,6 +7,7 @@ import { authActions } from '../store/reducers/auth';
 import PropTypes from "prop-types";
 
 function initLogin(accessLevel, JWT) {
+
 
   return new Promise(function (resolve, reject) {
 
@@ -99,6 +100,7 @@ function initLogin(accessLevel, JWT) {
     let identityWindow = null;
 
     login()
+
   });
 }
 
@@ -106,15 +108,21 @@ const DesoLogin = (props) => {
   const { accessLevel, JWT, buttonText } = props
 
   const dispatch = useDispatch();
-
+  const isAuth = useSelector(state => state.auth.isAuthenticated);
 
   const handleLogin = () => {
-    initLogin(accessLevel, JWT).then(e => {
-      dispatch(authActions.login(e));
-    }).catch(e => {
-      console.log('Failure: ', e)
-    });
+    if (!isAuth) {
+      initLogin(accessLevel, JWT).then(e => {
+        dispatch(authActions.login(e));
+      }).catch(e => {
+
+        console.log('Failure: ', e)
+      });
+    } else {
+      dispatch(authActions.logout());
+    }
   }
+
   return (
   <div>
       <Button
