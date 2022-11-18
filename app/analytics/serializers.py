@@ -86,18 +86,6 @@ class ImpressionSerializer(serializers.Serializer):
         ]
         read_only_fields = ['created']
 
-    def get_fields(self):
-        """get fields"""
-        fields = super().get_fields()
-        fields['source_app'] = serializers.SerializerMethodField()
-        fields['is_deso'] = serializers.BooleanField()
-        fields['posts'] = PostSerializer(many=True, required=False)
-        fields['remote_addr'] = serializers.IPAddressField()
-        fields['user_agent'] = serializers.CharField()
-        fields['user'] = serializers.CharField(required=True)
-        fields['referer'] = serializers.CharField(required=False)
-        return fields
-
     def _set_location(self, ip, instance):
         """set location metadata from ip address"""
         g = GeoIP2()
@@ -130,6 +118,65 @@ class ImpressionSerializer(serializers.Serializer):
         instance.browser_version = ua.browser.version_string
 
         instance.save()
+
+    def _get_or_create_posts(self, posts):
+        """handle getting or create posts for impression"""
+
+        logger.info(
+            'ImpressionViewset._get_or_create_posts() ----> ENTRY <----')
+        post_objects = []
+        for post in posts:
+            logger.info(
+                'ImpressionViewset._get_or_create_posts() - posts loop top / post: %s', post)
+            post_data = {
+                'post_hash': post['post_hash'],
+                'likes_total': 0,
+                'diamonds_total': 0,
+                'comments_total': 0,
+                'reposts_total': 0,
+                'creator': {
+                    'username': 'unknown',
+                    'key': 'unknown'
+                },
+                'node': 1
+            }
+            creator = self._get_or_create_creator(
+                post_data['creator'])
+            node = self._get_or_create_node(post_data['node'])
+            post_obj, created = models.Post.objects.get_or_create(
+                post_hash=post['post_hash'])
+            if not created:
+                logger.info(
+                    'ImpressionViewset._get_or_create_posts() - Post exists NOT CREATED: %s', post_obj)
+            post_obj.creator = creator
+            post_obj.node = node
+            post_obj.impressions_total = F('impressions_total') + 1
+            post_obj.save()
+            post_objects.append(post_obj)
+            logger.info(
+                'ImpressionViewset._get_or_create_posts() - posts loop bottom - post_obj: %s', post_obj)
+
+        return post_objects
+
+    def _get_or_create_creator(self, creator):
+        """get or create creator"""
+
+        logger.info(
+            'ImpressionViewset._get_or_create_creator() ----> ENTRY <----')
+        creator_obj, created = models.Creator.objects.get_or_create(
+            username=creator['username'],
+            public_key_base58=creator['key'])
+        creator_obj.save()
+        return creator_obj
+
+    def _get_or_create_node(self, node_id):
+        """get or create creator"""
+
+        logger.info('ImpressionViewset._get_or_create_node() ----> ENTRY <----')
+        node_obj, created = models.Node.objects.get_or_create(
+            id=node_id)
+        node_obj.save()
+        return node_obj
 
     def to_internal_value(self, data):
         """convert data to internal value"""
@@ -195,64 +242,20 @@ class ImpressionSerializer(serializers.Serializer):
             raise serializers.ValidationError(_('remote_addr is invalid'))
         return remote_addr
 
-    def _get_or_create_posts(self, posts):
-        """handle getting or create posts for impression"""
+    def get_fields(self):
+        """get fields"""
+        fields = super().get_fields()
+        fields['source_app'] = serializers.SerializerMethodField()
+        fields['is_deso'] = serializers.BooleanField()
+        fields['posts'] = PostSerializer(many=True, required=False)
+        fields['remote_addr'] = serializers.IPAddressField()
+        fields['user_agent'] = serializers.CharField()
+        fields['user'] = serializers.CharField(required=True)
+        fields['referer'] = serializers.CharField(required=False)
+        return fields
 
-        logger.info(
-            'ImpressionViewset._get_or_create_posts() ----> ENTRY <----')
-        post_objects = []
-        for post in posts:
-            logger.info(
-                'ImpressionViewset._get_or_create_posts() - posts loop top / post: %s', post)
-            post_data = {
-                'post_hash': post['post_hash'],
-                'likes_total': 0,
-                'diamonds_total': 0,
-                'comments_total': 0,
-                'reposts_total': 0,
-                'creator': {
-                    'username': 'unknown',
-                    'key': 'unknown'
-                },
-                'node': 1
-            }
-            creator = self._get_or_create_creator(
-                post_data['creator'])
-            node = self._get_or_create_node(post_data['node'])
-            post_obj, created = models.Post.objects.get_or_create(
-                post_hash=post['post_hash'])
-            if not created:
-                logger.info(
-                    'ImpressionViewset._get_or_create_posts() - Post exists NOT CREATED: %s', post_obj)
-            post_obj.creator = creator
-            post_obj.node = node
-            post_obj.impressions_total = F('impressions_total') + 1
-            post_obj.save()
-            post_objects.append(post_obj)
-            logger.info(
-                'ImpressionViewset._get_or_create_posts() - posts loop bottom - post_obj: %s', post_obj)
-
-        return post_objects
-
-    def _get_or_create_creator(self, creator):
-        """get or create creator"""
-
-        logger.info(
-            'ImpressionViewset._get_or_create_creator() ----> ENTRY <----')
-        creator_obj, created = models.Creator.objects.get_or_create(
-            username=creator['username'],
-            public_key_base58=creator['key'])
-        creator_obj.save()
-        return creator_obj
-
-    def _get_or_create_node(self, node_id):
-        """get or create creator"""
-
-        logger.info('ImpressionViewset._get_or_create_node() ----> ENTRY <----')
-        node_obj, created = models.Node.objects.get_or_create(
-            id=node_id)
-        node_obj.save()
-        return node_obj
+    def get_source_app(self):
+        return models.Impression.DESO_APP_CHOICES[self.source_app - 1][1]
 
 
 class ImpressionDetailSerializer(ImpressionSerializer):
