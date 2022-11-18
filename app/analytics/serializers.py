@@ -2,6 +2,10 @@
 serializers for analytics api
 """
 from rest_framework import serializers
+from drf_spectacular.utils import (
+    extend_schema_field,
+    OpenApiTypes,
+)
 from analytics import models
 import logging
 import ipaddress
@@ -275,6 +279,7 @@ class ImpressionDetailSerializer(ImpressionSerializer):
             'tz',
         ]
 
+    @extend_schema_field(OpenApiTypes.STR)
     def get_source_app(self):
         return models.Impression.DESO_APP_CHOICES[self.source_app - 1][1]
 

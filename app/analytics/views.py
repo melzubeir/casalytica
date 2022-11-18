@@ -3,6 +3,7 @@ views for the impressions api
 """
 from drf_spectacular.utils import (
     extend_schema_view,
+    extend_schema_field,
     extend_schema,
     OpenApiParameter,
     OpenApiTypes,
@@ -38,7 +39,7 @@ class ImpressionViewSet(viewsets.ModelViewSet):
     authentication_classes = [TokenAuthentication, ]
     permission_classes = [IsAuthenticated, ]
 
-
+    @extend_schema_field(OpenApiTypes.STR)
     def get_source_app(self):
         return Impression.DESO_APP_CHOICES[self.source_app - 1][1]
 
