@@ -13,11 +13,12 @@ urlpatterns = [
     path('accounts/', include('allauth.urls')),
 
     path('schema/', SpectacularAPIView.as_view(), name='api-schema'),
-    path('docs/',
+    path('v0/', include('analytics.urls')),
+    path('/',
          SpectacularSwaggerView.as_view(url_name='api-schema'),
          name='api-docs',
          ),
-    path('v0/', include('analytics.urls')),
+
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

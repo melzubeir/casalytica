@@ -1,5 +1,5 @@
 
-<a href="https://api.casalytica.com/docs/"><img align="right" src="https://img.shields.io/badge/casalytica-api-blueviolet"></a>
+<a href="https://api.casalytica.com/"><img align="right" src="https://img.shields.io/badge/casalytica-api-blueviolet"></a>
 
 <p align="center">
 <img src="https://raw.githubusercontent.com/melzubeir/casalytica/master/app/static/images/logo.png" width="300" alt="Casalytica">
@@ -132,7 +132,7 @@ curl -X 'POST' \
 ```
 
 
-see full usage in code docs: [documentation](https://api.casalytica.com/docs/)
+see full usage in code docs: [documentation](https://api.casalytica.com/)
 
 
 ### casalytica
