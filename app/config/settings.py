@@ -106,9 +106,11 @@ INSTALLED_APPS = [
     "dj_rest_auth",
     "dj_rest_auth.registration",
     "drf_spectacular",
+    'drf_spectacular_sidecar',
 
     "core",
     "analytics",
+    "user",
 
 
 ]
@@ -230,6 +232,9 @@ REST_FRAMEWORK = {
 
 SPECTACULAR_SETTINGS = {
     'COMPONENT_SPLIT_REQUEST': True,
+    # 'SWAGGER_UI_DIST': 'SIDECAR',  # shorthand to use the sidecar instead
+    # 'SWAGGER_UI_FAVICON_HREF': 'SIDECAR',
+    #'REDOC_DIST': 'SIDECAR',
     'TITLE': 'Casalytica API',
     'DESCRIPTION': 'analytics for on-chain content',
     'CONTACT': { 'name': 'Casalytica', 'email': 'hello@casalytica.com' },
