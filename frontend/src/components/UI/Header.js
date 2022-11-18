@@ -9,6 +9,7 @@ import Typography from '@mui/material/Typography';
 import Link from '@mui/material/Link';
 
 import DesoLogin from '../DesoLogin';
+import logo from '../../assets/images/logo.png';
 
 const accessLevel = 4;
 const JWT = true;
@@ -32,7 +33,8 @@ function Header(props) {
           noWrap
           sx={{ flex: 1 }}
         >
-          {title}
+          <img src={logo} alt={title} width="120" />
+
         </Typography>
         <IconButton>
           <SearchIcon />
