@@ -4,8 +4,8 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import Container from '@mui/material/Container';
 import DesoApi from './libs/DesoApi'
-import Header from './components/Header';
-import Footer from './components/Footer';
+import Header from './components/UI/Header';
+import Footer from './components/UI/Footer';
 
 import { authActions } from './store/reducers/auth';
 
