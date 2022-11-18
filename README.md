@@ -1,5 +1,5 @@
 
-<a href="https://www.casalytica.com/api/docs/"><img align="right" src="https://img.shields.io/badge/casalytica-api-blueviolet"></a>
+<a href="https://api.casalytica.com/docs/"><img align="right" src="https://img.shields.io/badge/casalytica-api-blueviolet"></a>
 
 <p align="center">
 <img src="https://raw.githubusercontent.com/melzubeir/casalytica/master/app/static/images/logo.png" width="300" alt="Casalytica">
@@ -108,7 +108,7 @@ docker-compose exec app python manage.py loaddata data_fixtures.json
 
 ```sh
 curl -X 'POST' \
-  'http://localhost:8000/api/impression/' \
+  'https://api.casalytica.com/v0/impression/' \
   -H 'accept: application/json' \
   -H 'Authorization: Token f3558c2d4b4260f775d01c9d52120b26d98df922' \
   -H 'Content-Type: application/json' \
@@ -132,7 +132,7 @@ curl -X 'POST' \
 ```
 
 
-see full usage in code docs: [documentation](https://www.casalytica.com/api/docs/)
+see full usage in code docs: [documentation](https://api.casalytica.com/docs/)
 
 
 ### casalytica

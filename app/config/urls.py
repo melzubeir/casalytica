@@ -12,12 +12,12 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path('accounts/', include('allauth.urls')),
 
-    path('api/schema/', SpectacularAPIView.as_view(), name='api-schema'),
-    path('api/docs/',
+    path('schema/', SpectacularAPIView.as_view(), name='api-schema'),
+    path('docs/',
          SpectacularSwaggerView.as_view(url_name='api-schema'),
          name='api-docs',
          ),
-    path('api/', include('analytics.urls')),
+    path('v0/', include('analytics.urls')),
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
