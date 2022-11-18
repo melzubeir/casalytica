@@ -222,6 +222,7 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 AUTH_USER_MODEL = 'core.User'
 
+
 REST_FRAMEWORK = {
     'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
     'DEFAULT_AUTHENTICATION_CLASSES': [
@@ -241,6 +242,8 @@ SPECTACULAR_SETTINGS = {
     'LICENSE': { 'name': 'BSD-3-CLAUSE', 'url': 'https://github.com/melzubeir/casalytica/blob/master/LICENSE.txt' },
     'VERSION': '0.0.1',
     'SCHEMA_PATH_PREFIX': r'/v0',
+    # "SWAGGER_UI_DIST": "//unpkg.com/swagger-ui-dist@3.35.1", # default
+    "SWAGGER_UI_FAVICON_HREF": STATIC_URL + "images/favicon.ico", # default is swagger favicon
 }
 
 # Email tings

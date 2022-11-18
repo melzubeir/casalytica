@@ -254,9 +254,6 @@ class ImpressionSerializer(serializers.Serializer):
         fields['referer'] = serializers.CharField(required=False)
         return fields
 
-    def get_source_app(self):
-        return models.Impression.DESO_APP_CHOICES[self.source_app - 1][1]
-
 
 class ImpressionDetailSerializer(ImpressionSerializer):
     """Serializer for impression detail view"""
@@ -277,6 +274,9 @@ class ImpressionDetailSerializer(ImpressionSerializer):
             'city', 'country', 'latitude', 'longitude',
             'tz',
         ]
+
+    def get_source_app(self):
+        return models.Impression.DESO_APP_CHOICES[self.source_app - 1][1]
 
 
 class CreatorSerializer(serializers.ModelSerializer):

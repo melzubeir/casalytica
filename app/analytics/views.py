@@ -39,6 +39,10 @@ class ImpressionViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticated, ]
 
 
+    def get_source_app(self):
+        return Impression.DESO_APP_CHOICES[self.source_app - 1][1]
+
+
 
 @extend_schema_view(
     list=extend_schema(
