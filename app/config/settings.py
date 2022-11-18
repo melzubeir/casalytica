@@ -230,6 +230,12 @@ REST_FRAMEWORK = {
 
 SPECTACULAR_SETTINGS = {
     'COMPONENT_SPLIT_REQUEST': True,
+    'TITLE': 'Casalytica API',
+    'DESCRIPTION': 'analytics for on-chain content',
+    'CONTACT': { 'name': 'Casalytica', 'email': 'hello@casalytica.com' },
+    'LICENSE': { 'name': 'BSD-3-CLAUSE', 'url': 'https://github.com/melzubeir/casalytica/blob/master/LICENSE.txt' },
+    'VERSION': '0.0.1',
+    'SCHEMA_PATH_PREFIX': r'/v0',
 }
 
 # Email tings
