@@ -3,7 +3,9 @@ serializers for analytics api
 """
 from rest_framework import serializers
 from drf_spectacular.utils import (
+    extend_schema_serializer,
     extend_schema_field,
+    OpenApiExample,
     OpenApiTypes,
 )
 from analytics import models
@@ -79,6 +81,52 @@ class PostSerializer(serializers.ModelSerializer):
         post_obj.save()
 
 
+@extend_schema_serializer(
+    exclude_fields=('id', 'source_app',),
+    examples=[
+        OpenApiExample(
+            "Minimal",
+            summary="This is minimal api call",
+            description="At a minimum, you will need to provide post(s) and a remote address. \
+                The remote address is used to determine location metadata of the visitor.",
+            value={
+                "posts": [
+                    {
+                        "post_hash": "7943910c8f962fb578752d517fde54bc3c2677d75aaaf798ab60fb086ae1097f"
+                    },
+                ],
+                "remote_addr": "4.2.2.1",
+            },
+            request_only=True,
+            response_only=False,
+        ),
+        OpenApiExample(
+            "Typical",
+            summary="This is a typical api call",
+            description="When reporting on pages/screens with multiple posts, it's recommended that you group \
+                them into one api call. Additionally, it would be of great value to provide referers and user \
+                agents data. This allows us to provide richer insights to you and creators.",
+            value={
+                "posts": [
+                    {
+                        "post_hash": "7943910c8f962fb578752d517fde54bc3c2677d75aaaf798ab60fb086ae1097f"
+                    },
+                    {
+                        "post_hash": "dd1f8d67859243cb0e6182fc210c3ce7ca464401b8b25cad2176d9a277f23d1d"
+                    },
+                    {
+                        "post_hash": "3fbdcd120f83c0ad6c7ca12ef66806de981b3a605c65217149b9dc222799b69e"
+                    }
+                ],
+                "remote_addr": "4.2.2.1",
+                "referer": "https://www.google.com/",
+                "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.102 Safari/537.36"
+            },
+            request_only=True,
+            response_only=False,
+        ),
+    ]
+)
 class ImpressionSerializer(serializers.Serializer):
     """serializer for impression model"""
 

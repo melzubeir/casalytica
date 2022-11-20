@@ -63,7 +63,25 @@ class ImpressionViewSet(viewsets.ModelViewSet):
     )
 )
 class PostViewSet(viewsets.ModelViewSet):
-    """View to manage post APIs"""
+    """
+    Posts are created on the deso blockchain and their impressions are being tracked
+    by the analytics app. As a result, only posts that have reported impressions
+    are available in the analytics app.
+
+    Impressions totals are calculated by the analytics app and are not available on the deso blockchain.
+
+    The following fields are available:
+    - post_hash: the hex hash of the post
+    - creator: the creator of the post
+    - impressions_total: the number of impressions reported for this post
+    - diamonds_total: the number of diamonds reported for this post
+    - likes_total: the number of likes reported for this post
+    - comments_total: the number of comments reported for this post
+    - reposts_total: the number of reposts reported for this post
+    - node: originating node where the post was created
+
+    We can query a post by its creator and/or post hash.
+    """
     serializer_class = serializers.PostSerializer
     queryset = Post.objects.all()
     authentication_classes = [TokenAuthentication, ]
