@@ -2,25 +2,31 @@ upstream casalytica {
     server  unix:/vol/app/casalytica.sock;
 }
 
-# upstream frontend {
-#     server  frontend:3000;
-# }
-
 
 server {
-    server_name casalytica.com www.casalytica.com api.casalytica.com casalytica.localhost;
+    listen 80;
+
+    root /vol/app/frontend;
+
     location /static {
         alias /vol/static/static;
     }
 
-    # location / {
-    #     proxy_pass          http://frontend;
-    # }
+    location / {
+        # proxy_pass http://192.168.64.4:3000;
+        try_files $uri $uri/ /index.html =404;
+    }
+}
 
+server {
+    server_name api.casalytica.com;
     location / {
         uwsgi_pass                        casalytica;
         include                           /etc/nginx/uwsgi_params;
         client_max_body_size              10M;
+    }
+    location /static {
+        alias /vol/static/static;
     }
 
 }
