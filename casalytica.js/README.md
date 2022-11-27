@@ -38,7 +38,7 @@ See full usage in code docs: [documentation](https://github.com/melzubeir/casaly
 ```js
 import { CasalyticaClient } from "Casalytica";
 
-const casalytica = new CasalyticaClient();
+const casalytica = new CasalyticaClient(CASALYTICA_API_KEY=YOUR_TOKEN_KEY_STRING);
 
 const impression = {
   "posts": [
@@ -49,7 +49,6 @@ const impression = {
       "post_hash": "14fafdebff6610c2b0c2cca2b5ec901949e1f98c5bccbb72450b01cfd3c35228",
     }
   ]
-  "source_app": 1,
   "remote_addr": "4.2.2.1",
   "referer": "https://www.google.com/",
   "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.102 Safari/537.36"
@@ -63,3 +62,34 @@ casalytica.postImpression(impression).then((response) => {
 }
 );
 ```
+
+#### Get impressions/views of a post
+
+```js
+import { CasalyticaClient } from "Casalytica";
+
+const casalytica = new CasalyticaClient(CASALYTICA_API_KEY=YOUR_TOKEN_KEY_STRING);
+
+const response = casalytica.getImpressions("3151efdf499e5220241b48040fc9500970f4aaa6f512daa0b88be7b3f200c339"
+  ).then  ((response) => {
+    console.log(response);
+  }
+  ).catch((error) => {
+    console.log(error);
+  }
+);
+
+```
+
+what you get back is a payload that includes:
+
+{
+  "post_hash": "",
+  "impressions_total": 0,
+  "likes_total": 0,
+  "diamonds_total": 0,
+  "comments_total": 0,
+  "reposts_total": 0,
+  "creator": 0,
+  "node": 2147483647
+}

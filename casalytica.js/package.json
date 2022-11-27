@@ -1,5 +1,5 @@
 {
-  "name": "casalytica",
+  "name": "@socialhose/casalytica",
   "version": "0.0.1",
   "description": "analytics for on-chain content",
   "main": "index.js",
