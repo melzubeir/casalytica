@@ -2,7 +2,7 @@
 <a href="https://api.casalytica.com/"><img align="right" src="https://img.shields.io/badge/casalytica-api-blueviolet"></a>
 
 <p align="center">
-<img src="https://raw.githubusercontent.com/melzubeir/casalytica/master/app/static/images/logo.png" width="300" alt="Casalytica">
+<img src="https://raw.githubusercontent.com/melzubeir/casalytica/master/app/static/images/casalytica-github-social-banner.jpg" alt="Casalytica">
 </p>
 
 an application-layer API to track on-chain content impressions and views
