@@ -1,0 +1,58 @@
+{% load static i18n %}
+<!DOCTYPE html>
+<html lang="en-US" dir="ltr">
+
+  <head prefix="og: https://ogp.me/ns#">
+    <meta name="author" content="Casalytica" />
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="robots" content="follow, index, max-snippet:-1, max-video-preview:-1, max-image-preview:large" />
+
+    <!-- Stylesheets -->
+    <link href="https://fonts.googleapis.com/css?family=Lato:300,400,400i,700|Raleway:300,400,500,600,700|Crete+Round:400i" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}" type="text/css" />
+    <link rel="stylesheet" href="{% static 'css/style.css' %}" type="text/css" />
+    <link rel="stylesheet" href="{% static 'css/dark.css' %}" type="text/css" />
+    <link rel="stylesheet" href="{% static 'css/font-icons.css' %}" type="text/css" />
+    <link rel="stylesheet" href="{% static 'css/animate.css' %}" type="text/css" />
+    <link rel="stylesheet" href="{% static 'css/magnific-popup.css' %}" type="text/css" />
+
+    <link rel="stylesheet" href="{% static 'css/responsive.css' %}" type="text/css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <!-- Document Title -->
+    <title>{% block title %}Casalytica{% endblock %}</title>
+  </head>
+
+  <body class="stretched">
+    <div id="wrapper" class="clearfix">
+
+        <!-- Header -->
+        {% include 'layouts/header.html' %}
+        <!-- #header end -->
+
+        {% block content %}
+        {% endblock content %}
+
+    </div>
+
+	<!-- Go To Top
+	============================================= -->
+	<div id="gotoTop" class="icon-angle-up"></div>
+
+	<!-- External JavaScripts
+	============================================= -->
+	<script src="{% static 'js/jquery.js' %}"></script>
+	<script src="{% static 'js/plugins.js' %}"></script>
+
+	<!-- Footer Scripts
+	============================================= -->
+	<script src="{% static 'js/functions.js' %}"></script>
+	<script>
+		$(function() {
+			$( "#side-navigation" ).tabs({ show: { effect: "fade", duration: 400 } });
+		});
+	</script>
+
+  </body>
+</html>

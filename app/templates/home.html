@@ -1,0 +1,28 @@
+{% extends '._themebase.html' %}
+{% load static i18n %}
+
+{% block content %}
+  {% include 'layouts/slider1.html' %}
+
+  <!--  Content
+		=============================================  -->
+  <section id="content" style="overflow: visible;">
+    <div class="content-wrap">
+      <div class="promo promo-dark promo-full landing-promo header-stick">
+        <div class="container clearfix">
+          <h3>When your app shares impressions of on-chain content <i class="icon-circle-arrow-right" style="position:relative;top:2px;"></i></h3>
+          <span>We give you back the totality of all reported impressions so your users can learn their true reach.</span>
+        </div>
+      </div>
+
+      {% include 'sections/features.html' %}
+      {% include 'sections/specs.html' %}
+      <div class="section footer-stick">
+        {% include 'sections/cta1.html' %}
+      </div>
+    </div>
+  </section>
+  <!-- #content end -->
+
+  {% include 'layouts/footer.html' %}
+{% endblock %}

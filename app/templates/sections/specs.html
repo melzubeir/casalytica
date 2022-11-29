@@ -1,0 +1,79 @@
+{% load static i18n %}
+
+<div class="container clearfix">
+
+  <div id="section-specs" class="heading-block title-center page-section">
+    <h2>API Endpoints</h2>
+    <span>Complete list of the API endpoints</span>
+  </div>
+
+  <div id="side-navigation">
+
+    <div class="col_one_third">
+
+      <ul class="sidenav">
+        <li class="ui-tabs-active"><a href="#snav-creators"><i class="icon-screen"></i>creators<i class="icon-chevron-right"></i></a></li>
+        <li><a href="#snav-impression"><i class="icon-magic"></i>impression<i class="icon-chevron-right"></i></a></li>
+        <li><a href="#snav-nodes"><i class="icon-tint"></i>nodes<i class="icon-chevron-right"></i></a></li>
+        <li><a href="#snav-posts"><i class="icon-gift"></i>posts<i class="icon-chevron-right"></i></a></li>
+      </ul>
+
+    </div>
+
+    <div class="col_two_third col_last">
+
+      <div id="snav-creators">
+        <h3>/v0/creators/</h3>
+        <ul>
+          <li>GET /v0/creators</li>
+          <li>POST /v0/creators/</li>
+          <li>GET /v0/creators/{username}</li>
+          <li>PUT /v0/creators/{username}</li>
+          <li>PATCH /v0/creators/{username}</li>
+          <li>DELETE /v0/creators/{username}</li>
+        </ul>
+      </div>
+
+      <div id="snav-impression">
+        <h3>/v0/impression/</h3>
+        <ul>
+          <li>GET /v0/impression/</li>
+          <li>POST /v0/impression/</li>
+          <li>GET /v0/impression/{id}</li>
+          <li>PUT /v0/impression/{id}</li>
+          <li>PATCH /v0/impression/{id}</li>
+          <li>DELETE /v0/impression/{id}</li>
+        </ul>
+      </div>
+
+      <div id="snav-nodes">
+        <h3>/v0/nodes/</h3>
+        <ul>
+          <li>GET /v0/nodes/</li>
+          <li>POST /v0/nodes/</li>
+          <li>GET /v0/nodes/{id}</li>
+          <li>PUT /v0/nodes/{id}</li>
+          <li>PATCH /v0/nodes/{id}</li>
+          <li>DELETE /v0/nodes/{id}</li>
+        </ul>
+      </div>
+
+      <div id="snav-posts">
+        <img class="alignleft img-responsive" src="{% static 'images/landing/bootstrap.png' %}" alt="">
+        <h3>/v0/posts/</h3>
+        <ul>
+          <li>GET /v0/posts/</li>
+          <li>POST /v0/posts/</li>
+          <li>GET /v0/posts/{post_hash}</li>
+          <li>PUT /v0/posts/{post_hash}</li>
+          <li>PATCH /v0/posts/{post_hash}</li>
+          <li>DELETE /v0/posts/{post_hash}</li>
+        </ul>
+      </div>
+
+
+    </div>
+
+  </div>
+
+</div>

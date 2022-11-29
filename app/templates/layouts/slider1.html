@@ -1,0 +1,45 @@
+{% load static i18n %}
+
+<section id="slider" class="slider-element"
+  style="background: url({% static 'images/casalytica5.png' %})
+    center; overflow: visible;" data-height-xl="500" data-height-lg="500"
+    data-height-md="600" data-height-sm="600" data-height-xs="600">
+
+  <div class="container clearfix">
+
+    <div class="form-widget" data-loader="button">
+
+      <div class="form-result"></div>
+
+      <form action="include/form.php" method="post" class="landing-wide-form landing-form-overlay dark nobottommargin clearfix">
+        <div class="heading-block nobottommargin nobottomborder">
+          <h2>Signup for FREE</h2>
+          <span>Must have a DESO account</span>
+        </div>
+        <div class="line" style="margin: 20px 0 30px;"></div>
+        <div class="col_full">
+          <input type="text" name="template-landing5-name" class="form-control required form-control-lg not-dark" value="" placeholder="Your Name*">
+        </div>
+        <div class="col_full">
+          <input type="email" name="template-landing5-email" class="form-control required form-control-lg not-dark" value="" placeholder="Your Email*">
+        </div>
+        <div class="col_full">
+          <input type="password" name="template-landing5-password" class="form-control required form-control-lg not-dark" value="" placeholder="Choose Password*">
+        </div>
+        <div class="col_full">
+          <input type="password" name="template-landing5-repassword" class="form-control required form-control-lg not-dark" value="" placeholder="Confirm Password*">
+        </div>
+        <div class="col_full hidden">
+          <input type="text" id="template-landing5-botcheck" name="template-landing5-botcheck" value="" class="form-control" />
+        </div>
+        <div class="col_full nobottommargin">
+          <button class="btn btn-lg btn-danger btn-block nomargin" value="submit" type="submit" style="">START FREE TRIAL</button>
+        </div>
+
+        <input type="hidden" name="prefix" value="template-landing5-">
+      </form>
+
+    </div>
+
+  </div>
+</section>
