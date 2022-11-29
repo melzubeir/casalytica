@@ -13,7 +13,6 @@ server {
     }
 
     location / {
-        # proxy_pass http://192.168.64.4:3000;
         try_files $uri $uri/ /index.html =404;
     }
 }

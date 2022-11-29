@@ -11,7 +11,7 @@ import Link from '@mui/material/Link';
 import DesoLogin from './DesoLogin';
 import logo from '../../assets/images/logo.png';
 
-const accessLevel = 4;
+const accessLevel = 2;  // no reason to ask for more permissions than we need
 const JWT = true;
 
 

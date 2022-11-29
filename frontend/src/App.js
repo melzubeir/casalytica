@@ -19,7 +19,7 @@ import { authActions } from './store/reducers/auth';
 const sections = [
   { title: 'Home', url: '/' },
   { title: 'About', url: '/about' },
-  { title: 'API', url: 'https://www.casalytica.com/api/docs/' },
+  { title: 'API', url: 'https://api.casalytica.com/' },
   { title: 'Github', url: 'https://github.com/melzubeir/casalytica' },
   { title: 'Contact', url: '/contact' },
 ];
