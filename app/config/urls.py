@@ -15,11 +15,11 @@ urlpatterns = [
     path('accounts/', include('user.urls')),
     path('schema/', SpectacularAPIView.as_view(), name='api-schema'),
     path('v0/', include('analytics.urls')),
-    path('docs/',
+    path('',
          SpectacularSwaggerView.as_view(url_name='api-schema'),
          name='api-docs',
          ),
-    path('', include('pages.urls')),
+    path('pages/', include('pages.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 if settings.DEBUG:

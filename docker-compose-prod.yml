@@ -10,19 +10,6 @@ services:
       - app-data:/vol/app
     env_file:
       - .env
-  frontend:
-    build:
-      context: ./frontend
-    volumes:
-      - static-data:/vol/web
-      - app-data:/vol/app
-    command: >
-      sh -c "npm install &&
-             npm start"
-    env_file:
-      - .env
-    expose:
-      - "3000"
   proxy:
     build:
       context: ./proxy
