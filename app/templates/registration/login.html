@@ -23,7 +23,7 @@
 					<div class="container-fluid vertical-middle divcenter clearfix">
 
 						<div class="center">
-							<a href="index.html"><img src="{% static 'images/logo-dark.png' %}" width="100" alt="Casalytica Logo"></a>
+							<a href="index.html"><img src="{% static 'images/logo-dark.png' %}" height="100" alt="Casalytica Logo"></a>
 						</div>
 
 						<div class="card divcenter noradius noborder" style="max-width: 400px; background-color: rgba(255,255,255,0.93);">
@@ -48,14 +48,18 @@
 								</form>
 
 								<div class="line line-sm"></div>
+                <div class="mt-6" id="loggedin">
 
+                </div>
 								<div class="center">
 									<h4 style="margin-bottom: 15px;">or Login with:</h4>
-									<a href="#" class="button button-rounded si-deso si-colored">DeSo</a>
+									<button type="button" id="login"
+                    onclick="login();" class="button button-rounded si-deso si-colored">DeSo</button>
 								</div>
-							</div>
-						</div>
 
+							</div>
+
+						</div>
 						<div class="center dark"><small>Copyrights &copy; All Rights Reserved by Casalytica</small></div>
 
 					</div>
@@ -66,5 +70,7 @@
 		</section><!-- #content end -->
 
 	</div><!-- #wrapper end -->
+
+
 
 {% endblock content %}
