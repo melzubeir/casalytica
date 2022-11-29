@@ -2,7 +2,12 @@
 {% load static i18n %}
 
 {% block content %}
+        <!-- Header -->
+        {% include 'layouts/header.html' %}
+        <!-- #header end -->
+
   {% include 'layouts/slider1.html' %}
+  <div id="wrapper" class="clearfix">
 
   <!--  Content
 		=============================================  -->
@@ -22,7 +27,10 @@
       </div>
     </div>
   </section>
+
   <!-- #content end -->
 
   {% include 'layouts/footer.html' %}
+</div>
+
 {% endblock %}

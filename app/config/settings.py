@@ -253,3 +253,7 @@ AWS_REGION = environ.get('AWS_REGION', 'us-east-2')
 AWS_SES_REGION_ENDPOINT = 'email.' + AWS_REGION + '.amazonaws.com'
 AWS_SES_ACCESS_KEY_ID = environ.get('AWS_SES_ACCESS_KEY_ID', '')
 AWS_SES_SECRET_ACCESS_KEY = environ.get('AWS_SES_SECRET_ACCESS_KEY', '')
+
+# Login/logout redirects
+LOGIN_REDIRECT_URL = 'home'
+LOGOUT_REDIRECT_URL = 'home'
