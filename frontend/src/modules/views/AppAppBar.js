@@ -40,10 +40,28 @@ function AppAppBar() {
               color="inherit"
               variant="h6"
               underline="none"
-              href="/contact"
+              href="https://www.npmjs.com/package/@socialhose/casalytica"
               sx={rightLink}
             >
-              {'Contact'}
+              {'npm'}
+            </Link>
+          <Link
+              color="inherit"
+              variant="h6"
+              underline="none"
+              href="https://github.com/melzubeir/casalytica"
+              sx={rightLink}
+            >
+              {'GitHub'}
+            </Link>
+          <Link
+              color="inherit"
+              variant="h6"
+              underline="none"
+              href="https://api.casalytica.com"
+              sx={rightLink}
+            >
+              {'API'}
             </Link>
             <DesoLogin
               accessLevel={accessLevel}
