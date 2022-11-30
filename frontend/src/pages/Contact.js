@@ -2,26 +2,33 @@
 import * as React from 'react';
 import Container from '@mui/material/Container';
 import Box from '@mui/material/Box';
+import Link from '@mui/material/Link';
+import DiamondIcon from '@mui/icons-material/Diamond';
+
 import Typography from '../components/UI/Typography';
-import TopBar from './TopBar';
-import Footer from './Footer';
 import withRoot from '../withRoot';
 
 function Contact() {
   return (
     <React.Fragment>
-      <TopBar />
       <Container>
         <Box sx={{ mt: 7, mb: 12 }}>
           <Typography variant="h3" gutterBottom marked="center" align="center">
             Contact
           </Typography>
-          <p>
-            holla back!
-          </p>
+          <div>
+<h2>
+  Socials
+</h2>
+<p>
+  <ul>
+    <li>DeSo <DiamondIcon />: <Link href="https://diamondapp.com/u/casalytica" underline="none">@casalytica</Link></li>
+    <li>email: hello@casalytica.com</li>
+  </ul>
+</p>
+</div>
         </Box>
       </Container>
-      <Footer />
     </React.Fragment>
   );
 }

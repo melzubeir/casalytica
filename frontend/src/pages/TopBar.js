@@ -63,6 +63,15 @@ function TopBar() {
             >
               {'API'}
             </Link>
+            <Link
+              color="inherit"
+              variant="h6"
+              underline="none"
+              href="/contact"
+              sx={rightLink}
+            >
+              {'Contact'}
+            </Link>
             <DesoLogin
               accessLevel={accessLevel}
               JWT={JWT}
