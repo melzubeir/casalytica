@@ -39,6 +39,7 @@ function AppAppBar() {
             <DesoLogin
               accessLevel={accessLevel}
               JWT={JWT}
+              color="inherit"
               buttonText={username ? 'Logout' : 'Login'}
               sx={rightLink}
             />
