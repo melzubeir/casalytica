@@ -1,0 +1,49 @@
+import * as React from 'react';
+import Box from '@mui/material/Box';
+import Link from '@mui/material/Link';
+import AppBar from '../components/AppBar';
+import Toolbar from '../components/Toolbar';
+import { useSelector } from 'react-redux';
+
+import DesoLogin from '../../components/UI/DesoLogin';
+import logo from '../../assets/images/logo-dark.png';
+
+const accessLevel = 2;  // no reason to ask for more permissions than we need
+let JWT = true;
+
+
+function AppAppBar() {
+
+  const isAuth = useSelector(state => state.auth.isAuthenticated);
+  const username = useSelector(state => state.auth.username);
+
+  return (
+    <div>
+      <AppBar position="fixed">
+        <Toolbar sx={{ justifyContent: 'space-between' }}>
+          <Box sx={{ flex: 1 }} />
+          <Link
+            variant="h6"
+            underline="none"
+            color="inherit"
+            href="/"
+            sx={{ fontSize: 24 }}
+          >
+             <img src={logo} alt="Casalytica" width="70" />
+          </Link>
+          <Box sx={{ flex: 1, display: 'flex', justifyContent: 'flex-end' }}>
+            <DesoLogin
+              accessLevel={accessLevel}
+              JWT={JWT}
+              buttonText={username ? 'Logout' : 'Login'}
+            />
+
+          </Box>
+        </Toolbar>
+      </AppBar>
+      <Toolbar />
+    </div>
+  );
+}
+
+export default AppAppBar;

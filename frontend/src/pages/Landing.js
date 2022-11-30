@@ -41,18 +41,16 @@ reasonable expectations.
 </p>
 
 <h4>twitter</h4>
-<table>
-  <tr>
-    <td>
-    <img src="https://user-images.githubusercontent.com/66845648/204166740-ec9cb4ea-1c97-4048-9d55-63b31462b4fd.png"
+<div className="row">
+<div>
+  <img src="https://user-images.githubusercontent.com/66845648/204166740-ec9cb4ea-1c97-4048-9d55-63b31462b4fd.png"
           alt="desocialworld" width="300" height="300" />
-    </td>
-    <td>
+</div>
+<div>
     <img src ="https://user-images.githubusercontent.com/66845648/204166861-ceabed9b-1e64-4d2e-8ba7-0a9f7cb63786.png"
           alt="desofy" width="300" height="300" />
-    </td>
-  </tr>
-</table>
+</div>
+</div>
 <p>
 twitter shows you the analytics of every tweet, including impressions, yet you don't find that on
 DeSocialWorld or Desofy or Diamond even.

@@ -1,10 +1,16 @@
 import { useDispatch, useSelector } from 'react-redux';
 import React from 'react';
-import Button from '@mui/material/Button';
+import Link from '@mui/material/Link';
 
 import { authActions } from '../../store/reducers/auth';
-
 import PropTypes from "prop-types";
+
+
+const rightLink = {
+  fontSize: 16,
+  color: 'common.white',
+  ml: 3,
+};
 
 function initLogin(accessLevel, JWT) {
 
@@ -125,12 +131,17 @@ const DesoLogin = (props) => {
 
   return (
   <div>
-      <Button
-        variant="contained"
-        onClick={handleLogin}
-      >
-        {buttonText || "Sign in with Deso"}
-      </Button>
+    <Link
+      variant="h6"
+      underline="none"
+      color="inherit"
+      href="#"
+
+      onClick={handleLogin}
+      sx={rightLink}
+    >
+      { buttonText || 'Sign In'}
+    </Link>
     </div>
   );
 }
