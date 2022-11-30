@@ -10,7 +10,11 @@ import logo from '../../assets/images/logo-dark.png';
 
 const accessLevel = 2;  // no reason to ask for more permissions than we need
 let JWT = true;
-
+const rightLink = {
+  fontSize: 16,
+  color: 'common.white',
+  ml: 3,
+};
 
 function AppAppBar() {
 
@@ -36,6 +40,7 @@ function AppAppBar() {
               accessLevel={accessLevel}
               JWT={JWT}
               buttonText={username ? 'Logout' : 'Login'}
+              sx={rightLink}
             />
 
           </Box>

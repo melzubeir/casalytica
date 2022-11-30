@@ -1,10 +1,13 @@
 import * as React from 'react';
-import Button from '../components/Button';
 import Typography from '../components/Typography';
 import ProductHeroLayout from './ProductHeroLayout';
 
+import DesoLogin from '../../components/UI/DesoLogin';
+
 const backgroundImage =
   'https://api.casalytica.com/static/images/0016.jpg?auto=format&fit=crop&w=1400';
+
+let JWT = true;
 
 export default function ProductHero() {
   return (
@@ -33,16 +36,15 @@ export default function ProductHero() {
         When your app shares impressions of on-chain content,
         we give you back the totality of all reported impressions so your users can learn their true reach.
       </Typography>
-      <Button
-        color="secondary"
-        variant="contained"
-        size="large"
-        component="a"
-        href="/premium-themes/onepirate/sign-up/"
-        sx={{ minWidth: 200 }}
-      >
-        Register
-      </Button>
+      <DesoLogin
+              accessLevel={2}
+              JWT={JWT}
+              buttonText="Register"
+              color="secondary"
+              sx={{ minWidth: 200 }}
+        />
+
+
       <Typography variant="body2" color="inherit" sx={{ mt: 2 }}>
         Sharing is caring
       </Typography>

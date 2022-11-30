@@ -6,12 +6,6 @@ import { authActions } from '../../store/reducers/auth';
 import PropTypes from "prop-types";
 
 
-const rightLink = {
-  fontSize: 16,
-  color: 'common.white',
-  ml: 3,
-};
-
 function initLogin(accessLevel, JWT) {
 
 
@@ -111,7 +105,7 @@ function initLogin(accessLevel, JWT) {
 }
 
 const DesoLogin = (props) => {
-  const { accessLevel, JWT, buttonText } = props
+  const { accessLevel, JWT, buttonText, color, sx } = props
 
   const dispatch = useDispatch();
   const isAuth = useSelector(state => state.auth.isAuthenticated);
@@ -128,17 +122,17 @@ const DesoLogin = (props) => {
       dispatch(authActions.logout());
     }
   }
-
+  console.log("color: ", color)
   return (
   <div>
     <Link
       variant="h6"
       underline="none"
-      color="inherit"
+      color={color}
       href="#"
 
       onClick={handleLogin}
-      sx={rightLink}
+      sx={sx}
     >
       { buttonText || 'Sign In'}
     </Link>
