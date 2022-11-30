@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from 'react-redux';
 import React from 'react';
 import Link from '@mui/material/Link';
-
+import Button from '../../modules/components/Button';
 import { authActions } from '../../store/reducers/auth';
 import PropTypes from "prop-types";
 
@@ -105,14 +105,24 @@ function initLogin(accessLevel, JWT) {
 }
 
 const DesoLogin = (props) => {
-  const { accessLevel, JWT, buttonText, color, sx } = props
-
+  /* const {
+    isButton,
+    accessLevel,
+    JWT,
+    buttonText,
+    variant,
+    component,
+    size,
+    color,
+    underline,
+    sx } = props
+*/
   const dispatch = useDispatch();
   const isAuth = useSelector(state => state.auth.isAuthenticated);
 
   const handleLogin = () => {
     if (!isAuth) {
-      initLogin(accessLevel, JWT).then(e => {
+      initLogin(props.accessLevel, props.JWT).then(e => {
         dispatch(authActions.login(e));
       }).catch(e => {
 
@@ -122,22 +132,42 @@ const DesoLogin = (props) => {
       dispatch(authActions.logout());
     }
   }
-  console.log("color: ", color)
-  return (
-  <div>
-    <Link
-      variant="h6"
-      underline="none"
-      color={color}
-      href="#"
 
-      onClick={handleLogin}
-      sx={sx}
-    >
-      { buttonText || 'Sign In'}
-    </Link>
+
+  if (props.isButton) {
+    return (
+      <div>
+        <Button
+          color={props.color}
+          variant={props.variant}
+          size={props.size}
+          component={props.component}
+          href="#"
+          sx={props.sx}
+          underline={props.underline}
+          onClick={handleLogin}
+        >
+          {props.buttonText || 'Sign In'}
+        </Button>
+      </div>
+    );
+  }
+  return (
+    <div>
+      <Link
+        variant={props.variant}
+        underline={props.underline}
+        color={props.color}
+        href="#"
+        component={props.component}
+        onClick={handleLogin}
+        sx={props.sx}
+      >
+        {props.buttonText || 'Sign In'}
+      </Link>
     </div>
   );
+
 }
 
 DesoLogin.propTypes = {

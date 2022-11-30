@@ -10,7 +10,7 @@ import store from './store/index';
 let persistor = persistStore(store);
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
-document.title = 'Casalytica';
+document.title = 'Casalytica - analytics for on-chain content';
 
 root.render(
     <React.StrictMode>

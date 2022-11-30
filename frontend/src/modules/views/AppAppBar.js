@@ -36,12 +36,25 @@ function AppAppBar() {
              <img src={logo} alt="Casalytica" width="70" />
           </Link>
           <Box sx={{ flex: 1, display: 'flex', justifyContent: 'flex-end' }}>
+          <Link
+              color="inherit"
+              variant="h6"
+              underline="none"
+              href="/contact"
+              sx={rightLink}
+            >
+              {'Contact'}
+            </Link>
             <DesoLogin
               accessLevel={accessLevel}
               JWT={JWT}
+              variant="h6"
+              isButton={false}
               color="inherit"
+              underline="none"
+              component="a"
               buttonText={username ? 'Logout' : 'Login'}
-              sx={rightLink}
+              sx={{ ...rightLink, color: 'secondary.main' }}
             />
 
           </Box>

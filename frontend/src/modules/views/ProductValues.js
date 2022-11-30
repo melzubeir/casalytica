@@ -26,6 +26,23 @@ function ProductValues() {
           sx={{ pointerEvents: 'none', position: 'absolute', top: -180 }}
         />
         <Grid container spacing={5}>
+        <Grid item xs={12} md={4}>
+            <Box sx={item}>
+              <Box
+                component="img"
+                src="https://api.casalytica.com/static/images/icons/features/performance.png"
+                alt="diamond"
+                sx={{ height: 55 }}
+              />
+              <Typography variant="h6" sx={{ my: 5 }}>
+                DeSo First
+              </Typography>
+              <Typography variant="h5">
+                {'While our service is designed for any on-chain content, '}
+                {'it is built with DeSo first, which is why is is aware of DeSo nodes and their operators as well.'}
+              </Typography>
+            </Box>
+          </Grid>
           <Grid item xs={12} md={4}>
             <Box sx={item}>
               <Box
@@ -65,23 +82,6 @@ function ProductValues() {
                 }
 
                 {'used to view the on-chain content served by your app.'}
-              </Typography>
-            </Box>
-          </Grid>
-          <Grid item xs={12} md={4}>
-            <Box sx={item}>
-              <Box
-                component="img"
-                src="https://api.casalytica.com/static/images/icons/features/performance.png"
-                alt="diamond"
-                sx={{ height: 55 }}
-              />
-              <Typography variant="h6" sx={{ my: 5 }}>
-                Exclusive rates
-              </Typography>
-              <Typography variant="h5">
-                {'While our service is designed for any on-chain content, '}
-                {'it is built with DeSo first, which is why is is aware of DeSo nodes and their operators as well.'}
               </Typography>
             </Box>
           </Grid>

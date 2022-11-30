@@ -41,6 +41,11 @@ export default function ProductHero() {
               JWT={JWT}
               buttonText="Register"
               color="secondary"
+              variant="contained"
+              size="large"
+              component="a"
+              underline="none"
+              isButton={true}
               sx={{ minWidth: 200 }}
         />
 
