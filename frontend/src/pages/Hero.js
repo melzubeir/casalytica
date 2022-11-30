@@ -1,17 +1,17 @@
 import * as React from 'react';
-import Typography from '../components/Typography';
-import ProductHeroLayout from './ProductHeroLayout';
+import Typography from '../components/UI/Typography';
+import HeroLayout from './HeroLayout';
 
-import DesoLogin from '../../components/UI/DesoLogin';
+import DesoLogin from '../components/UI/DesoLogin';
 
 const backgroundImage =
   'https://api.casalytica.com/static/images/0016.jpg?auto=format&fit=crop&w=1400';
 
 let JWT = true;
 
-export default function ProductHero() {
+export default function Hero() {
   return (
-    <ProductHeroLayout
+    <HeroLayout
       sxBackground={{
         backgroundImage: `url(${backgroundImage})`,
         backgroundColor: '#7fc7d9', // Average color of the background image.
@@ -53,6 +53,6 @@ export default function ProductHero() {
       <Typography variant="body2" color="inherit" sx={{ mt: 2 }}>
         Sharing is caring
       </Typography>
-    </ProductHeroLayout>
+    </HeroLayout>
   );
 }

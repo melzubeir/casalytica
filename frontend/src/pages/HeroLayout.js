@@ -5,10 +5,10 @@ import { styled } from '@mui/material/styles';
 import Container from '@mui/material/Container';
 import Box from '@mui/material/Box';
 
-import arrowDown from '../../assets/images/icons/heroArrowDown.png';
+import arrowDown from '../assets/images/icons/heroArrowDown.png';
 
 
-const ProductHeroLayoutRoot = styled('section')(({ theme }) => ({
+const HeroLayoutRoot = styled('section')(({ theme }) => ({
   color: theme.palette.common.white,
   position: 'relative',
   display: 'flex',
@@ -31,11 +31,11 @@ const Background = styled(Box)({
   zIndex: -2,
 });
 
-function ProductHeroLayout(props) {
+function HeroLayout(props) {
   const { sxBackground, children } = props;
 
   return (
-    <ProductHeroLayoutRoot>
+    <HeroLayoutRoot>
       <Container
         sx={{
           mt: 3,
@@ -68,11 +68,11 @@ function ProductHeroLayout(props) {
           sx={{ position: 'absolute', bottom: 32 }}
         />
       </Container>
-    </ProductHeroLayoutRoot>
+    </HeroLayoutRoot>
   );
 }
 
-ProductHeroLayout.propTypes = {
+HeroLayout.propTypes = {
   children: PropTypes.node,
   sxBackground: PropTypes.oneOfType([
     PropTypes.arrayOf(
@@ -83,4 +83,4 @@ ProductHeroLayout.propTypes = {
   ]),
 };
 
-export default ProductHeroLayout;
+export default HeroLayout;

@@ -1,12 +1,12 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
 import Link from '@mui/material/Link';
-import AppBar from '../components/AppBar';
-import Toolbar from '../components/Toolbar';
+import AppBar from '../components/UI/AppBar';
+import Toolbar from '../components/UI/Toolbar';
 import { useSelector } from 'react-redux';
 
-import DesoLogin from '../../components/UI/DesoLogin';
-import logo from '../../assets/images/logo-dark.png';
+import DesoLogin from '../components/UI/DesoLogin';
+import logo from '../assets/images/logo-dark.png';
 
 const accessLevel = 2;  // no reason to ask for more permissions than we need
 let JWT = true;
@@ -16,7 +16,7 @@ const rightLink = {
   ml: 3,
 };
 
-function AppAppBar() {
+function TopBar() {
 
   const isAuth = useSelector(state => state.auth.isAuthenticated);
   const username = useSelector(state => state.auth.username);
@@ -83,4 +83,4 @@ function AppAppBar() {
   );
 }
 
-export default AppAppBar;
+export default TopBar;

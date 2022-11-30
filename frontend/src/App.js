@@ -2,12 +2,12 @@
 import * as React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useEffect } from 'react';
-import ProductDownload from './modules/views/ProductDownload';
-import AppFooter from './modules/views/AppFooter';
-import ProductHero from './modules/views/ProductHero';
-import ProductValues from './modules/views/ProductValues';
-import AppAppBar from './modules/views/AppAppBar';
-import withRoot from './modules/withRoot';
+import Download from './pages/Download';
+import Footer from './pages/Footer';
+import Hero from './pages/Hero';
+import Features from './pages/Features';
+import TopBar from './pages/TopBar';
+import withRoot from './withRoot';
 import { authActions } from './store/reducers/auth';
 
 import DesoApi from './libs/DesoApi'
@@ -35,11 +35,11 @@ function Index() {
 
   return (
     <React.Fragment>
-      <AppAppBar />
-      <ProductHero />
-      <ProductValues />
-      <ProductDownload />
-      <AppFooter />
+      <TopBar />
+      <Hero />
+      <Features />
+      <Download />
+      <Footer />
     </React.Fragment>
   );
 }

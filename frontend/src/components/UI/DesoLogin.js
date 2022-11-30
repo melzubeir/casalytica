@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from 'react-redux';
 import React from 'react';
 import Link from '@mui/material/Link';
-import Button from '../../modules/components/Button';
+import Button from './Button';
 import { authActions } from '../../store/reducers/auth';
 import PropTypes from "prop-types";
 
