@@ -8,6 +8,7 @@ import Footer from './pages/Footer';
 import Hero from './pages/Hero';
 import Features from './pages/Features';
 import TopBar from './pages/TopBar';
+import Register from './pages/Register';
 import Contact from './pages/Contact';
 import withRoot from './withRoot';
 import { authActions } from './store/reducers/auth';
@@ -45,6 +46,9 @@ function Index() {
       </Route>
       <Route exact path="/contact">
         <Contact />
+      </Route>
+      <Route exact path="/register">
+        <Register />
       </Route>
       <Footer />
     </React.Fragment>

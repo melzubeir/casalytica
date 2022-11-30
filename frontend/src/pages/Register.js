@@ -1,20 +1,24 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
-import Link from '@mui/material/Link';
+import { useSelector } from 'react-redux';
 import { Field, Form, FormSpy } from 'react-final-form';
-import Typography from './modules/components/Typography';
-import AppFooter from './modules/views/AppFooter';
-import AppAppBar from './modules/views/AppAppBar';
-import AppForm from './modules/views/AppForm';
-import { email, required } from './modules/form/validation';
-import RFTextField from './modules/form/RFTextField';
-import FormButton from './modules/form/FormButton';
-import FormFeedback from './modules/form/FormFeedback';
-import withRoot from './modules/withRoot';
+import Typography from '../components/UI/Typography';
+import MyForm from './MyForm';
+import { email, required } from '../components/Form/validation';
+import RFTextField from '../components/Form/RFTextField';
+import FormButton from '../components/Form/FormButton';
+import FormFeedback from '../components/Form/FormFeedback';
+import withRoot from '../withRoot';
 
-function SignUp() {
+import DesoLogin from '../components/UI/DesoLogin';
+
+function Register() {
   const [sent, setSent] = React.useState(false);
+
+  const isAuth = useSelector(state => state.auth.isAuthenticated);
+  const username = useSelector(state => state.auth.username);
+
 
   const validate = (values) => {
     const errors = required(['firstName', 'lastName', 'email', 'password'], values);
@@ -34,17 +38,20 @@ function SignUp() {
   };
 
   return (
-    <React.Fragment>
-      <AppAppBar />
-      <AppForm>
+      <MyForm>
         <React.Fragment>
           <Typography variant="h3" gutterBottom marked="center" align="center">
-            Sign Up
+            Register
           </Typography>
           <Typography variant="body2" align="center">
-            <Link href="/premium-themes/onepirate/sign-in/" underline="always">
-              Already have an account?
-            </Link>
+          <DesoLogin
+              accessLevel="2"
+              JWT={true}
+              isButton={false}
+              underline="always"
+              component="a"
+              buttonText={username ? 'hey, ' + username : 'You must login to DeSo first'}
+            />
           </Typography>
         </React.Fragment>
         <Form
@@ -120,10 +127,8 @@ function SignUp() {
             </Box>
           )}
         </Form>
-      </AppForm>
-      <AppFooter />
-    </React.Fragment>
+      </MyForm>
   );
 }
 
-export default withRoot(SignUp);
+export default withRoot(Register);

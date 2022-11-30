@@ -2,7 +2,7 @@ import * as React from 'react';
 import Typography from '../components/UI/Typography';
 import HeroLayout from './HeroLayout';
 
-import DesoLogin from '../components/UI/DesoLogin';
+import Button from '../components/UI/Button';
 
 const backgroundImage =
   'https://api.casalytica.com/static/images/0016.jpg?auto=format&fit=crop&w=1400';
@@ -36,18 +36,17 @@ export default function Hero() {
         When your app shares impressions of on-chain content,
         we give you back the totality of all reported impressions so your users can learn their true reach.
       </Typography>
-      <DesoLogin
-              accessLevel={2}
-              JWT={JWT}
+      <Button
               buttonText="Register"
               color="secondary"
               variant="contained"
               size="large"
               component="a"
               underline="none"
-              isButton={true}
+              href="/register"
               sx={{ minWidth: 200 }}
-        />
+        >Register
+      </Button>
 
 
       <Typography variant="body2" color="inherit" sx={{ mt: 2 }}>
