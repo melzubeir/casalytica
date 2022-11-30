@@ -43,7 +43,7 @@ function Header(props) {
         <DesoLogin
           accessLevel={accessLevel}
           JWT={JWT}
-          buttonText={username ? 'Logout' : 'Login'}
+          buttontext={username ? 'Logout' : 'Login'}
         />
       </Toolbar>
       <Toolbar

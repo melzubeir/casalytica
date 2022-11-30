@@ -3,7 +3,7 @@ import * as React from 'react';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import Container from '@mui/material/Container';
-import Typography from '../components/UI/Typography';
+import Typography from '../UI/Typography';
 
 const item = {
   display: 'flex',
@@ -12,7 +12,7 @@ const item = {
   px: 5,
 };
 
-function Features() {
+function SectionFeatures() {
   return (
     <Box
       component="section"
@@ -21,7 +21,7 @@ function Features() {
       <Container sx={{ mt: 15, mb: 10, display: 'flex', position: 'relative' }}>
         <Box
           component="img"
-          src="/static/themes/onepirate/productCurvyLines.png"
+          src="/assets/images/curvyLines.png"
           alt="curvy lines"
           sx={{ pointerEvents: 'none', position: 'absolute', top: -180 }}
         />
@@ -91,4 +91,4 @@ function Features() {
   );
 }
 
-export default Features;
+export default SectionFeatures;

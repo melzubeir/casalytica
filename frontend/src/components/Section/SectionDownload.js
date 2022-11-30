@@ -3,12 +3,12 @@ import * as React from 'react';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import Container from '@mui/material/Container';
-import Button from '../components/UI/Button';
-import Typography from '../components/UI/Typography';
+import Button from '../UI/Button';
+import Typography from '../UI/Typography';
 
-import npmlogo from '../assets/images/npm-logo.png';
-import githublogo from '../assets/images/github-logo.png';
-import code from '../assets/images/code.png';
+import npmlogo from '../../assets/images/npm-logo.png';
+import githublogo from '../../assets/images/github-logo.png';
+import code from '../../assets/images/code.png';
 
 const item = {
   display: 'flex',
@@ -29,7 +29,7 @@ const image = {
   my: 4,
 };
 
-function Download() {
+function SectionDownload() {
   return (
     <Box
       component="section"
@@ -125,4 +125,4 @@ function Download() {
   );
 }
 
-export default Download;
+export default SectionDownload;

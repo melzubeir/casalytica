@@ -105,18 +105,7 @@ function initLogin(accessLevel, JWT) {
 }
 
 const DesoLogin = (props) => {
-  /* const {
-    isButton,
-    accessLevel,
-    JWT,
-    buttonText,
-    variant,
-    component,
-    size,
-    color,
-    underline,
-    sx } = props
-*/
+
   const dispatch = useDispatch();
   const isAuth = useSelector(state => state.auth.isAuthenticated);
 
@@ -136,7 +125,6 @@ const DesoLogin = (props) => {
 
   if (props.isButton) {
     return (
-      <div>
         <Button
           color={props.color}
           variant={props.variant}
@@ -147,13 +135,11 @@ const DesoLogin = (props) => {
           underline={props.underline}
           onClick={handleLogin}
         >
-          {props.buttonText || 'Sign In'}
+          {props.buttontext || 'Sign In'}
         </Button>
-      </div>
     );
   }
   return (
-    <div>
       <Link
         variant={props.variant}
         underline={props.underline}
@@ -163,9 +149,8 @@ const DesoLogin = (props) => {
         onClick={handleLogin}
         sx={props.sx}
       >
-        {props.buttonText || 'Sign In'}
+        {props.buttontext || 'Sign In'}
       </Link>
-    </div>
   );
 
 }
@@ -173,6 +158,6 @@ const DesoLogin = (props) => {
 DesoLogin.propTypes = {
   accessLevel: PropTypes.number.isRequired,
   JWT: PropTypes.bool,
-  buttonText: PropTypes.string,
+  buttontext: PropTypes.string,
 };
 export default DesoLogin;

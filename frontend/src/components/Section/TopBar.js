@@ -1,12 +1,12 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
 import Link from '@mui/material/Link';
-import AppBar from '../components/UI/AppBar';
-import Toolbar from '../components/UI/Toolbar';
+import AppBar from '../UI/AppBar';
+import Toolbar from '../UI/Toolbar';
 import { useSelector } from 'react-redux';
 
-import DesoLogin from '../components/UI/DesoLogin';
-import logo from '../assets/images/logo-dark.png';
+import DesoLogin from '../UI/DesoLogin';
+import logo from '../../assets/images/logo-dark.png';
 
 const accessLevel = 2;  // no reason to ask for more permissions than we need
 let JWT = true;
@@ -80,7 +80,7 @@ function TopBar() {
               color="inherit"
               underline="none"
               component="a"
-              buttonText={username ? 'Logout' : 'Login'}
+              buttontext={username ? 'Logout' : 'Login'}
               sx={{ ...rightLink, color: 'secondary.main' }}
             />
 

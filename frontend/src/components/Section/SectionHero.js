@@ -1,17 +1,16 @@
 import * as React from 'react';
-import Typography from '../components/UI/Typography';
-import HeroLayout from './HeroLayout';
+import Typography from '../UI/Typography';
+import SectionHeroLayout from './SectionHeroLayout';
 
-import Button from '../components/UI/Button';
+import Button from '../UI/Button';
 
 const backgroundImage =
   'https://api.casalytica.com/static/images/0016.jpg?auto=format&fit=crop&w=1400';
 
-let JWT = true;
 
-export default function Hero() {
+export default function SectionHero() {
   return (
-    <HeroLayout
+    <SectionHeroLayout
       sxBackground={{
         backgroundImage: `url(${backgroundImage})`,
         backgroundColor: '#7fc7d9', // Average color of the background image.
@@ -37,7 +36,7 @@ export default function Hero() {
         we give you back the totality of all reported impressions so your users can learn their true reach.
       </Typography>
       <Button
-              buttonText="Register"
+              buttontext="Register"
               color="secondary"
               variant="contained"
               size="large"
@@ -52,6 +51,6 @@ export default function Hero() {
       <Typography variant="body2" color="inherit" sx={{ mt: 2 }}>
         Sharing is caring
       </Typography>
-    </HeroLayout>
+    </SectionHeroLayout>
   );
 }

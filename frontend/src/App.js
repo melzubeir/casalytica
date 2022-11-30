@@ -3,15 +3,19 @@ import * as React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Route } from 'react-router-dom';
 import { useEffect } from 'react';
-import Download from './pages/Download';
-import Footer from './pages/Footer';
-import Hero from './pages/Hero';
-import Features from './pages/Features';
-import TopBar from './pages/TopBar';
+import { authActions } from './store/reducers/auth';
+
+import TopBar from './components/Section/TopBar';
+import Footer from './components/Section/Footer';
+import SectionHero from './components/Section/SectionHero';
+import SectionFeatures from './components/Section/SectionFeatures';
+import SectionDownload from './components/Section/SectionDownload';
+
 import Register from './pages/Register';
 import Contact from './pages/Contact';
+
 import withRoot from './withRoot';
-import { authActions } from './store/reducers/auth';
+
 
 import DesoApi from './libs/DesoApi'
 
@@ -40,9 +44,9 @@ function Index() {
     <React.Fragment>
       <TopBar />
       <Route exact path="/">
-        <Hero />
-        <Features />
-        <Download />
+        <SectionHero />
+        <SectionFeatures />
+        <SectionDownload />
       </Route>
       <Route exact path="/contact">
         <Contact />
