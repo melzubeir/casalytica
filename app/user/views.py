@@ -10,18 +10,34 @@ from rest_framework import (
 from rest_framework.authtoken.views import ObtainAuthToken
 from rest_framework.settings import api_settings
 from django.urls import reverse_lazy
+import logging
 from user.serializers import (
     UserSerializer,
     AuthTokenSerializer
 )
 
 from .forms import CustomUserCreationForm
+from analytics import models
+
+from django.contrib.auth import get_user_model
+
+logger = logging.getLogger(__name__)
 
 
 class CreateUserView(generics.CreateAPIView):
     """Create a new user in the system"""
     serializer_class = UserSerializer
-    permission_classes = [permissions.IsAdminUser]
+
+    def create(self, serializer):
+        """Create a new user"""
+
+        # create creator object for user
+        creator_obj, created = models.Creator.objects.get_or_create(
+            username=serializer.data.get('creator').get('username'),
+            public_key_base58=serializer.data.get('creator').get('public_key_base58'),
+        )
+        serializer.data['creator'] = creator_obj.pk
+        return super().create(serializer)
 
 
 class CreateTokenView(ObtainAuthToken):

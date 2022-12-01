@@ -19,7 +19,9 @@ class UserAdmin(BaseUserAdmin):
                 'fields': (
                     'is_active',
                     'is_staff',
+                    'is_reporter',
                     'is_superuser',
+                    'creator',
                 )
             }
         ),
@@ -35,7 +37,9 @@ class UserAdmin(BaseUserAdmin):
                 'password2',
                 'is_active',
                 'is_staff',
+                'is_reporter',
                 'is_superuser',
+                'creator',
             ),
         }),
     )

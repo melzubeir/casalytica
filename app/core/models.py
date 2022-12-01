@@ -6,9 +6,11 @@ from django.contrib.auth.models import (
     BaseUserManager,
     PermissionsMixin
 )
+import logging
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
+logger = logging.getLogger(__name__)
 
 class UserManager(BaseUserManager):
     """Manager for users"""
@@ -28,6 +30,7 @@ class UserManager(BaseUserManager):
         user = self.create_user(email, password)
         user.is_staff = True
         user.is_superuser = True
+        user.is_reporter = True
         user.save(using=self._db)
 
         return user
@@ -37,8 +40,13 @@ class User(AbstractBaseUser, PermissionsMixin):
     """User is in the system"""
     email = models.EmailField(max_length=255, unique=True)
     name = models.CharField(max_length=255)
-    username = models.CharField(max_length=255)
+    creator = models.ForeignKey(
+        'analytics.Creator',
+        on_delete=models.CASCADE,
+        null=True,
+        blank=True)
     is_active = models.BooleanField(default=True)
+    is_reporter = models.BooleanField(default=False)
     is_staff = models.BooleanField(default=False)
 
     objects = UserManager()

@@ -5,8 +5,14 @@ from django.contrib.auth import (
     get_user_model,
     authenticate,
 )
+import logging
 from django.utils.translation import gettext as _
 from rest_framework import serializers
+from analytics import models
+from analytics import serializers as analytics_serializers
+
+
+logger = logging.getLogger(__name__)
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -14,12 +20,9 @@ class UserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = get_user_model()
-        fields = ['email', 'password', 'name']
+        fields = ['email', 'password', 'name', 'creator']
         extra_kwargs = {'password': {'write_only': True, 'min_length': 5}}
 
-    def create(self, validated_data):
-        """Create and return a user with encrypted password"""
-        return get_user_model().objects.create_user(**validated_data)
 
     def update(self, instance, validated_data):
         """Update and return user"""
