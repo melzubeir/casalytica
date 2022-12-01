@@ -42,7 +42,7 @@ LOGGING = {
     'version': 1,                       # the dictConfig format version
     'disable_existing_loggers': False,  # retain the default loggers
     'formatters': {
-    'console': {
+        'console': {
             'format': '%(name)-12s %(levelname)-8s %(message)s'
         },
         'file': {
@@ -108,6 +108,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "django.contrib.sites",
     "corsheaders",
 
     "debug_toolbar",
@@ -121,7 +122,7 @@ INSTALLED_APPS = [
     "dj_rest_auth",
     "dj_rest_auth.registration",
     "drf_spectacular",
-    'drf_spectacular_sidecar',
+    "drf_spectacular_sidecar",
 
     "core",
     "analytics",
@@ -179,8 +180,8 @@ DATABASES = {
 
 # DeSo configs
 nodeURL = environ.get('NODE_URL', 'https://node.deso.org/api/v0/')
-casalyticaPublicKey='BC1YLiy1Ny1btpBkaNHBaUD5D9xX8PhdgeToPn3Fq95RhCMYQVW1Anw'
-SKIP_DESO=bool(int(environ.get('SKIP_DESO', 0)))
+casalyticaPublicKey = 'BC1YLiy1Ny1btpBkaNHBaUD5D9xX8PhdgeToPn3Fq95RhCMYQVW1Anw'
+SKIP_DESO = bool(int(environ.get('SKIP_DESO', 0)))
 
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
@@ -236,9 +237,6 @@ GEOIP_PATH = environ.get('GEOIP_PATH')
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-AUTH_USER_MODEL = 'core.User'
-
-
 REST_FRAMEWORK = {
     'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
     'DEFAULT_AUTHENTICATION_CLASS   ES': [
@@ -251,18 +249,40 @@ SPECTACULAR_SETTINGS = {
     'COMPONENT_SPLIT_REQUEST': True,
     # 'SWAGGER_UI_DIST': 'SIDECAR',  # shorthand to use the sidecar instead
     # 'SWAGGER_UI_FAVICON_HREF': 'SIDECAR',
-    #'REDOC_DIST': 'SIDECAR',
+    # 'REDOC_DIST': 'SIDECAR',
     'TITLE': 'Casalytica API',
     'DESCRIPTION': 'analytics for on-chain content',
-    'CONTACT': { 'name': 'Casalytica', 'email': 'hello@casalytica.com' },
-    'LICENSE': { 'name': 'BSD-3-CLAUSE', 'url': 'https://github.com/melzubeir/casalytica/blob/master/LICENSE.txt' },
+    'CONTACT': {'name': 'Casalytica', 'email': 'hello@casalytica.com'},
+    'LICENSE': {'name': 'BSD-3-CLAUSE', 'url': 'https://github.com/melzubeir/casalytica/blob/master/LICENSE.txt'},
     'VERSION': '0.0.1',
     'SCHEMA_PATH_PREFIX': r'/v0',
     # "SWAGGER_UI_DIST": "//unpkg.com/swagger-ui-dist@3.35.1", # default
-    "SWAGGER_UI_FAVICON_HREF": STATIC_URL + "images/favicon.ico", # default is swagger favicon
+    # default is swagger favicon
+    "SWAGGER_UI_FAVICON_HREF": STATIC_URL + "images/favicon.ico",
 }
 
+
+# USER MODEL & AUTHENTICATION BACKENDS
+
+AUTH_USER_MODEL = 'core.User'
+SITE_ID = 1
+
+
+AUTHENTICATION_BACKENDS = (
+    'django.contrib.auth.backends.ModelBackend',
+    'allauth.account.auth_backends.AuthenticationBackend',
+)
+
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_AUTHENTICATION_METHOD = 'email'
+ACCOUNT_USERNAME_REQUIRED = False
+ACCOUNT_DEFAULT_HTTP_PROTOCOL = 'https'
+ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
+ACCOUNT_SESSION_REMEMBER = True
+ACCOUNT_SIGNUP_PASSWORD_ENTER_TWICE = False
+
 # Email tings
+DEFAULT_FROM_EMAIL = environ.get('DEFAULT_FROM_EMAIL', 'hello@casalytica.com')
 EMAIL_BACKEND = 'django_ses.SESBackend'
 AWS_REGION = environ.get('AWS_REGION', 'us-east-2')
 AWS_SES_REGION_ENDPOINT = 'email.' + AWS_REGION + '.amazonaws.com'
