@@ -1,5 +1,4 @@
 from django.db import models
-import logging
 import json
 from config import settings
 from django.utils.translation import gettext_lazy as _
@@ -7,8 +6,6 @@ from django.contrib.gis.geoip2 import GeoIP2
 from user_agents import parse
 from config import settings
 
-
-logger = logging.getLogger(__name__)
 
 DESO_APP_CHOICES = [
     (0, ('Undefined')),

@@ -15,11 +15,12 @@ from user.serializers import (
     UserSerializer,
     AuthTokenSerializer
 )
+from django.contrib.auth import get_user_model
 
 from .forms import CustomUserCreationForm
 from analytics import models
+from config import settings
 
-from django.contrib.auth import get_user_model
 
 logger = logging.getLogger(__name__)
 
@@ -34,9 +35,14 @@ class CreateUserView(generics.CreateAPIView):
         # create creator object for user
         creator_obj, created = models.Creator.objects.get_or_create(
             username=serializer.data.get('creator').get('username'),
-            public_key_base58=serializer.data.get('creator').get('public_key_base58'),
+            public_key_base58=serializer.data.get(
+                'creator').get('public_key_base58'),
         )
+
         serializer.data['creator'] = creator_obj.pk
+        if settings.DEBUG:
+            logger.info("Creator object created: %s", creator_obj)
+            logger.info('User data: %s', serializer.data)
 
         return super().create(serializer)
 

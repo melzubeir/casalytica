@@ -10,6 +10,8 @@ import logging
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
+from config import settings
+
 logger = logging.getLogger(__name__)
 
 class UserManager(BaseUserManager):
@@ -23,6 +25,8 @@ class UserManager(BaseUserManager):
         user.set_password(password)
         user.save(using=self._db)
 
+        if settings.DEBUG:
+            logger.info('User created: %s', user)
         return user
 
     def create_superuser(self, email, password):

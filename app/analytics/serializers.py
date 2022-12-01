@@ -15,7 +15,7 @@ from django.db.models import F
 from django.utils.translation import gettext_lazy as _
 from django.contrib.gis.geoip2 import GeoIP2
 from user_agents import parse
-
+from config import settings
 
 logger = logging.getLogger(__name__)
 
@@ -37,7 +37,9 @@ class PostSerializer(serializers.ModelSerializer):
 
     def _get_or_create_creator(self, username, public_key_base58):
         """get or create creator"""
-        logger.info('PostSerializer._get_or_create_creator() ----> ENTRY <----')
+        if settings.DEBUG:
+            logger.info(
+                'PostSerializer._get_or_create_creator() ----> ENTRY <----')
 
         creator_obj, created = models.Creator.objects.get_or_create(
             username=username,
@@ -47,7 +49,10 @@ class PostSerializer(serializers.ModelSerializer):
 
     def _get_or_create_node(self, node_id):
         """get or create creator"""
-        logger.info('PostSerializer._get_or_create_node() ----> ENTRY <----')
+        if settings.DEBUG:
+            logger.info(
+                'PostSerializer._get_or_create_node() ----> ENTRY <----')
+
         node_obj, created = models.Node.objects.get_or_create(
             id=node_id)
         node_obj.save()
@@ -55,13 +60,17 @@ class PostSerializer(serializers.ModelSerializer):
 
     def update(self, post_data):
         """update post"""
-        logger.info('PostSerializer.update() ----> ENTRY <----')
+        if settings.DEBUG:
+            logger.info('PostSerializer.update() ----> ENTRY <----')
+
         post_obj = models.Post.objects.get(post_hash=post_data['post_hash'])
         post_obj.impressions_total = F('impressions_total') + 1
 
     def create(self, post_data):
         """create post"""
-        logger.info('PostSerializer.create() ----> ENTRY <----')
+        if settings.DEBUG:
+            logger.info('PostSerializer.create() ----> ENTRY <----')
+
         creator = self._get_or_create_creator(
             post_data['creator'][0], post_data['creator'][1])
         node = self._get_or_create_node(post_data['node'])
@@ -76,8 +85,8 @@ class PostSerializer(serializers.ModelSerializer):
         post_obj.creator = creator
         post_obj.node = node
         post_obj.impressions_total = F('impressions_total') + 1
-
-        logger.info('PostSerializer.create() post_obj: %s', post_obj)
+        if settings.DEBUG:
+            logger.info('PostSerializer.create() post_obj: %s', post_obj)
         post_obj.save()
 
 
@@ -173,9 +182,9 @@ class ImpressionSerializer(serializers.Serializer):
 
     def _get_or_create_posts(self, posts):
         """handle getting or create posts for impression"""
-
-        logger.info(
-            'ImpressionViewset._get_or_create_posts() ----> ENTRY <----')
+        if settings.DEBUG:
+            logger.info(
+                'ImpressionViewset._get_or_create_posts() ----> ENTRY <----')
         post_objects = []
         for post in posts:
             logger.info(
@@ -197,7 +206,7 @@ class ImpressionSerializer(serializers.Serializer):
             node = self._get_or_create_node(post_data['node'])
             post_obj, created = models.Post.objects.get_or_create(
                 post_hash=post['post_hash'])
-            if not created:
+            if not created and settings.DEBUG:
                 logger.info(
                     'ImpressionViewset._get_or_create_posts() - Post exists NOT CREATED: %s', post_obj)
             post_obj.creator = creator
@@ -205,16 +214,18 @@ class ImpressionSerializer(serializers.Serializer):
             post_obj.impressions_total = F('impressions_total') + 1
             post_obj.save()
             post_objects.append(post_obj)
-            logger.info(
-                'ImpressionViewset._get_or_create_posts() - posts loop bottom - post_obj: %s', post_obj)
+            if settings.DEBUG:
+                logger.info(
+                    'ImpressionViewset._get_or_create_posts() - posts loop bottom - post_obj: %s',
+                    post_obj)
 
         return post_objects
 
     def _get_or_create_creator(self, creator):
         """get or create creator"""
-
-        logger.info(
-            'ImpressionViewset._get_or_create_creator() ----> ENTRY <----')
+        if settings.DEBUG:
+            logger.info(
+                'ImpressionViewset._get_or_create_creator() ----> ENTRY <----')
         creator_obj, created = models.Creator.objects.get_or_create(
             username=creator['username'],
             public_key_base58=creator['key'])
@@ -223,8 +234,9 @@ class ImpressionSerializer(serializers.Serializer):
 
     def _get_or_create_node(self, node_id):
         """get or create creator"""
-
-        logger.info('ImpressionViewset._get_or_create_node() ----> ENTRY <----')
+        if settings.DEBUG:
+            logger.info(
+                'ImpressionViewset._get_or_create_node() ----> ENTRY <----')
         node_obj, created = models.Node.objects.get_or_create(
             id=node_id)
         node_obj.save()
@@ -232,8 +244,9 @@ class ImpressionSerializer(serializers.Serializer):
 
     def to_internal_value(self, data):
         """convert data to internal value"""
-        logger.info(
-            'ImpressionSerializer.to_internal_value() ----> ENTRY <----\n\t\tdata: %s', data)
+        if settings.DEBUG:
+            logger.info(
+                'ImpressionSerializer.to_internal_value() ----> ENTRY <----\n\t\tdata: %s', data)
         auth_user = self.context['request'].user
 
         values = {
@@ -245,14 +258,16 @@ class ImpressionSerializer(serializers.Serializer):
             'referer': data.get('referer', None),
             'user': auth_user
         }
-        logger.info(
-            'ImpressionSerializer.to_internal_value() values: %s', values)
+        if settings.DEBUG:
+            logger.info(
+                'ImpressionSerializer.to_internal_value() values: %s', values)
         return values
 
     def to_representation(self, instance):
         """convert to representation"""
-        logger.info(
-            'ImpressionSerializer.to_representation() ----> ENTRY <----')
+        if settings.DEBUG:
+            logger.info(
+                'ImpressionSerializer.to_representation() ----> ENTRY <----')
         return {
             'created': instance.created,
             'remote_addr': instance.remote_addr,
@@ -265,7 +280,8 @@ class ImpressionSerializer(serializers.Serializer):
 
     def create(self, validated_data):
         """create impression"""
-        logger.info('ImpressionSerializer.create() ----> ENTRY <----')
+        if settings.DEBUG:
+            logger.info('ImpressionSerializer.create() ----> ENTRY <----')
         instance = models.Impression.objects.create(
             remote_addr=validated_data['remote_addr'],
             user_agent=validated_data['user_agent'],
@@ -285,8 +301,9 @@ class ImpressionSerializer(serializers.Serializer):
 
     def validate_remote_addr(self, remote_addr):
         """validate remote_addr"""
-        logger.info(
-            'ImpressionSerializer.validate_remote_addr() ----> ENTRY <----')
+        if settings.DEBUG:
+            logger.info(
+                'ImpressionSerializer.validate_remote_addr() ----> ENTRY <----')
         if remote_addr is None:
             raise serializers.ValidationError(_('remote_addr is required'))
         if (ipaddress.ip_address(remote_addr).is_private or
@@ -309,7 +326,6 @@ class ImpressionSerializer(serializers.Serializer):
 
 class ImpressionDetailSerializer(ImpressionSerializer):
     """Serializer for impression detail view"""
-    # posts = PostSerializer(many=True, required=False)
 
     class Meta(ImpressionSerializer.Meta):
         fields = ImpressionSerializer.Meta.fields + [
