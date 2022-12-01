@@ -14,7 +14,7 @@ import axios from 'axios';
 import DesoLogin from '../components/UI/DesoLogin';
 
 let client = axios.create({
-  baseURL: 'http://localhost:8000',
+  baseURL: 'https://api.casalytica.com',
   headers: {
     'Content-Type': 'application/json',
     'Accept': 'application/json',
