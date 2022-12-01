@@ -37,6 +37,7 @@ class CreateUserView(generics.CreateAPIView):
             public_key_base58=serializer.data.get('creator').get('public_key_base58'),
         )
         serializer.data['creator'] = creator_obj.pk
+
         return super().create(serializer)
 
 

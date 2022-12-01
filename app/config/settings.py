@@ -123,6 +123,7 @@ INSTALLED_APPS = [
     "dj_rest_auth.registration",
     "drf_spectacular",
     "drf_spectacular_sidecar",
+    "django_ses",
 
     "core",
     "analytics",
@@ -273,13 +274,16 @@ AUTHENTICATION_BACKENDS = (
     'allauth.account.auth_backends.AuthenticationBackend',
 )
 
+
 ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_AUTHENTICATION_METHOD = 'email'
+ACCOUNT_UNIQUE_EMAIL = True
 ACCOUNT_USERNAME_REQUIRED = False
 ACCOUNT_DEFAULT_HTTP_PROTOCOL = 'https'
 ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
 ACCOUNT_SESSION_REMEMBER = True
 ACCOUNT_SIGNUP_PASSWORD_ENTER_TWICE = False
+ACCOUNT_USER_MODEL_USERNAME_FIELD=None
 
 # Email tings
 DEFAULT_FROM_EMAIL = environ.get('DEFAULT_FROM_EMAIL', 'hello@casalytica.com')

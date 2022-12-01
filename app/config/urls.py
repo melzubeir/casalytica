@@ -12,6 +12,7 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path('accounts/', include('allauth.urls')),
     #path('accounts/', include('django.contrib.auth.urls')),
+    path('api-auth/', include('dj_rest_auth.registration.urls')),
     path('accounts/', include('user.urls')),
     path('schema/', SpectacularAPIView.as_view(), name='api-schema'),
     path('v0/', include('analytics.urls')),
