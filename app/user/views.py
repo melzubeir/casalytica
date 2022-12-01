@@ -15,7 +15,6 @@ from user.serializers import (
     UserSerializer,
     AuthTokenSerializer
 )
-from django.contrib.auth import get_user_model
 
 from .forms import CustomUserCreationForm
 from analytics import models

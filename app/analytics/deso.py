@@ -9,7 +9,8 @@ logger = logging.getLogger(__name__)
 
 def get_post_data(post_hash, skip_deso=True):
     """get post data from deso"""
-    logger.info('get_post_data() ----> ENTRY <----')
+    if settings.DEBUG:
+        logger.info('get_post_data() ----> ENTRY <----')
     p = {
         'post_hash': post_hash,
         'likes_total': 0,
@@ -22,7 +23,7 @@ def get_post_data(post_hash, skip_deso=True):
         },
         'node': 1
     }
-    if skip_deso:
+    if skip_deso and settings.DEBUG:
         logger.info(
             'get_post_data() skip_deso True p: %s', p)
         return p
@@ -57,5 +58,6 @@ def get_post_data(post_hash, skip_deso=True):
     except:
         logger.error('error getting post from deso')
 
-    logger.info('post data from deso: %s', p)
+    if settings.DEBUG:
+        logger.info('post data from deso: %s', p)
     return p
