@@ -240,7 +240,7 @@ class ImpressionSerializer(serializers.Serializer):
             'remote_addr': data.get('remote_addr', None),
             'posts': data.get('posts', None),
             'user_agent': data.get('user_agent', None),
-            'source_app': data.get('source_app', None),
+            'source_app': data.get('source_app', 1),
             'is_deso': data.get('is_deso', True),
             'referer': data.get('referer', None),
             'user': auth_user
