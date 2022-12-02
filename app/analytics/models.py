@@ -5,14 +5,6 @@ from django.utils.translation import gettext_lazy as _
 from config import settings
 
 
-DESO_APP_CHOICES = [
-    (0, ('Undefined')),
-    (1, ('Diamond')),
-    (2, ('Desofy')),
-    (3, ('Entre')),
-]
-
-
 class Creator(models.Model):
     """Model for creators"""
     username = models.CharField(max_length=255)
@@ -71,7 +63,6 @@ class OnChainApp(models.Model):
     is_deso = models.BooleanField(default=True)
     is_verified = models.BooleanField(default=False)
     is_claimed = models.BooleanField(default=False)
-
 
     def __str__(self):
         return self.name

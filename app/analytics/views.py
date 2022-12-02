@@ -20,7 +20,6 @@ from .models import (
 from analytics import serializers
 
 
-
 @extend_schema_view(
     list=extend_schema(
         parameters=[
@@ -38,11 +37,6 @@ class ImpressionViewSet(viewsets.ModelViewSet):
     queryset = Impression.objects.all()
     authentication_classes = [TokenAuthentication, ]
     permission_classes = [IsAuthenticated, ]
-
-    @extend_schema_field(OpenApiTypes.STR)
-    def get_source_app(self):
-        return Impression.DESO_APP_CHOICES[self.source_app - 1][1]
-
 
 
 @extend_schema_view(
