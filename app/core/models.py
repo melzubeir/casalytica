@@ -34,6 +34,7 @@ class UserManager(BaseUserManager):
         user = self.create_user(email, password)
         user.is_staff = True
         user.is_superuser = True
+        user.is_active = True
         user.is_reporter = True
         user.save(using=self._db)
 
@@ -49,7 +50,8 @@ class User(AbstractBaseUser, PermissionsMixin):
         on_delete=models.CASCADE,
         null=True,
         blank=True)
-    is_active = models.BooleanField(default=True)
+    is_active = models.BooleanField(default=False)
+    is_verified = models.BooleanField(default=False)
     is_reporter = models.BooleanField(default=False)
     is_staff = models.BooleanField(default=False)
 

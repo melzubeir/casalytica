@@ -17,6 +17,9 @@ class Creator(models.Model):
     """Model for creators"""
     username = models.CharField(max_length=255)
     public_key_base58 = models.CharField(max_length=255)
+    profile_image = models.URLField(max_length=255, null=True, blank=True)
+    featured_image = models.URLField(max_length=255, null=True, blank=True)
+    description = models.TextField(null=True, blank=True)
 
     def __str__(self):
         return self.username
@@ -44,9 +47,38 @@ class Node(models.Model):
         return self.name
 
 
+class OnChainApp(models.Model):
+    """Model for apps serving on-chain content"""
+    name = models.CharField(max_length=255)
+    owner = models.ForeignKey(
+        Creator,
+        on_delete=models.CASCADE,
+        null=True,
+        blank=True)
+    node = models.ForeignKey(
+        Node,
+        on_delete=models.CASCADE,
+        null=True,
+        blank=True)
+    url = models.URLField(max_length=255, null=True, blank=True)
+    description = models.TextField(null=True, blank=True)
+    created = models.DateTimeField(auto_now_add=True)
+
+    # if the app is published not null
+    app_store_url = models.URLField(max_length=255, null=True, blank=True)
+    google_store_url = models.URLField(max_length=255, null=True, blank=True)
+
+    is_deso = models.BooleanField(default=True)
+    is_verified = models.BooleanField(default=False)
+    is_claimed = models.BooleanField(default=False)
+
+
+    def __str__(self):
+        return self.name
+
+
 class Post(models.Model):
     """Model for posts"""
-
 
     post_hash = models.SlugField(max_length=64,
                                  validators=[settings.HEXA_VALID],
@@ -72,8 +104,7 @@ class Post(models.Model):
 
     def toJSON(self):
         return json.dumps(self, default=lambda o: o.__dict__,
-            sort_keys=True, indent=4)
-
+                          sort_keys=True, indent=4)
 
     def __str__(self):
         return self.post_hash
@@ -87,9 +118,13 @@ class Impression(models.Model):
 
     # required fields
     posts = models.ManyToManyField('Post', blank=True)
-
-    source_app = models.IntegerField(choices=DESO_APP_CHOICES, default=0)
     created = models.DateTimeField(auto_now_add=True)
+
+    source_app = models.ForeignKey(
+        OnChainApp,
+        on_delete=models.CASCADE,
+        blank=True,
+        null=True)
 
     # optional but highly recommended
     remote_addr = models.GenericIPAddressField(
@@ -120,7 +155,6 @@ class Impression(models.Model):
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
     )
-
 
     def __str__(self):
         return str(self.created)

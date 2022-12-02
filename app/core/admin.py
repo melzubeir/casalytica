@@ -10,7 +10,7 @@ from django.utils.translation import gettext_lazy as _
 class UserAdmin(BaseUserAdmin):
     """Define the admin pages for users"""
     ordering = ['email', 'id']
-    list_display = ['email', 'name', 'creator', 'is_staff']
+    list_display = ['email', 'name', 'creator', 'is_reporter']
     search_fields = ('email', 'creator')
 
     fieldsets = (

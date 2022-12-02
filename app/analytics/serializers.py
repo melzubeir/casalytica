@@ -74,7 +74,6 @@ class PostSerializer(serializers.ModelSerializer):
         creator = self._get_or_create_creator(
             post_data['creator'][0], post_data['creator'][1])
         node = self._get_or_create_node(post_data['node'])
-
         post_obj, created = models.Post.objects.get_or_create(
             post_hash=post_data['post_hash'], creator=creator, node=node)
 
@@ -233,7 +232,7 @@ class ImpressionSerializer(serializers.Serializer):
         return creator_obj
 
     def _get_or_create_node(self, node_id):
-        """get or create creator"""
+        """get or create node"""
         if settings.DEBUG:
             logger.info(
                 'ImpressionViewset._get_or_create_node() ----> ENTRY <----')
@@ -242,6 +241,17 @@ class ImpressionSerializer(serializers.Serializer):
         node_obj.save()
         return node_obj
 
+    def _get_or_create_onchainapp(self, onchainapp_id):
+        """get or create onchainapp"""
+        if settings.DEBUG:
+            logger.info(
+                'ImpressionViewset._get_or_create_onchainapp() ----> ENTRY <----')
+        onchainapp_obj, created = models.OnChainApp.objects.get_or_create(
+            id=onchainapp_id)
+        onchainapp_obj.save()
+        return onchainapp_obj
+
+
     def to_internal_value(self, data):
         """convert data to internal value"""
         if settings.DEBUG:
@@ -249,11 +259,14 @@ class ImpressionSerializer(serializers.Serializer):
                 'ImpressionSerializer.to_internal_value() ----> ENTRY <----\n\t\tdata: %s', data)
         auth_user = self.context['request'].user
 
+        souce_app = None
+        source_app = models.OnChainApp.objects.get(owner_id=auth_user.creator.id)
+
         values = {
             'remote_addr': data.get('remote_addr', None),
             'posts': data.get('posts', None),
             'user_agent': data.get('user_agent', None),
-            'source_app': data.get('source_app', 1),
+            'source_app': source_app,
             'is_deso': data.get('is_deso', True),
             'referer': data.get('referer', None),
             'user': auth_user
@@ -273,7 +286,7 @@ class ImpressionSerializer(serializers.Serializer):
             'remote_addr': instance.remote_addr,
             'referer': instance.referer,
             'user_agent': instance.user_agent,
-            'source_app': instance.source_app,
+            'source_app': instance.source_app.id,
             'is_deso': instance.is_deso,
             'posts': instance.posts.all(),
         }
@@ -314,7 +327,7 @@ class ImpressionSerializer(serializers.Serializer):
     def get_fields(self):
         """get fields"""
         fields = super().get_fields()
-        fields['source_app'] = serializers.SerializerMethodField()
+        fields['source_app'] = OnChainAppSerializer(read_only=True)
         fields['is_deso'] = serializers.BooleanField()
         fields['posts'] = PostSerializer(many=True, required=False)
         fields['remote_addr'] = serializers.IPAddressField()
@@ -343,9 +356,17 @@ class ImpressionDetailSerializer(ImpressionSerializer):
             'tz',
         ]
 
-    @extend_schema_field(OpenApiTypes.STR)
-    def get_source_app(self):
-        return models.Impression.DESO_APP_CHOICES[self.source_app - 1][1]
+
+class OnChainAppSerializer(serializers.ModelSerializer):
+    """Serializer for creator model"""
+
+    class Meta:
+        model = models.OnChainApp
+        fields = [
+            'name', 'description', 'url', 'app_store_url', 'play_store_url',
+            'creator', 'ndoe', 'is_deso'
+        ]
+        read_only_fields = fields
 
 
 class CreatorSerializer(serializers.ModelSerializer):
