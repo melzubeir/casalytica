@@ -21,7 +21,7 @@ export default class TitleComponent3 extends Component {
               Dashboards
             </a>
           </BreadcrumbItem>
-          <BreadcrumbItem active>Example Breadcrumb</BreadcrumbItem>
+          <BreadcrumbItem active>Creator</BreadcrumbItem>
         </Breadcrumb>
       </Fragment>
     );

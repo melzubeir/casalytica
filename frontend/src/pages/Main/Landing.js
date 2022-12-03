@@ -1,7 +1,7 @@
 import React from 'react';
 import { useSelector} from 'react-redux';
 import AppHeader from '../../Layout/AppHeader';
-
+import AppMain from '../../Layout/AppMain';
 
 function Landing() {
 
@@ -18,7 +18,7 @@ function Landing() {
         description={description}
         avatar = {avatar} />
       <React.Fragment>
-        <p>okok</p>
+        <AppMain />
       </React.Fragment>
 
     </React.Fragment>

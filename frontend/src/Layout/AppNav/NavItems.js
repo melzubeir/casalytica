@@ -4,63 +4,12 @@ export const MainNav = [
     label: "Dashboards",
     content: [
       {
-        label: "Analytics",
-        to: "#/dashboards/analytics",
-      },
-      {
-        label: "Commerce",
-        to: "#/dashboards/commerce",
-      },
-      {
-        label: "Sales",
-        to: "#/dashboards/sales",
-      },
-      {
-        label: "Minimal",
-        content: [
-          {
-            label: "Variation 1",
-            to: "#/dashboards/minimal-dashboard-1",
-          },
-          {
-            label: "Variation 2",
-            to: "#/dashboards/minimal-dashboard-2",
-          },
-        ],
-      },
-      {
-        label: "CRM",
-        to: "#/dashboards/crm",
-      },
-    ],
-  },
-  {
-    icon: "pe-7s-browser",
-    label: "Pages",
-    content: [
-      {
-        label: "Login",
-        to: "#/pages/login",
-      },
-      {
-        label: "Login Boxed",
-        to: "#/pages/login-boxed",
+        label: "Overview",
+        to: "#/dashboards/overview",
       },
       {
         label: "Register",
         to: "#/pages/register",
-      },
-      {
-        label: "Register Boxed",
-        to: "#/pages/register-boxed",
-      },
-      {
-        label: "Forgot Password",
-        to: "#/pages/forgot-password",
-      },
-      {
-        label: "Forgot Password Boxed",
-        to: "#/pages/forgot-password-boxed",
       },
     ],
   },
@@ -413,4 +362,3 @@ export const ChartsNav = [
     to: "#/charts/sparklines-2",
   },
 ];
-

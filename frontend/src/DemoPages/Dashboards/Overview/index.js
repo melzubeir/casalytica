@@ -8,8 +8,8 @@ import TabContent from "rc-tabs/lib/SwipeableTabContent";
 import ScrollableInkTabBar from "rc-tabs/lib/ScrollableInkTabBar";
 
 // Examples
-import AnalyticsDashboard1 from "./Examples/Variation1";
-import AnalyticsDashboard2 from "./Examples/Variation2";
+import CreatorDashboard from "./CreatorDashboard";
+import ContentDashboard from "./ContentDashboard";
 
 export default class AnalyticsDashboard extends Component {
   render() {
@@ -18,16 +18,16 @@ export default class AnalyticsDashboard extends Component {
         <TransitionGroup>
           <CSSTransition component="div" classNames="TabsAnimation" appear={true}
             timeout={1500} enter={false} exit={false}>
-            <div>  
-              <PageTitle heading="Analytics Dashboard"
-                subheading="This is an example dashboard created using build-in elements and components."
+            <div>
+              <PageTitle heading="Dashboard"
+                subheading="This is your casalytica dashboard, proceed with curiosity."
                 icon="pe-7s-car icon-gradient bg-mean-fruit"/>
               <Tabs defaultActiveKey="1" renderTabBar={() => <ScrollableInkTabBar />} renderTabContent={() => <TabContent />}>
-                <TabPane tab="Variation 1" key="1">
-                  <AnalyticsDashboard1 />
+                <TabPane tab="Creator" key="1">
+                  <CreatorDashboard />
                 </TabPane>
-                <TabPane tab="Variation 2" key="2">
-                  <AnalyticsDashboard2 />
+                <TabPane tab="Content" key="2">
+                  <ContentDashboard />
                 </TabPane>
               </Tabs>
             </div>

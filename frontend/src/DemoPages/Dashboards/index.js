@@ -3,7 +3,7 @@ import { Route } from "react-router-dom";
 
 // DASHBOARDS
 
-import AnalyticsDashboard from "./Analytics";
+import OverviewDashboard from "./Overview";
 import SalesDashboard from "./Sales";
 import CommerceDashboard from "./Commerce";
 import CRMDashboard from "./CRM";
@@ -27,12 +27,7 @@ const Dashboards = ({ match }) => (
       <AppSidebar />
       <div className="app-main__outer">
         <div className="app-main__inner">
-          <Route path={`${match.url}/analytics`} component={AnalyticsDashboard}/>
-          <Route path={`${match.url}/sales`} component={SalesDashboard} />
-          <Route path={`${match.url}/commerce`} component={CommerceDashboard} />
-          <Route path={`${match.url}/crm`} component={CRMDashboard} />
-          <Route path={`${match.url}/minimal-dashboard-1`} component={MinimalDashboard1}/>
-          <Route path={`${match.url}/minimal-dashboard-2`} component={MinimalDashboard2}/>
+          <Route path={`${match.url}/overview`} component={OverviewDashboard}/>
         </div>
         <AppFooter />
       </div>
