@@ -1,25 +1,40 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
+import "./polyfills";
+import React from "react";
+import ReactDOM from "react-dom";
+
+import * as serviceWorker from "./serviceWorker";
+
+import { HashRouter } from "react-router-dom";
+import "./assets/base.scss";
+import Main from "./pages/Main";
+
 import { persistStore } from 'redux-persist';
 import { PersistGate } from 'redux-persist/integration/react';
-import { Provider } from 'react-redux';
-import { BrowserRouter } from 'react-router-dom';
-import App from './App';
+
+import { Provider } from "react-redux";
 import store from './store/index';
+
 
 let persistor = persistStore(store);
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
+// const rootElement = ReactDOM.createRoot(document.getElementById('root'));
+const rootElement = document.getElementById("root");
+
 document.title = 'Casalytica - analytics for on-chain content';
 
-root.render(
-    <React.StrictMode>
-        <Provider store={store}>
-            <PersistGate persistor={persistor}>
-                <BrowserRouter>
-                    <App />
-                </BrowserRouter>
-            </PersistGate>
-        </Provider>
-    </React.StrictMode>
-);
+const renderApp = (Component) => {
+  ReactDOM.render(
+    <Provider store={store}>
+      <PersistGate persistor={persistor}>
+        <HashRouter>
+          <Component />
+        </HashRouter>
+      </PersistGate>
+    </Provider>,
+    rootElement
+  );
+};
+
+renderApp(Main);
+
+serviceWorker.unregister();

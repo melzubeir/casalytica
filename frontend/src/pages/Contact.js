@@ -10,24 +10,26 @@ import withRoot from '../withRoot';
 
 function Contact() {
   return (
-      <Container>
+    <Container>
+      <React.Fragment>
         <Box sx={{ mt: 7, mb: 12 }}>
           <Typography variant="h3" gutterBottom marked="center" align="center">
             Contact
           </Typography>
           <div>
-<h2>
-  Socials
-</h2>
-<p>
-  <ul>
-    <li>DeSo <DiamondIcon />: <Link href="https://diamondapp.com/u/casalytica" underline="none">@casalytica</Link></li>
-    <li>email: hello@casalytica.com</li>
-  </ul>
-</p>
-</div>
+            <h2>
+              Socials
+            </h2>
+            <p>
+              <ul>
+                <li>DeSo <DiamondIcon />: <Link href="https://diamondapp.com/u/casalytica" underline="none">@casalytica</Link></li>
+                <li>email: hello@casalytica.com</li>
+              </ul>
+            </p>
+          </div>
         </Box>
-      </Container>
+      </React.Fragment>
+    </Container>
   );
 }
 
