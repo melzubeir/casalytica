@@ -1,7 +1,8 @@
 import React from 'react';
-import { useSelector} from 'react-redux';
+import { useSelector } from 'react-redux';
 import AppHeader from '../../Layout/AppHeader';
 import AppMain from '../../Layout/AppMain';
+
 
 function Landing() {
 

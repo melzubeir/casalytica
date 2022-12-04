@@ -28,8 +28,8 @@ import CountUp from "react-countup";
 
 import DataTable from 'react-data-table-component';
 
-import avatar1 from "../../../assets/utils/images/avatars/1.jpg";
-import avatar2 from "../../../assets/utils/images/avatars/2.jpg";
+import avatar1 from "../../assets/utils/images/avatars/1.jpg";
+import avatar2 from "../../assets/utils/images/avatars/2.jpg";
 
 import { IoIosAnalytics } from "react-icons/io";
 

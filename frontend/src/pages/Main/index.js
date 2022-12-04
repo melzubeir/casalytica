@@ -2,27 +2,27 @@ import React, { Fragment, useEffect } from "react";
 import { connect, useSelector, useDispatch } from "react-redux";
 import cx from "classnames";
 import { withRouter } from "react-router-dom";
-
 import ResizeDetector from "react-resize-detector";
+
+import DesoApi from '../../libs/DesoApi'
 
 import Landing from "./Landing";
 import { authActions } from "../../store/reducers/auth";
 
-import DesoApi from '../../libs/DesoApi'
-
 const deso = new DesoApi();
+
 
 const Main = (props) => {
 
   const [closedSmallerSiderbar, setClosedSmallerSiderbar] = React.useState(false);
-  const dispatch = useDispatch();
 
+  const dispatch = useDispatch();
   const publicKey = useSelector(state => state.auth.publicKey);
   const isAuth = useSelector(state => state.auth.isAuthenticated);
-
+  const username = useSelector(state => state.auth.username);
 
   useEffect(() => {
-    if (isAuth) {
+    if (isAuth && publicKey && username === null) {
       deso.getSingleProfile(publicKey)
         .then((response) => {
           dispatch(authActions.setProfile(response.Profile));
@@ -30,7 +30,7 @@ const Main = (props) => {
 
         })
     }
-  }, [isAuth, publicKey, dispatch]);
+  }, [isAuth, publicKey, username, dispatch]);
 
 
   let {

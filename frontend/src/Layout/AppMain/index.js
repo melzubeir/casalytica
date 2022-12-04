@@ -4,8 +4,7 @@ import Loader from "react-loaders";
 
 import { ToastContainer } from "react-toastify";
 
-const Dashboards = lazy(() => import("../../DemoPages/Dashboards"));
-const Components = lazy(() => import("../../DemoPages/Components"));
+const Dashboard = lazy(() => import("../../pages/Dashboard"));
 
 
 const AppMain = () => {
@@ -13,25 +12,7 @@ const AppMain = () => {
     return (
         <Fragment>
 
-            {/* Components */}
-
-            <Suspense fallback={
-                <div className="loader-container">
-                    <div className="loader-container-inner">
-                        <div className="text-center">
-                            <Loader type="ball-pulse-rise"/>
-                        </div>
-                        <h6 className="mt-5">
-                            Please wait while we load all the Components examples
-                            <small>Because this is a demonstration we load at once all the Components examples. This wouldn't happen in a real live app!</small>
-                        </h6>
-                    </div>
-                </div>
-            }>
-                <Route path="/components" component={Components}/>
-            </Suspense>
-
-            {/* Dashboards */}
+            {/* Dashboard */}
 
             <Suspense fallback={
                 <div className="loader-container">
@@ -46,12 +27,12 @@ const AppMain = () => {
                     </div>
                 </div>
             }>
-                <Route path="/dashboards" component={Dashboards}/>
+                <Route path="/dashboard" component={Dashboard}/>
             </Suspense>
 
 
             <Route exact path="/" render={() => (
-                <Redirect to="/dashboards/overview"/>
+                <Redirect to="/dashboard/overview"/>
             )}/>
             <ToastContainer/>
         </Fragment>

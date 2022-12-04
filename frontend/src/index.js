@@ -22,12 +22,12 @@ const rootElement = document.getElementById("root");
 
 document.title = 'Casalytica - analytics for on-chain content';
 
-const renderApp = (Component) => {
+const renderApp = (App) => {
   ReactDOM.render(
     <Provider store={store}>
       <PersistGate persistor={persistor}>
         <HashRouter>
-          <Component />
+          <App />
         </HashRouter>
       </PersistGate>
     </Provider>,

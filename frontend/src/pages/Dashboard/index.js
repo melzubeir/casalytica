@@ -1,11 +1,10 @@
 import React, { Fragment, useEffect } from "react";
 import { Route } from "react-router-dom";
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 // DASHBOARDS
 
 import OverviewDashboard from "./Overview";
-
 
 // Layout
 
@@ -16,35 +15,26 @@ import AppFooter from "../../Layout/AppFooter";
 // Theme Options
 import ThemeOptions from "../../Layout/ThemeOptions";
 
-import DesoApi from '../../libs/DesoApi'
-import { authActions } from "../../store/reducers/auth";
+import DesoApi from "../../libs/DesoApi";
 
 const deso = new DesoApi();
 
+const Dashboard = ({ match }) => {
 
-
-
-
-
-const Dashboards = ({ match }) => {
-
-  const dispatch = useDispatch();
-  const publicKey = useSelector(state => state.auth.publicKey);
   const isAuth = useSelector(state => state.auth.isAuthenticated);
   const username = useSelector(state => state.auth.username);
   const avatar = useSelector(state => state.auth.largeProfilePicURL);
   const description = useSelector(state => state.auth.description);
 
-  useEffect(() => {
-    if (isAuth && publicKey && username === null) {
-      deso.getSingleProfile(publicKey)
-        .then((response) => {
-          dispatch(authActions.setProfile(response.Profile));
-          console.log(response.Profile);
 
+  useEffect(() => {
+    if (isAuth) {
+      deso.getDeSoPrice()
+        .then((response) => {
+          console.log(response);
         })
     }
-  }, [isAuth, publicKey, username, dispatch]);
+  }, [isAuth]);
 
   return (
     <Fragment>
@@ -69,4 +59,4 @@ const Dashboards = ({ match }) => {
 }
 
 
-export default Dashboards;
+export default Dashboard;
