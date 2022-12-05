@@ -12,7 +12,13 @@ WORKDIR /app
 ARG DEV=false
 RUN python -m venv /py && \
     /py/bin/pip install --upgrade pip && \
-    apk add --update --no-cache curl bash postgresql-client jpeg-dev && \
+    echo @edge http://nl.alpinelinux.org/alpine/edge/community >> /etc/apk/repositories && \
+    echo @edge http://nl.alpinelinux.org/alpine/edge/main >> /etc/apk/repositories && \
+    apk update && \
+    apk add --update --no-cache curl bash postgresql-client jpeg-dev chromium harfbuzz \
+        "freetype>2.8" \
+        ttf-freefont \
+        nss && \
     apk add --update --no-cache --virtual .tmp-build-deps \
         build-base postgresql-dev musl-dev zlib zlib-dev linux-headers && \
     /py/bin/pip install -r /tmp/requirements.txt && \
@@ -33,6 +39,7 @@ RUN python -m venv /py && \
     chmod -R +x /scripts
 
 ENV PATH="/scripts:/py/bin:$PATH"
+ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true
 
 USER django-user
 
