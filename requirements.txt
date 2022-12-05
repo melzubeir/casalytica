@@ -14,3 +14,4 @@ django-debug-toolbar>=3.7.0,<3.8.0
 geoip2>=4.5.0,<4.6.0
 deso>=2.2.1,<2.3
 django-cors-headers>=3.13.0,<3.14.0
+selenium>=4.7.2,<4.8.0
