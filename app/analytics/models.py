@@ -5,6 +5,24 @@ from django.utils.translation import gettext_lazy as _
 from config import settings
 
 
+QUALIFICATION_CHOICES = [
+    (1, _('Irrelevant')),
+    (2, _('Semi Relevant')),
+    (3, _('Relevant')),
+    (4, _('Celebrity')),
+]
+
+POST_CHOICES = [
+    (1, _('Curated')),
+    (2, _('Promotional')),
+    (3, _('Informational')),
+    (4, _('Interactive')),
+    (5, _('Call to Action')),
+    (7, _('Profile')),
+    (6, _('Other')),
+]
+
+
 class Creator(models.Model):
     """Model for creators"""
     username = models.CharField(max_length=255)
@@ -12,6 +30,24 @@ class Creator(models.Model):
     profile_image = models.URLField(max_length=255, null=True, blank=True)
     featured_image = models.URLField(max_length=255, null=True, blank=True)
     description = models.TextField(null=True, blank=True)
+
+    qualification = models.IntegerField(
+        choices=QUALIFICATION_CHOICES,
+        null=True,
+        blank=True,
+        default=1)
+
+    in_degree_reach = models.IntegerField(null=True, blank=True, default=0)
+    in_degree_engagement = models.IntegerField(null=True, blank=True, default=0)
+
+    relevant_posts_percentage = models.FloatField(null=True, blank=True, default=0)
+    post_frequency_daily = models.FloatField(null=True, blank=True)
+    follower_count = models.IntegerField(null=True, blank=True)
+    follower_count_3rd_degree = models.IntegerField(null=True, blank=True)
+    follower_engagement = models.FloatField(null=True, blank=True)
+
+    # last time the creator has been synced with the blockchain
+    last_sync = models.DateTimeField(null=True, blank=True)
 
     def __str__(self):
         return self.username
@@ -34,6 +70,8 @@ class Node(models.Model):
         Creator,
         on_delete=models.CASCADE
     )
+
+    last_sync = models.DateTimeField(null=True, blank=True)
 
     def __str__(self):
         return self.name
@@ -79,12 +117,23 @@ class Post(models.Model):
     diamonds_total = models.IntegerField(default=0)
     comments_total = models.IntegerField(default=0)
     reposts_total = models.IntegerField(default=0)
+    sentiment_score = models.FloatField(null=True, blank=True)
+    has_image = models.BooleanField(default=False)
+    has_text = models.BooleanField(default=True)
+    has_link = models.BooleanField(default=False)
+    has_video = models.BooleanField(default=False)
+
+
+    type = models.IntegerField(
+        choices=POST_CHOICES,
+        null=True,
+        blank=True,
+        default=1)
     node = models.ForeignKey(
         Node,
         on_delete=models.CASCADE,
         blank=True,
         null=True
-
     )
     creator = models.ForeignKey(
         Creator,
@@ -92,6 +141,8 @@ class Post(models.Model):
         blank=True,
         null=True
     )
+
+    last_sync = models.DateTimeField(null=True, blank=True)
 
     def toJSON(self):
         return json.dumps(self, default=lambda o: o.__dict__,
