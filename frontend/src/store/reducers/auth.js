@@ -39,10 +39,15 @@ const authSlice = createSlice({
       state.description = action.payload.Description;
       state.blogSlugMap = action.payload.ExtraData.BlogSlugMap;
       state.circleIt = action.payload.ExtraData.CircleIt;
-      state.DAOPublicKeysPurchased = action.payload.ExtraData.DAOPublicKeysPurchased
-      state.FeaturedImageURL = action.payload.ExtraData.FeaturedImageURL
-      state.NFTProfilePicturePostHashHex = action.payload.ExtraData.NFTProfilePicturePostHashHex
-      state.PinnedPostHashHex = action.payload.ExtraData.PinnedPostHashHex
+      state.daoPublicKeysPurchased = action.payload.ExtraData.DAOPublicKeysPurchased;
+      state.featuredImageURL = action.payload.ExtraData.FeaturedImageURL;
+      state.nftProfilePicturePostHashHex = action.payload.ExtraData.NFTProfilePicturePostHashHex;
+      state.pinnedPostHashHex = action.payload.ExtraData.PinnedPostHashHex;
+      state.numberOfHolders = action.payload.CoinEntry.NumberOfHolders;
+      state.coinsInCirculationNanos = action.payload.CoinEntry.CoinsInCirculationNanos;
+      state.coinPriceDesoNanos = action.payload.CoinPriceDeSoNanos;
+      state.daoCoinsInCirculationNanos = action.payload.DAOCoinEntry.CoinsInCirculationNanos;
+      state.desoBalanceNanos = action.payload.DESOBalanceNanos;
     }
   },
 });

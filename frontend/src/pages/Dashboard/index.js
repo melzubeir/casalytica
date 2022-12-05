@@ -1,6 +1,6 @@
 import React, { Fragment, useEffect } from "react";
 import { Route } from "react-router-dom";
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 
 // DASHBOARDS
 
@@ -14,31 +14,44 @@ import AppFooter from "../../Layout/AppFooter";
 
 // Theme Options
 import ThemeOptions from "../../Layout/ThemeOptions";
+import { desoActions } from "../../store/reducers/deso";
 
 import DesoApi from "../../libs/DesoApi";
 
 const deso = new DesoApi();
 
+
 const Dashboard = ({ match }) => {
 
+  const dispatch = useDispatch();
   const isAuth = useSelector(state => state.auth.isAuthenticated);
   const username = useSelector(state => state.auth.username);
   const avatar = useSelector(state => state.auth.largeProfilePicURL);
   const description = useSelector(state => state.auth.description);
-
+  const desoPrice = useSelector(state => state.deso.usdCentsPerDeSoCoinbase);
+  const desoPosts = useSelector(state => state.deso.posts);
 
   useEffect(() => {
-    if (isAuth) {
+    if (!desoPrice) {
       deso.getDeSoPrice()
         .then((response) => {
           console.log(response);
+          dispatch(desoActions.setDesoPrice(response));
         })
     }
-  }, [isAuth]);
+    if (username) {
+      deso.getPostsForPublicKey(username)
+        .then((response) => {
+          console.log(response);
+          dispatch(desoActions.setDesoPosts(response));
+        })
+    }
+  }, [desoPrice, desoPosts, username, dispatch]);
+
 
   return (
     <Fragment>
-      <ThemeOptions />
+      { /* <ThemeOptions /> */ }
       <AppHeader
         isAuth={isAuth}
         username={username}

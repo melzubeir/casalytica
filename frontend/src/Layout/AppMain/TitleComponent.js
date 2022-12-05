@@ -6,7 +6,7 @@ import { faHome } from "@fortawesome/free-solid-svg-icons";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-export default class TitleComponent3 extends Component {
+export default class TitleComponent extends Component {
   render() {
     return (
       <Fragment>
@@ -21,7 +21,7 @@ export default class TitleComponent3 extends Component {
               Dashboards
             </a>
           </BreadcrumbItem>
-          <BreadcrumbItem active>Minimal Dashboard Example</BreadcrumbItem>
+          <BreadcrumbItem active>Creator</BreadcrumbItem>
         </Breadcrumb>
       </Fragment>
     );

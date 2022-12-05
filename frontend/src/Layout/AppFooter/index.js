@@ -1,5 +1,4 @@
 import React, { Fragment } from "react";
-import MegaMenuFooter from "./Components/FooterMegaMenu";
 import FooterDots from "./Components/FooterDots";
 
 class AppFooter extends React.Component {
@@ -12,7 +11,7 @@ class AppFooter extends React.Component {
               <FooterDots />
             </div>
             <div className="app-footer-right">
-              <MegaMenuFooter />
+              <p>Copyright 2022, Casalytica</p>
             </div>
           </div>
         </div>

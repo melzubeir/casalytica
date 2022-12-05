@@ -1,6 +1,6 @@
 export const MainNav = [
   {
-    icon: "pe-7s-rocket",
+    icon: "pe-7s-diamond",
     label: "Dashboards",
     content: [
       {
@@ -8,26 +8,35 @@ export const MainNav = [
         to: "#/dashboards/overview",
       },
       {
-        label: "Register",
-        to: "#/pages/register",
+        label: "App",
+        to: "#/dashbaord/app",
       },
+      {
+        label: "Content",
+        to: "#/dashbaord/content",
+      },
+      {
+        label: "Creator",
+        to: "#/dashbaord/creator",
+      },
+
     ],
   },
   {
-    icon: "pe-7s-plugin",
-    label: "Applications",
+    icon: "pe-7s-user",
+    label: "Account",
     content: [
       {
-        label: "Mailbox",
-        to: "#/apps/mailbox",
+        label: "Profile",
+        to: "#/account/profile",
       },
       {
-        label: "Chat",
-        to: "#/apps/chat",
+        label: "Settings",
+        to: "#/account/settings",
       },
       {
-        label: "FAQ Section",
-        to: "#/apps/faq-section",
+        label: "FAQs and Docs",
+        to: "#/docs/faq",
       },
     ],
   },

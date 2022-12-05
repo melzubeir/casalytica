@@ -10,6 +10,7 @@ import ScrollableInkTabBar from "rc-tabs/lib/ScrollableInkTabBar";
 // Examples
 import CreatorDashboard from "./CreatorDashboard";
 import ContentDashboard from "./ContentDashboard";
+import AppDashboard from "./AppDashboard";
 
 export default class AnalyticsDashboard extends Component {
   render() {
@@ -23,11 +24,14 @@ export default class AnalyticsDashboard extends Component {
                 subheading="This is your casalytica dashboard, proceed with curiosity."
                 icon="pe-7s-car icon-gradient bg-mean-fruit"/>
               <Tabs defaultActiveKey="1" renderTabBar={() => <ScrollableInkTabBar />} renderTabContent={() => <TabContent />}>
-                <TabPane tab="Creator" key="1">
-                  <CreatorDashboard />
+                <TabPane tab="App" key="1">
+                  <AppDashboard />
                 </TabPane>
                 <TabPane tab="Content" key="2">
                   <ContentDashboard />
+                </TabPane>
+                <TabPane tab="Creator" key="3">
+                  <CreatorDashboard />
                 </TabPane>
               </Tabs>
             </div>
