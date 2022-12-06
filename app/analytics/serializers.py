@@ -259,7 +259,6 @@ class ImpressionSerializer(serializers.Serializer):
                 'ImpressionSerializer.to_internal_value() ----> ENTRY <----\n\t\tdata: %s', data)
         auth_user = self.context['request'].user
 
-        souce_app = None
         source_app = models.OnChainApp.objects.get(owner_id=auth_user.creator.id)
 
         values = {

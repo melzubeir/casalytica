@@ -46,6 +46,17 @@ class Creator(models.Model):
     follower_count_3rd_degree = models.IntegerField(null=True, blank=True)
     follower_engagement = models.FloatField(null=True, blank=True)
 
+    follower = models.ManyToManyField(
+        'analytics.Creator',
+        related_name='followers',
+        blank=True,
+        null=True)
+    following = models.ManyToManyField(
+        'analytics.Creator',
+        related_name='followings',
+        blank=True,
+        null=True)
+
     # last time the creator has been synced with the blockchain
     last_sync = models.DateTimeField(null=True, blank=True)
 

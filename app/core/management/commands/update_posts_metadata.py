@@ -21,7 +21,19 @@ class Command(BaseCommand):
     desoPost = deso.Posts()
     num_days = 1
 
+    def add_arguments(self, parser):
+        parser.add_argument(
+            '--days',
+            type=int,
+            default=self.num_days,
+            help='age of posts to update'
+        )
+
     def handle(self, *args, **options):
+
+        if options['num_days']:
+            self.num_days = options['num_days']
+
         self.stdout.write('Updating posts metadata..')
         self.update_posts_metadata()
         self.stdout.write(self.style.SUCCESS('Posts metadata updated!'))
