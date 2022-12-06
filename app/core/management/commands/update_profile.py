@@ -3,14 +3,12 @@ Update posts metadata from the deso blockchain
 """
 from datetime import (
     datetime,
-    timedelta,
 )
 from django.core.management.base import BaseCommand
+from django.utils.timezone import utc
 
-from django.db.models import F, Q
-from analytics.models import Creator
-import json
 import deso
+from analytics.models import Creator
 
 
 class Command(BaseCommand):
@@ -56,7 +54,7 @@ class Command(BaseCommand):
 
         obj.username = f.get('Username')
         obj.description=f.get('Description')
-        obj.last_sync=datetime.now()
+        obj.last_sync=datetime.utcnow().replace(tzinfo=utc)
         obj.save()
         self.followers_list.append(obj.pk)
 
@@ -88,7 +86,7 @@ class Command(BaseCommand):
             obj.description = description
             obj.profile_image = image_url
             obj.featured_image = featured_url
-            obj.last_sync = datetime.now()
+            obj.last_sync = datetime.utcnow().replace(tzinfo=utc)
             obj.save()
 
     def handle_update_profile_metadata(self):
@@ -105,7 +103,7 @@ class Command(BaseCommand):
         Creator.objects.filter(
             username=self.username).update(
                 follower_count=followers.get('NumFollowers'),
-                last_sync=datetime.now()
+                last_sync=datetime.utcnow().replace(tzinfo=utc)
         )
         creator_list = []
 
