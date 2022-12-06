@@ -50,12 +50,12 @@ class Creator(models.Model):
         'analytics.Creator',
         related_name='followers',
         blank=True,
-        null=True)
+    )
     following = models.ManyToManyField(
         'analytics.Creator',
         related_name='followings',
         blank=True,
-        null=True)
+    )
 
     # last time the creator has been synced with the blockchain
     last_sync = models.DateTimeField(null=True, blank=True)
