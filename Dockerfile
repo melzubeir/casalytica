@@ -36,7 +36,6 @@ RUN python -m venv /py && \
     chmod -R +x /scripts
 
 ENV PATH="/scripts:/py/bin:$PATH"
-ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true
 
 USER django-user
 
