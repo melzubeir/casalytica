@@ -26,7 +26,7 @@ POST_CHOICES = [
 class Creator(models.Model):
     """Model for creators"""
     username = models.CharField(max_length=255)
-    public_key_base58 = models.CharField(max_length=255)
+    public_key_base58 = models.CharField(max_length=255, unique=True)
     profile_image = models.URLField(max_length=255, null=True, blank=True)
     featured_image = models.URLField(max_length=255, null=True, blank=True)
     description = models.TextField(null=True, blank=True)
