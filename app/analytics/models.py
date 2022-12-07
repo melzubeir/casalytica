@@ -6,10 +6,11 @@ from config import settings
 
 
 QUALIFICATION_CHOICES = [
-    (1, _('Irrelevant')),
-    (2, _('Semi Relevant')),
-    (3, _('Relevant')),
-    (4, _('Celebrity')),
+    (1, _('Bot')),
+    (2, _('Irrelevant')),
+    (3, _('Semi Relevant')),
+    (4, _('Relevant')),
+    (5, _('Celebrity')),
 ]
 
 POST_CHOICES = [
@@ -133,7 +134,7 @@ class Post(models.Model):
     has_text = models.BooleanField(default=True)
     has_link = models.BooleanField(default=False)
     has_video = models.BooleanField(default=False)
-
+    is_bot_trigger = models.BooleanField(default=False)
 
     type = models.IntegerField(
         choices=POST_CHOICES,
