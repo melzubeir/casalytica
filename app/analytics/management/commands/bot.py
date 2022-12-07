@@ -91,10 +91,12 @@ class Command(BaseCommand):
 
         if post.get('PostExtraData') and post.get('PostExtraData').get('Node'):
             id = post.get('PostExtraData').get('Node')
-        try:
-            node_obj = Node.objects.get(id=id)
-            post['node'] = node_obj
-        except Node.DoesNotExist:
+            try:
+                node_obj = Node.objects.get(id=id)
+                post['node'] = node_obj
+            except Node.DoesNotExist:
+                post['node'] = None
+        else:
             post['node'] = None
 
         post['creator'] = creator_obj
