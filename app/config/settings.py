@@ -296,3 +296,9 @@ AWS_SES_SECRET_ACCESS_KEY = environ.get('AWS_SES_SECRET_ACCESS_KEY', '')
 # Login/logout redirects
 LOGIN_REDIRECT_URL = 'home'
 LOGOUT_REDIRECT_URL = 'home'
+
+# CasaBot
+CASABOT = environ.get('CASABOT', default='casalytica')
+CASAPUBLICKEY = environ.get(
+    'CASAPUBLICKEY', default='BC1YLiy1Ny1btpBkaNHBaUD5D9xX8PhdgeToPn3Fq95RhCMYQVW1Anw')
+CASASEEDHEX = environ.get('CASASEEDHEX', default='')

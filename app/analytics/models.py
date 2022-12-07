@@ -31,6 +31,7 @@ class Creator(models.Model):
     profile_image = models.URLField(max_length=255, null=True, blank=True)
     featured_image = models.URLField(max_length=255, null=True, blank=True)
     description = models.TextField(null=True, blank=True)
+    is_verified = models.BooleanField(default=False)
 
     qualification = models.IntegerField(
         choices=QUALIFICATION_CHOICES,
@@ -135,6 +136,7 @@ class Post(models.Model):
     has_link = models.BooleanField(default=False)
     has_video = models.BooleanField(default=False)
     is_bot_trigger = models.BooleanField(default=False)
+    is_bot_processed = models.BooleanField(default=False)
 
     type = models.IntegerField(
         choices=POST_CHOICES,

@@ -7,10 +7,8 @@ from datetime import (
     timedelta,
 )
 from django.core.management.base import BaseCommand
-from django.db import transaction
 from django.db.models import F, Q
-from django.conf import settings
-from analytics.models import Post
+from models import Post
 import deso
 
 

@@ -8,7 +8,7 @@ from django.core.management.base import BaseCommand
 from django.utils.timezone import utc
 
 import deso
-from analytics.models import Creator
+from models import Creator
 
 
 class Command(BaseCommand):
