@@ -7,6 +7,7 @@ COPY ./requirements.txt /tmp/requirements.txt
 COPY ./requirements.dev.txt /tmp/requirements.dev.txt
 COPY ./scripts /scripts
 COPY ./app /app
+COPY crontab /etc/cron.d/crontab
 WORKDIR /app
 
 ARG DEV=false
@@ -34,6 +35,8 @@ RUN python -m venv /py && \
     chown -R django-user:django-user /vol && \
     chmod -R 755 /vol && \
     chmod -R +x /scripts
+
+RUN crontab /etc/cron.d/crontab
 
 ENV PATH="/scripts:/py/bin:$PATH"
 
