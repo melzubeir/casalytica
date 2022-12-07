@@ -1,0 +1,1 @@
+*/1 * * * * cd /CasaBot && /usr/bin/python3.9 CasaBot.py >> cron_log.log 2>&1

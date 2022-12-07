@@ -6,6 +6,7 @@ from datetime import (
 )
 from django.core.management.base import BaseCommand
 from django.utils.timezone import utc
+from os import environ
 import re
 import deso
 
@@ -13,19 +14,21 @@ from analytics.models import (
     Node,
     Post,
     Creator)
-from config.settings import logger
 from config.settings import (
+    logger,
+    ENVIRONMENT,
     CASABOT,
     CASAPUBLICKEY,
-    CASASEEDHEX,
+    CASABOTSEEDHEX,
 )
+
 
 class Command(BaseCommand):
     help = 'CasaBot - a deso bot'
 
     desoUser = deso.User()
     desoPosts = deso.Posts()
-    response_limit = 50
+    response_limit = 500
     botname = CASABOT
     trigger_term = 'hey @'+CASABOT
     run_count = 1
@@ -65,7 +68,7 @@ class Command(BaseCommand):
             post['has_video'] = True
 
         if post.get('Body').startswith(self.trigger_term):
-            logger.info("trigger post found..")
+            logger.info("trigger post found: " + post.get('PostHashHex'))
             post['is_bot_trigger'] = True
 
         featured_image = post.get('ProfileEntryResponse').get(
@@ -85,23 +88,14 @@ class Command(BaseCommand):
         creator_obj.featured_image = featured_image
         creator_obj.last_sync = datetime.utcnow().replace(tzinfo=utc)
         creator_obj.save()
-        '''
+
         if post.get('PostExtraData') and post.get('PostExtraData').get('Node'):
             id = post.get('PostExtraData').get('Node')
-            node_obj, created = Node.objects.get_or_create(
-                # this shouldn't happen in production with
-                # prepopulated nodes in the db
-                name = 'unknown',
-                url = 'unknown',
-                owner = 'elzubeir')
-            node_obj.last_sync=datetime.utcnow().replace(tzinfo=utc)
-            node_obj.save()
-
+        try:
+            node_obj = Node.objects.get(id=id)
             post['node'] = node_obj
-        else:
+        except Node.DoesNotExist:
             post['node'] = None
-        '''
-        post['node'] = None
 
         post['creator'] = creator_obj
 
@@ -162,20 +156,27 @@ class Command(BaseCommand):
         return (triggered_mentions, mentions_list)
 
     def handle_mention(self, mention):
-        desoSocial = deso.Social(CASAPUBLICKEY, CASASEEDHEX)
+        desoSocial = deso.Social(CASAPUBLICKEY, CASABOTSEEDHEX)
         s = mention.get('Body')
 
         match = re.search('is @([a-z]*) a bot', s)
         if match:
             reply = 'yeah.... probably.'
-            logger.info("going in..")
+            return desoSocial.submitPost(
+                postExtraData={"App": "CasaBot"},
+                parentStakeID=mention.get('PostHashHex'),
+                body=reply
+            )
+        if re.search('quit playing', s):
+            reply = 'ok, i\'ll stop playing'
             return desoSocial.submitPost(
                 postExtraData={"App": "CasaBot"},
                 parentStakeID=mention.get('PostHashHex'),
                 body=reply
             )
 
-        return None
+        logger.info(reply)
+        return False
 
     def handle(self, *args, **options):
 
@@ -183,15 +184,16 @@ class Command(BaseCommand):
             self.response_limit = options['response-limit']
         if options.get('botname'):
             self.botname = options['botname']
-        if options.get('trigger-term'):
-            self.trigger_term = options['trigger-term']
-        if options.get('run-count'):
-            self.run_count = options['run-count']
+        if options.get('trigger_term'):
+            self.trigger_term = options['trigger_term']
+        if options.get('run_count'):
+            self.run_count = options['run_count']
 
-        self.stdout.write(self.style.NOTICE('Bot starting!'))
-
+        self.stdout.write(self.style.NOTICE(
+            'Bot starting! \nconfigs: ' + str(options)))
         # get mentions feed
         (mentions, mentions_list) = self.get_mentions()
+
         for i in range(self.run_count):
             (mentions, mentions_list) = self.get_mentions(mentions_list)
 
