@@ -8,7 +8,7 @@ from datetime import (
 )
 from django.core.management.base import BaseCommand
 from django.db.models import F, Q
-from models import Post
+from analytics.models import Post
 import deso
 
 
@@ -29,8 +29,10 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
 
-        if options['num_days']:
-            self.num_days = options['num_days']
+        if options['days']:
+            self.num_days = options['days']
+        else:
+            self.num_days = 1
 
         self.stdout.write('Updating posts metadata..')
         self.update_posts_metadata()
