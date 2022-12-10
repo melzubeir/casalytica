@@ -2,6 +2,7 @@ FROM python:3.9-alpine3.13
 LABEL maintainer="elzubeir"
 
 ENV PYTHONUNBUFFERED 1
+ENV PYTHONPATH="/py/lib/python3.9/site-packages"
 
 COPY ./requirements.txt /tmp/requirements.txt
 COPY ./requirements.dev.txt /tmp/requirements.dev.txt
@@ -15,9 +16,11 @@ RUN python -m venv /py && \
     apk update && \
     apk add --update --no-cache curl bash postgresql-client jpeg-dev \
         chromium chromium-chromedriver git \
-        harfbuzz ttf-freefont freetype freetype-dev nss && \
+        harfbuzz ttf-freefont freetype freetype-dev nss \
+        py3-numpy && \
     apk add --update --no-cache --virtual .tmp-build-deps \
-        build-base postgresql-dev musl-dev zlib zlib-dev linux-headers && \
+        build-base postgresql-dev musl-dev zlib zlib-dev \
+        linux-headers && \
     /py/bin/pip install -r /tmp/requirements.txt && \
     if [ $DEV = "true" ]; \
         then /py/bin/pip install -r /tmp/requirements.dev.txt ; \
@@ -37,6 +40,7 @@ RUN python -m venv /py && \
 
 
 ENV PATH="/scripts:/py/bin:$PATH"
+
 
 USER django-user
 
