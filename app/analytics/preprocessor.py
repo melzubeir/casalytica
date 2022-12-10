@@ -47,10 +47,13 @@ class Preprocessor:
 
         nltk.data.path.append(self.nltk_data_dir)
         self.analyzer = SentimentIntensityAnalyzer()
-        self.sia = SentimentIntensityAnalyzer()
         self.tokens = nltk.word_tokenize(self.text)
         self.tagged = nltk.pos_tag(self.tokens)
-        self.named_entities = nltk.ne_chunk(self.tagged)
+        # this requires the numpy library which is not installed on the server
+        # until we can install it without issue
+        #
+        # self.named_entities = nltk.ne_chunk(self.tagged)
+        self.named_entities = []
 
 
     def get_tokens(self):

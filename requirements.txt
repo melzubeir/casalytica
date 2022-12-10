@@ -16,5 +16,5 @@ git+https://github.com/melzubeir/DeSo.py@master#egg=deso
 django-cors-headers>=3.13.0,<3.14.0
 selenium>=4.7.2,<4.8.0
 nltk>=3.7.0,<3.8.0
-numpy>=1.23.5,<1.24.0
+#numpy>=1.23.5,<1.24.0
 vaderSentiment>=3.3.2,<3.4.0
