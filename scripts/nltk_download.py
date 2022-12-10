@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 """Download NLTK data."""
 import nltk
 target_dir = '/vol/app/nltk_data'
