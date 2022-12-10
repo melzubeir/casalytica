@@ -39,11 +39,12 @@ class Command(BaseCommand):
 
         if options['username']:
             self.username = options['username']
-        if options['fetchnum']:
-            self.fetchnum = options['fetchnum']
         else:
             self.stderr.write(self.style.ERROR('Username is required'))
-            return
+            return False
+        if options['fetchnum']:
+            self.fetchnum = options['fetchnum']
+
 
         self.stdout.write('Updating profile metadata..')
 
