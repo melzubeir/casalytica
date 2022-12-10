@@ -264,7 +264,7 @@ class ImpressionSerializer(serializers.Serializer):
                 'ImpressionSerializer.to_internal_value() ----> ENTRY <----\n\t\tdata: %s', data)
         auth_user = self.context['request'].user
 
-        source_app = models.OnChainApp.objects.get(owner_id=auth_user.creator.id)
+        source_app = models.OnChainApp.objects.get(owner_id=auth_user)
 
         values = {
             'remote_addr': data.get('remote_addr', None),
@@ -308,10 +308,17 @@ class ImpressionSerializer(serializers.Serializer):
             user=validated_data['user'],
         )
 
-        self._get_or_create_posts(validated_data['posts'])
 
-        self._set_location(validated_data['remote_addr'], instance)
-        self._set_agent(validated_data['user_agent'], instance)
+        if (validated_data['posts'] is not None and
+                len(validated_data['posts']) > 0):
+            self._get_or_create_posts(validated_data['posts'])
+
+        if (validated_data['remote_addr'] is not None):
+            self._set_location(validated_data['remote_addr'], instance)
+
+        if (validated_data['user_agent'] is not None):
+            self._set_agent(validated_data['user_agent'], instance)
+
         instance.save()
 
         return instance

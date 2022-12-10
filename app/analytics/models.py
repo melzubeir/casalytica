@@ -150,7 +150,7 @@ class OnChainApp(models.Model):
     """Model for apps serving on-chain content"""
     name = models.CharField(max_length=255)
     owner = models.ForeignKey(
-        Creator,
+        AUTH_USER_MODEL,
         on_delete=models.CASCADE,
         null=True,
         blank=True)
