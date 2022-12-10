@@ -153,7 +153,8 @@ class CreatorTasks:
                 if not skip:
                     # append followers_list with creator objects
                     obj = self._update_or_create_profile(f)
-                    follows_list.append(obj)
+                    if obj:
+                        follows_list.append(obj)
 
             # after each page, update the creator object
             if follow_type == 'followers':
