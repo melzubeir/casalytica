@@ -8,16 +8,21 @@ from django.contrib import admin
 class ImpressionAdmin(admin.ModelAdmin):
     """Define the admin pages for impressions"""
     list_display = ("created", "remote_addr", "referer", )
-
+    exclude = ('posts')
 
 class PostAdmin(admin.ModelAdmin):
     """Define the admin pages for impressions"""
     list_display = ("post_hash", "impressions_total", )
+    search_fields = ['post_hash', 'node', 'creator',]
+    exclude = ('creator',)
 
 
 class CreatorAdmin(admin.ModelAdmin):
     """Define the admin pages for creators"""
     list_display = ("username", "public_key_base58", )
+    search_fields = ['username', 'public_key_base58',]
+    exclude = ('followers', 'friends', 'hodlers',)
+
 
 
 class NodeAdmin(admin.ModelAdmin):
