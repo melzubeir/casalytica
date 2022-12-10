@@ -2,7 +2,7 @@
 Update profile metadata from the deso blockchain
 """
 from django.core.management.base import BaseCommand
-from analytics.creators import CreatorTasks
+from analytics.creatortasks import CreatorTasks
 
 
 class Command(BaseCommand):
