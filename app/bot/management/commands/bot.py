@@ -1,5 +1,5 @@
 """
-Update posts metadata from the deso blockchain
+Your friendly casalytica bot
 """
 from datetime import (
     datetime,
@@ -16,7 +16,6 @@ from analytics.models import (
     Creator)
 from config.settings import (
     logger,
-    ENVIRONMENT,
     CASABOT,
     CASAPUBLICKEY,
     CASABOTSEEDHEX,
@@ -27,7 +26,7 @@ class Command(BaseCommand):
     help = 'CasaBot - a deso bot'
 
     desoUser = deso.User()
-    desoPosts = deso.Posts()
+    desoPosts = deso.Posts(readerPublicKey=CASAPUBLICKEY)
     response_limit = 500
     botname = CASABOT
     trigger_term = 'hey @'+CASABOT
@@ -111,10 +110,9 @@ class Command(BaseCommand):
         triggered_mentions = []
 
         mentions = self.desoPosts.getHotFeed(
-            readerPublicKey=CASAPUBLICKEY,
             taggedUsername=CASABOT,
             # pr to fix spelling response (desopy)
-            responeLimit=self.response_limit,
+            responseLimit=self.response_limit,
         ).json()
 
         try:
@@ -157,28 +155,89 @@ class Command(BaseCommand):
 
         return (triggered_mentions, mentions_list)
 
+    def get_creator_info(self, username):
+        """get creator info"""
+
+        deso_profile = self.desoUser.getSingleProfile(
+            username=username,
+        ).json()
+        if deso_profile.get('Profile'):
+            deso_profile = deso_profile.get('Profile')
+        else:
+            # unable to find user ond deso
+            return False
+
+        creator = Creator.objects.filter(public_key_base58=deso_profile.get('PublicKeyBase58Check')).first()
+        if not creator:
+            return  "we don't know about @{} yet. try again in a few minutes.".format(username)
+        else:
+            return "here's what we know about @{}: \n\n \
+                {} \n\n \".format(username, creator.qualification)"
+
+
+
     def handle_mention(self, mention):
         desoSocial = deso.Social(CASAPUBLICKEY, CASABOTSEEDHEX)
         s = mention.get('Body')
+        actions = [
+            'whois',
+            'remind me',
+        ]
 
-        match = re.search('is @([a-z]*) a bot', s)
-        if match:
-            reply = 'yeah.... probably.'
-            return desoSocial.submitPost(
-                postExtraData={"App": "CasaBot"},
-                parentStakeID=mention.get('PostHashHex'),
-                body=reply
-            )
-        if re.search('quit playing', s):
-            reply = 'ok, i\'ll stop playing'
-            return desoSocial.submitPost(
-                postExtraData={"App": "CasaBot"},
-                parentStakeID=mention.get('PostHashHex'),
-                body=reply
-            )
+        for action in actions:
+            if s.startswith(self.trigger_term + ' ' + action):
+                if action == 'remind me':
+                    match = re.search('remind me in ([0-9]*) ([a-z]*)', s)
+                    if match.group(1) is int and match.group(2) is str:
+                        time = match.group(1)
+                        unit = match.group(2)
+                        if unit == 'minutes':
+                            time = time * 60
+                        elif unit == 'hours':
+                            time = time * 3600
+                        elif unit == 'days':
+                            time = time * 86400
+                        elif unit == 'weeks':
+                            time = time * 604800
+                        elif unit == 'months':
+                            time = time * 2592000
+                        elif unit == 'years':
+                            time = time * 31536000
+                        else:
+                            reply = "sorry i don't understand that time unit. \
+                                i understand minutes, hours, days, weeks, months, and years."
+                            break
+                    reply = f'ok i\'ll remind you in {time} {unit}'
+                    break
+            if action == 'whois':
+                match = re.search('whois @([a-z]*)', s)
+                if match:
+                    creator_name = match.group(1)
+                    self.get_creator_info(creator_name)
+                    reply = f'ok i\'ll look up that user @{creator_name}'
+                else:
+                    reply = "sorry i don't understand that command. \
+                            something is wrong with the username maybe?"
+                break
+
+            else:
+                reply = "sorry i don't understand that command. \
+                        i understand 'whois' and 'remind me'"
+                break
+        else:
+            logger.info("no match found")
+
+            return False
 
         logger.info(reply)
-        return False
+        '''
+        return desoSocial.submitPost(
+            postExtraData={"App": "CasaBot"},
+            parentStakeID=mention.get('PostHashHex'),
+            body=reply
+        )
+        '''
+
 
     def handle(self, *args, **options):
 

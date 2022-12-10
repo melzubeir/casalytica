@@ -128,7 +128,7 @@ INSTALLED_APPS = [
     "core",
     "analytics",
     "user",
-
+    "bot",
 
 ]
 
