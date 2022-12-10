@@ -186,7 +186,7 @@ class Post(models.Model):
     diamonds_total = models.IntegerField(default=0)
     comments_total = models.IntegerField(default=0)
     reposts_total = models.IntegerField(default=0)
-    sentiment_score = models.FloatField(null=True, blank=True)
+    sentiment_score = models.CharField(max_length=255, null=True, blank=True)
     has_image = models.BooleanField(default=False)
     has_text = models.BooleanField(default=True)
     has_link = models.BooleanField(default=False)
