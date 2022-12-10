@@ -1,16 +1,26 @@
 from django.db import models
-import json
-from config import settings
+from datetime import (
+    datetime,
+    timedelta
+)
+from django.utils.timezone import utc
+from config.settings import (
+    logger,
+    HEXA_VALID,
+    AUTH_USER_MODEL,
+)
 from django.utils.translation import gettext_lazy as _
-from config import settings
+
+import deso
 
 
 QUALIFICATION_CHOICES = [
-    (1, _('Bot')),
-    (2, _('Irrelevant')),
-    (3, _('Semi Relevant')),
-    (4, _('Relevant')),
-    (5, _('Celebrity')),
+    (1, _('Irrelevant')),
+    (2, _('Semi Relevant')),
+    (3, _('Relevant')),
+    (4, _('Celebrity')),
+    (5, _('Benign Bot')),
+    (6, _('Malicious Bot')),
 ]
 
 POST_CHOICES = [
@@ -23,6 +33,37 @@ POST_CHOICES = [
     (6, _('Other')),
 ]
 
+FETCHNUM = 1000
+
+class CreatorQuerySet(models.QuerySet):
+    """Custom manager for Creator model"""
+
+    desoUser = deso.User()
+
+    def benign_bots(self):
+        return self.filter(qualification=5)
+
+    def malicious_bots(self):
+        return self.filter(qualification=6)
+
+
+
+class CreatorManager(models.Manager):
+
+    #def get_queryset(self):
+    #    return CreatorQuerySet(self.model, using=self._db)
+    def get_queryset(self):
+        return super(CreatorManager, self).get_queryset().all()
+
+    def benign_bots(self):
+        return self.get_queryset().benign_bots()
+
+    def malicious_bots(self):
+        return self.get_queryset().malicious_bots()
+
+    def update_follows(self):
+        return self.get_queryset().update_follows()
+
 
 class Creator(models.Model):
     """Model for creators"""
@@ -32,6 +73,10 @@ class Creator(models.Model):
     featured_image = models.URLField(max_length=255, null=True, blank=True)
     description = models.TextField(null=True, blank=True)
     is_verified = models.BooleanField(default=False)
+    deso_balance = models.FloatField(null=True, blank=True)
+    coin_hodlers_num = models.IntegerField(null=True, blank=True)
+    dao_holders_num = models.IntegerField(null=True, blank=True)
+    coin_price = models.FloatField(null=True, blank=True)
 
     qualification = models.IntegerField(
         choices=QUALIFICATION_CHOICES,
@@ -40,27 +85,38 @@ class Creator(models.Model):
         default=1)
 
     in_degree_reach = models.IntegerField(null=True, blank=True, default=0)
-    in_degree_engagement = models.IntegerField(null=True, blank=True, default=0)
+    in_degree_engagement = models.IntegerField(
+        null=True, blank=True, default=0)
 
-    relevant_posts_percentage = models.FloatField(null=True, blank=True, default=0)
+    relevant_posts_percentage = models.FloatField(
+        null=True, blank=True, default=0)
     post_frequency_daily = models.FloatField(null=True, blank=True)
     follower_count = models.IntegerField(null=True, blank=True)
+    friends_count = models.IntegerField(null=True, blank=True)
     follower_count_3rd_degree = models.IntegerField(null=True, blank=True)
     follower_engagement = models.FloatField(null=True, blank=True)
 
-    follower = models.ManyToManyField(
+    followers = models.ManyToManyField(
         'analytics.Creator',
-        related_name='followers',
+        related_name='cfollowers',
         blank=True,
     )
-    following = models.ManyToManyField(
+    friends = models.ManyToManyField(
         'analytics.Creator',
-        related_name='followings',
+        related_name='cfriends',
+        blank=True,
+    )
+    hodlers = models.ManyToManyField(
+        'analytics.Creator',
+        related_name='chodlers',
         blank=True,
     )
 
     # last time the creator has been synced with the blockchain
     last_sync = models.DateTimeField(null=True, blank=True)
+
+    objects = models.Manager()
+    creators = CreatorQuerySet()
 
     def __str__(self):
         return self.username
@@ -123,7 +179,7 @@ class Post(models.Model):
     """Model for posts"""
 
     post_hash = models.SlugField(max_length=64,
-                                 validators=[settings.HEXA_VALID],
+                                 validators=[HEXA_VALID],
                                  unique=True)
     impressions_total = models.IntegerField(default=0)
     likes_total = models.IntegerField(default=0)
@@ -208,7 +264,7 @@ class Impression(models.Model):
     is_deso = models.BooleanField(default=True)
 
     user = models.ForeignKey(
-        settings.AUTH_USER_MODEL,
+        AUTH_USER_MODEL,
         on_delete=models.CASCADE,
     )
 
