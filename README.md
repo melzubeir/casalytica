@@ -39,6 +39,7 @@ nginx reverse proxy server.
 - nginx
 - docker
 
+
 ### aws ec2 setup
 
 settings up an aws ec2 instance (amazon linux 2)
@@ -124,7 +125,6 @@ curl -X 'POST' \
          "post_hash":"3fbdcd120f83c0ad6c7ca12ef66806de981b3a605c65217149b9dc222799b69e"
       }
    ],
-   "source_app":1,
    "remote_addr":"4.2.2.1",
    "referer":"https://www.google.com/",
    "user_agent":"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.102 Safari/537.36"
