@@ -22,7 +22,7 @@
   },
   "homepage": "https://github.com/melzubeir/casalytica#readme",
   "dependencies": {
-    "casalytica": "^0.0.1",
-    "axios": "^0.21.1"
+    "axios": "^0.21.1",
+    "ipify": "^6.0.0"
   }
 }

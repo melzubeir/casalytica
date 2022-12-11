@@ -1,4 +1,6 @@
 import axios, { AxiosResponse } from 'axios';
+import ipify from 'ipify';
+const useragent = require('get-user-agent');
 
 const DEFAULT_ENDPOINT = 'https://api.casalytica.com/v0';
 
@@ -22,6 +24,10 @@ export class CasalyticaClient {
   }
 
   async postImpression(data) {
+
+    if (data.remote_addr === undefined) {
+      data.remote_addr = await ipify();
+    }
 
     try {
       const response = await client.post(self.baseUrl + '/impression/put', data);

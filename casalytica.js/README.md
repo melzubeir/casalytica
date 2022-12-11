@@ -48,8 +48,7 @@ const impression = {
     {
       "post_hash": "14fafdebff6610c2b0c2cca2b5ec901949e1f98c5bccbb72450b01cfd3c35228",
     }
-  ]
-  "remote_addr": "4.2.2.1",
+  ],
   "referer": "https://www.google.com/",
   "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.102 Safari/537.36"
 };
