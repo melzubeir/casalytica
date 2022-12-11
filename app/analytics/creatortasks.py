@@ -34,16 +34,16 @@ class CreatorTasks:
         self.fetchnum = fetchnum
         self.created = None
 
-        p = self.desoUser.getSingleProfile(username=self.username).json()
-        p = self.normalize_profile(p)
+        self.p = self.desoUser.getSingleProfile(username=self.username).json()
+        self.p = self.normalize_profile(self.p)
 
         try:
-            self.public_key_base58 = p.get('PublicKeyBase58Check')
+            self.public_key_base58 = self.p.get('PublicKeyBase58Check')
         except:
-            logger.error(p)
+            logger.error(self.p)
 
         self.creator_obj, self.created = Creator.objects.get_or_create(
-            username=self.username,
+            username__iexact=self.username,
             public_key_base58=self.public_key_base58,)
 
     def normalize_profile(self, profile):
@@ -61,12 +61,44 @@ class CreatorTasks:
             return None
         return profile
 
+
+    def update_profile(self):
+        """Update the creator profile with the latest blockchain data"""
+        try:
+            self.creator_obj.featured_image = self.p.get(
+                'ExtraData', {}).get('FeaturedImageURL')
+        except:
+            pass
+        try:
+            self.creator_obj.coin_hodlers_num = self.p.get(
+                'CoinEntry', {}).get('NumberOfHolders')
+        except:
+            pass
+        try:
+            self.creator_obj.dao_hodlers_num = self.p.get(
+                'DAOCoinEntry', {}).get('NumberOfHolders')
+        except:
+            pass
+        self.creator_obj.username = self.p.get('Username')
+        self.creator_obj.description = self.p.get('Description')
+        self.creator_obj.profile_image = self.desoUser.getProfilePicURL(
+            self.p.get('PublicKeyBase58Check'))
+        self.creator_obj.is_verified = self.p.get('IsVerified')
+        self.creator_obj.deso_balance = self.p.get('DESOBalanceNanos')
+        self.creator_obj.coin_price = self.p.get('CoinPriceDeSoNanos')
+        self.creator_obj.last_sync = datetime.utcnow().replace(tzinfo=utc)
+        self.creator_obj.save()
+
+        return self.creator_obj
+
+
+
     def _update_or_create_profile(self, f):
         """update profile in database and return a tuple of (obj, created)"""
 
         try:
             obj, created = Creator.objects.get_or_create(
-                username=f.get('Username'),
+                username__iexact=f.get('Username'),
                 public_key_base58=f.get('PublicKeyBase58Check'),
             )
         except Exception as e:
