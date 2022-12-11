@@ -69,9 +69,9 @@ class Creator(models.Model):
     """Model for creators"""
     username = models.CharField(max_length=255)
     public_key_base58 = models.CharField(max_length=255, unique=True)
-    profile_image = models.URLField(max_length=255, null=True, blank=True)
-    featured_image = models.URLField(max_length=255, null=True, blank=True)
-    description = models.TextField(null=True, blank=True)
+    profile_image = models.URLField(max_length=255, blank=True, default='')
+    featured_image = models.URLField(max_length=255, blank=True, default='')
+    description = models.TextField(blank=True, default='')
     is_verified = models.BooleanField(default=False)
     deso_balance = models.FloatField(null=True, blank=True)
     coin_hodlers_num = models.IntegerField(null=True, blank=True)
@@ -159,13 +159,13 @@ class OnChainApp(models.Model):
         on_delete=models.CASCADE,
         null=True,
         blank=True)
-    url = models.URLField(max_length=255, null=True, blank=True)
-    description = models.TextField(null=True, blank=True)
+    url = models.URLField(max_length=255, blank=True, default='')
+    description = models.TextField(blank=True, default='')
     created = models.DateTimeField(auto_now_add=True)
 
     # if the app is published not null
-    app_store_url = models.URLField(max_length=255, null=True, blank=True)
-    google_store_url = models.URLField(max_length=255, null=True, blank=True)
+    app_store_url = models.URLField(max_length=255, blank=True, default='')
+    google_store_url = models.URLField(max_length=255, blank=True, default='')
 
     is_deso = models.BooleanField(default=True)
     is_verified = models.BooleanField(default=False)
@@ -181,16 +181,18 @@ class Post(models.Model):
     post_hash = models.SlugField(max_length=64,
                                  validators=[HEXA_VALID],
                                  unique=True)
+    body = models.TextField(blank=True, default='')
     impressions_total = models.IntegerField(default=0)
     likes_total = models.IntegerField(default=0)
     diamonds_total = models.IntegerField(default=0)
     comments_total = models.IntegerField(default=0)
     reposts_total = models.IntegerField(default=0)
-    sentiment_score = models.CharField(max_length=255, null=True, blank=True)
+    sentiment_score = models.CharField(max_length=255, blank=True, default='')
     has_image = models.BooleanField(default=False)
     has_text = models.BooleanField(default=True)
     has_link = models.BooleanField(default=False)
     has_video = models.BooleanField(default=False)
+    is_spam = models.BooleanField(default=False)
     is_bot_trigger = models.BooleanField(default=False)
     is_bot_processed = models.BooleanField(default=False)
 
@@ -240,26 +242,26 @@ class Impression(models.Model):
 
     # optional but highly recommended
     remote_addr = models.GenericIPAddressField(
-        protocol='both', unpack_ipv4=True, null=True)
+        protocol='both', unpack_ipv4=True, blank=True, null=True)
 
     # optional
-    user_agent = models.CharField(max_length=255, null=True)
-    referer = models.CharField(max_length=255, null=True)
-    creator_handle = models.CharField(max_length=255, null=True, blank=True)
+    user_agent = models.CharField(max_length=255, blank=True, default='')
+    referer = models.CharField(max_length=255, blank=True, default='')
+    creator_handle = models.CharField(max_length=255, blank=True, default='')
 
     # generated from the above inputs
-    device_family = models.CharField(max_length=255, null=True)
-    device_brand = models.CharField(max_length=255, null=True)
-    device_model = models.CharField(max_length=255, null=True)
-    browser_family = models.CharField(max_length=255, null=True)
-    browser_version = models.CharField(max_length=14, null=True)
-    os_family = models.CharField(max_length=255, null=True)
-    os_version = models.CharField(max_length=14, null=True)
-    city = models.CharField(max_length=255, null=True)
-    country = models.CharField(max_length=255, null=True)
+    device_family = models.CharField(max_length=255, blank=True, default='')
+    device_brand = models.CharField(max_length=255, blank=True, default='')
+    device_model = models.CharField(max_length=255, blank=True, default='')
+    browser_family = models.CharField(max_length=255, blank=True, default='')
+    browser_version = models.CharField(max_length=14, blank=True, default='')
+    os_family = models.CharField(max_length=255, blank=True, default='')
+    os_version = models.CharField(max_length=14, blank=True, default='')
+    city = models.CharField(max_length=255, blank=True, default='')
+    country = models.CharField(max_length=255, blank=True, default='')
     latitude = models.DecimalField(max_digits=5, decimal_places=3, null=True)
     longitude = models.DecimalField(max_digits=5, decimal_places=3, null=True)
-    tz = models.CharField(max_length=255, null=True)
+    tz = models.CharField(max_length=255, blank=True, default='')
 
     is_deso = models.BooleanField(default=True)
 
