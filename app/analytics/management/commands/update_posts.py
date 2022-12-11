@@ -6,6 +6,7 @@ from datetime import (
     datetime,
     timedelta,
 )
+from django.utils.timezone import utc
 from django.core.management.base import BaseCommand
 from django.db.models import F, Q
 import deso
@@ -64,6 +65,6 @@ class Command(BaseCommand):
                 reposts_total=F('reposts_total') + myPost['RepostCount'],
                 body=myPost['Body'],
                 sentiment_score=sentiment,
-                last_sync=datetime.now()
+                last_sync=datetime.utcnow().replace(tzinfo=utc)
             )
             print("Updating post: " + myPost['PostHashHex'])
