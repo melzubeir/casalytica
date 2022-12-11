@@ -69,8 +69,8 @@ class Creator(models.Model):
     """Model for creators"""
     username = models.CharField(max_length=255)
     public_key_base58 = models.CharField(max_length=255, unique=True)
-    profile_image = models.URLField(max_length=255, blank=True, default='')
-    featured_image = models.URLField(max_length=255, blank=True, default='')
+    profile_image = models.URLField(max_length=255, null=True, blank=True)
+    featured_image = models.URLField(max_length=255, null=True, blank=True)
     description = models.TextField(blank=True, default='')
     is_verified = models.BooleanField(default=False)
     deso_balance = models.FloatField(null=True, blank=True)
@@ -159,13 +159,13 @@ class OnChainApp(models.Model):
         on_delete=models.CASCADE,
         null=True,
         blank=True)
-    url = models.URLField(max_length=255, blank=True, default='')
+    url = models.URLField(max_length=255, blank=True, null=True)
     description = models.TextField(blank=True, default='')
     created = models.DateTimeField(auto_now_add=True)
 
     # if the app is published not null
-    app_store_url = models.URLField(max_length=255, blank=True, default='')
-    google_store_url = models.URLField(max_length=255, blank=True, default='')
+    app_store_url = models.URLField(max_length=255, blank=True, null=True)
+    google_store_url = models.URLField(max_length=255, blank=True, null=True)
 
     is_deso = models.BooleanField(default=True)
     is_verified = models.BooleanField(default=False)
