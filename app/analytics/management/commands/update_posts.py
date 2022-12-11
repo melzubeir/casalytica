@@ -62,6 +62,7 @@ class Command(BaseCommand):
                 diamonds_total=F('diamonds_total') + myPost['DiamondCount'],
                 comments_total=F('comments_total') + myPost['CommentCount'],
                 reposts_total=F('reposts_total') + myPost['RepostCount'],
+                body=myPost['Body'],
                 sentiment_score=sentiment,
                 last_sync=datetime.now()
             )
