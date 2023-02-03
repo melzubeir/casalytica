@@ -32,8 +32,9 @@ export default function SectionHero() {
         variant="h5"
         sx={{ mb: 4, mt: { sx: 4, sm: 10 } }}
       >
-        When your app shares impressions of on-chain content,
-        we give you back the totality of all reported impressions so your users can learn their true reach.
+        This project has been
+        <a href="https://desocialworld.com/posts/1730a527efe8171133293efb6e01f1b8c48456d142389e023ebbffbf1178e93f?feedTab=desocialworld.feed.tab.searchclout&tab=posts">sunset</a>,
+        feel free to use the code for your own projects.
       </Typography>
       <Button
               buttontext="Register"
